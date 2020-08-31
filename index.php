@@ -1,4 +1,4 @@
 <?php 
-require_once('dashboard.php');
+include("dashboard.php");
 
 ?>
