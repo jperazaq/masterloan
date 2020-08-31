@@ -1,0 +1,108 @@
+ <header >
+            <div class="collapse navbar-collapse" id="navbarSupportedContent"  >
+                <ul class="nav navbar-nav ml-auto">
+                  <li class="nav-item active">
+                      <a class="nav-link" href="#">Crear Nuevo Prestamo</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="#">Descargar</a>
+                  </li>
+                  
+                </ul>
+              </div>
+            </div>
+          </nav>  </header>
+              
+          <div class="container col-lg-12" >
+            <h1  >Prestamos</h1><hr>
+            
+
+          
+          <!-- Bloque de graficos -->
+            <div class="card-deck">
+              <div class="card">
+                <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+                <div class="card-body">
+                  <h5 class="card-title">Atraso</h5><hr>
+
+                  <p class="card-text"><canvas id="line-chart1" width="200" height="150"></canvas></p>
+                  
+                </div>
+              </div>
+              <div class="card">
+                <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+                <div class="card-body">
+                  <h5 class="card-title">Cantidad de Prestamos</h5><hr>
+                  <p class="card-text"><p class="card-text"><canvas id="line-chart" width="200" height="150"></canvas></p></p>
+                  
+                </div>
+              </div>
+              <div class="card">
+                <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+                <div class="card-body">
+                  <h5 class="card-title"> Resumen de creditos</h5> <hr>
+                  <h5>Total de la Cartera:</h5> <h4  style="color:#00adb5"> ₡ 150 000 000</h4>
+                  <h5>Creditos Otorgados:</h5> <h4  style="color:#00adb5"> 189</h4>
+                  <h5>Dias de Pago promedio:</h5> <h4  style="color:#00adb5"> 43 dias</h4>
+                  <h5>Total en Atraso</h5> <h4  style="color:#00adb5"> ₡ 2 650 000</h4>
+                  <h5>Cantidad de Clientes</h5> <h4  style="color:#00adb5"> 175</h4>
+                  
+                
+                  
+                </div>
+              </div>
+            </div>  
+  </div><br><hr>
+
+  <!-- MAnipulacion de los graficos        -->
+  <script>
+            new Chart(document.getElementById("line-chart"), {
+                responsive:true,
+                type: 'line',
+                data: {
+                  labels: ["Enero","Febrero","Marzo","Abril","Mayo","Julio","Julio","Agosto","Septiembre","Octubre"],
+                  datasets: [{ 
+                      data: [5500000,1200000,800000,5670000,9900000,1687899,5550700,2300000,7980214,6878543],
+                      label: "Prestamos",
+                      borderColor: "#3e95cd",
+                      fill: false
+                    }
+                  ]
+                },
+                options: {
+                  title: {
+                    display: true,
+                    text: 'Total de Prestamos Otorgados'
+                  }
+                }
+              });
+            </script>
+
+
+  <script>
+            new Chart(document.getElementById("line-chart1"), {
+                responsive: true,
+                type: 'bar',
+                data: {
+                  labels: ["Al dia","1-30","31-60","61-90","Mas de 90 dias"],
+                  datasets: [{ 
+                      data: [5500000,1200000,800000,5670000,9900000],
+                      label: "Prestamos",
+                      borderColor: "#3e95cd",
+                      fill: false
+                    }
+                  ]
+                },
+                options: {
+                  
+                  title: {
+                    display: true,
+                    text: 'Lista de Periodo de Atraso',
+                  }
+                  
+                }
+                
+              });
+    </script>
+
+  <script>
