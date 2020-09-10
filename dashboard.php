@@ -10,6 +10,30 @@
       <?php   
       
       include  ('conexion.php');
+      
+
+      
+      
+      
+      session_start();  
+      $varsession = $_SESSION['emailsess'];
+    
+      
+      
+
+      $querySes = mysqli_query($conn, "SELECT `idUSERS`, `ID_NUMBER`, `FIRST_NAME`, `LAST_NAME`, `SECOND_LAST_NAME`, `USER_USER`, `PHONE_NUMBER`, `EMAIL_NUMBER`, `DATE_OF_BIRTH`, `AGE`, `JOB`, `USER_PASSWORD`
+       FROM `users` WHERE EMAIL_NUMBER = '$varsession'");
+      $rowses = mysqli_fetch_array($querySes);
+      $nombrein = $rowses['FIRST_NAME'];
+     
+     
+      if ($varsession == NULL || $varsession = ""){
+        header("LOCATION: nuevo.php")
+        ;
+        die();
+
+      }
+
 
       $query1 = mysqli_query($conn, "SELECT * FROM  loans");
       $query2= mysqli_query($conn, "SELECT * FROM  loans");
@@ -29,14 +53,25 @@
       $query16 = mysqli_query($conn, "SELECT  AVG(LATE_DAYS) FROM  amortization ");
       $query17 = mysqli_query($conn, "SELECT  * FROM  amortization ");
       $query18 = mysqli_query($conn, "SELECT count(*) FROM  customers");
-      $query19 = mysqli_query($conn, "SELECT distinct loans.USER_CLIENTE_ID, users.FIRST_NAME, users.SECOND_LAST_NAME, users.LAST_NAME, loans.LOAN_AMOUNT, loans.LOAN_ID, users.idUSERS  FROM  loans INNER JOIN users WHERE loans.USER_CLIENTE_ID = users.idUSERS");
-      $query20 = mysqli_query($conn, "SELECT  users.idUSERS, users.FIRST_NAME,users.FIRST_NAME,users.SECOND_LAST_NAME, users.LAST_NAME, sum(LOAN_AMOUNT) FROM users INNER JOIN loans WHERE users.idUSERS= loans.USER_CLIENTE_ID GROUP BY USER_CLIENTE_ID ");
+
+      $query19 = mysqli_query($conn, "SELECT distinct loans.USER_CLIENTE_ID, users.FIRST_NAME, users.SECOND_LAST_NAME, users.LAST_NAME, loans.LOAN_AMOUNT, loans.LOAN_ID, users.idUSERS  F
+      ROM  loans INNER JOIN users WHERE loans.USER_CLIENTE_ID = users.idUSERS");
+     
+     $query20 = mysqli_query($conn, "SELECT  users.idUSERS, users.FIRST_NAME,users.FIRST_NAME,users.SECOND_LAST_NAME, users.LAST_NAME, sum(LOAN_AMOUNT) FROM
+       users INNER JOIN loans WHERE users.idUSERS= loans.USER_CLIENTE_ID GROUP BY USER_CLIENTE_ID ");
+      
       $query21 = mysqli_query($conn, " SELECT customers.FIRST_NAME, customers.LAST_NAME, customers.SECOND_LAST_NAME, customers.ID_NUMBER, customers.CUSTOMER_ID,
       loans.LOAN_ID, loans.STAR_DATE, loans.MONTO_CUOTA_TOTAL, loans.LOAN_AMOUNT, loans.MONTO_SOLO_INTERESES,loans.USER_CLIENTE_ID
         FROM customers AS customers
-      INNER JOIN loans AS loans ON customers.CUSTOMER_ID = loans.CUSTOMER_ID");
+      INNER JOIN loans AS loans ON customers.CUSTOMER_ID = loans.CUSTOMER_ID ORDER BY loans.LOAN_ID ASC");
+
       $query22 = mysqli_query($conn, "SELECT  * FROM  amortization ");
+
       $query22 = mysqli_query($conn, "SELECT  MAX(ARREAR) FROM  amortization ");
+
+      $query23 = mysqli_query($conn, "SELECT customers.CUSTOMER_ID,customers.ID_NUMBER, customers.FIRST_NAME,customers.LAST_NAME,customers.SECOND_LAST_NAME ,amortization.LOAN_ID, amortization.ARREAR, 
+      amortization.CUOTA, amortization.LATE_DAYS FROM customers 
+      INNER JOIN amortization WHERE customers.CUSTOMER_ID = amortization.CUSTOMER_ID AND amortization.ARREAR>0 ORDER BY amortization.ARREAR DESC");
 
       $row = mysqli_fetch_array($query14);
       $row2= mysqli_fetch_array($query15);
@@ -201,13 +236,15 @@ while($aging01 = mysqli_fetch_array($query13) ){
     $totalAPagar1 = $totalAPagar1+$aging01['CUOTA'];
     $treintaSesenta= $treintaSesenta+$aging01['CUOTA'];
   }
-    elseif($aging01['ARREAR']>60 && $aging['ARREAR']<=90){
+    elseif($aging01['ARREAR']>60 && $aging01['ARREAR']<=90){
       $totalAPagar1 = $totalAPagar1+$aging01['CUOTA'];
       $sesentanoventa= $sesentanoventa+$aging01['CUOTA'];
-
-    }else{
+    }
+    elseif($aging01['ARREAR']>60 && $aging01['ARREAR']>90){
       $totalAPagar1 = $totalAPagar1+$aging01['CUOTA'];
-      $over90 = $over90+$aging01['CUOTA'];
+      $over90= $over90+$aging01['CUOTA'];
+
+    
     }
   
 
@@ -249,9 +286,35 @@ while($payDateAmounts = mysqli_fetch_array($query17)){
           
     </head>
     <body>
+    <div class= "wrapper " >
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" style="height: 50px;color:#222831; ">
+    <a href="#" class="navbar-brand">Master Loan</a>
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarCollapse" >
+        <div class="navbar-nav">
+            <a href="#" class="nav-item nav-link active"></a>
+            <a href="#" class="nav-item nav-link"></a>
+            <a href="#" class="nav-item nav-link"></a>
+            <a href="#" class="nav-item nav-link disabled" tabindex="-1"></a>
+        </div>
+        <div class="navbar-nav ml-auto">
+            <a href="#" class="nav-item nav-link">Bienvenido <?php echo $nombrein?></a> <h2 >|</h2>
+            <a href="../masterlender/nuevoPrestamo.php" class="nav-item nav-link">Nuevo Credito </a> 
+            <a href="../masterlender/nuevoCliente.php" class="nav-item nav-link">Nuevo Cliente </a> 
+            <a href="../masterlender/cerrasesion.php" class="nav-item nav-link">Cerrar Sesion </a> 
+        </div>
+    </div>
+</nav>
+</div>
       
       <div class="wrapper d-flex align-items-stretch" >
-        <nav id="sidebar" class="active " style="background-color:#222831" >
+        
+        <nav id="sidebar" class="active " style="background-color:#343a40; margin-top:50px;" >
+
+        
          
           <ul class="list-unstyled components mb-5"  style=" position: fixed">
           <h1><a href="index.html" class="logo">ML</a></h1>
@@ -259,7 +322,8 @@ while($payDateAmounts = mysqli_fetch_array($query17)){
              
             </li>
 
-          
+           
+            <li>
             <li class="active" >
               <a href="dashboard.php"><span class="fa fa-home"></span> Dashboard</a>
             </li>
@@ -284,9 +348,13 @@ while($payDateAmounts = mysqli_fetch_array($query17)){
           </div>
         </nav>
 
+        
+
           <!-- Page Content  -->
         
         <div id="content" class="p-4 p-md-5" style="margin-top:0px; width:100%;background-color:#FFFDF7" >
+
+        
 
           <!-- <nav class="navbar navbar-expand-lg " style="background-color:#eeeeee "> -->
             <div class="container-fluid"    >
@@ -296,7 +364,7 @@ while($payDateAmounts = mysqli_fetch_array($query17)){
             <header >
            
               
-          <div class="container col-lg-12" >
+          <div class="container col-lg-12"  style="margin-top:55px">
             <h1  >DASHBOARD</h1><hr>
             
            
@@ -323,15 +391,15 @@ while($payDateAmounts = mysqli_fetch_array($query17)){
                   <tbody>
                     <tr>
                     <th ><?php echo number_format($aldia,2) ?></th>
-                    <th scope="row"><?php echo number_format( ($aldia/$totalAPagar1)*100 ,2)?></th>
+                    <th scope="row"><?php echo number_format( ($aldia/$totalAPagar1)*100 ,0)?></th>
                     <th ><?php echo number_format($unoTreinta,2) ?></th>
-                    <th scope="row"><?php echo number_format(($unoTreinta/$totalAPagar1)*100,2)  ?></th>
+                    <th scope="row"><?php echo number_format(($unoTreinta/$totalAPagar1)*100,0)  ?></th>
                     <th><?php echo number_format($treintaSesenta,2) ?></td>
-                    <th scope="row"><?php echo number_format( ($treintaSesenta/$totalAPagar1)*100,2)  ?></th>
+                    <th scope="row"><?php echo number_format( ($treintaSesenta/$totalAPagar1)*100,0)  ?></th>
                     <th><?php echo number_format($sesentanoventa,2) ?></td>
-                    <th scope="row"><?php echo number_format(($sesentanoventa/$totalAPagar1)*100,2)  ?></th>
+                    <th scope="row"><?php echo number_format(($sesentanoventa/$totalAPagar1)*100,0)  ?></th>
                     <th><?php echo number_format($over90,2) ?></td>
-                    <th scope="row"><?php echo number_format(($over90/$totalAPagar1)*100,2)  ?></th>
+                    <th scope="row"><?php echo number_format(($over90/$totalAPagar1)*100,0)  ?></th>
                       
                     </tr>
                    
@@ -458,41 +526,52 @@ BLOQUE DE COBRADORES -->
 
                   <div class="container">
                       <div class="row">
+                      <table class="table">
+                      <tr>
+                   <thead>
+                       <tr>
+                      <th>Nombre del Analista</th>
+                      <th>Total de la Cartera </th>
                       
+                        </thead>
+                        </tr>
 
                       <?php 
                       $loans = 0;
-                      while ($cobradores = mysqli_fetch_array($query20)){
-                       
+                 
+                      while ($cobradores = mysqli_fetch_array($query20)){                    
+                      
                         
-                      ?>                 
+                      ?>          
                 
                         
         
 
             
-            <table class="table">
+            
                      
                         <tbody>
                           <tr>
-                          <th><?php echo $cobradores['FIRST_NAME'], ' ',$cobradores['LAST_NAME'], ' ',$cobradores['SECOND_LAST_NAME']?></th>
-                          <th><?php echo number_format( $cobradores['sum(LOAN_AMOUNT)'],2)?></th>
+                          <td><?php echo $cobradores['FIRST_NAME'], ' ',$cobradores['LAST_NAME'], ' ',$cobradores['SECOND_LAST_NAME']?></td>
+                          <td><?php echo number_format( $cobradores['sum(LOAN_AMOUNT)'],2)?></td>
                           
                           </tr>
                         
                         
                         </tbody>
             
+                       
             
-            </table>
-                      <?php }?>
+                      <?php 
+                    
+                    
+                    }?>
+                      </table>
                       </div>
                       
-                      
+                     
                     </div>
-                    <div class="col">
-                          <h5><a href="nuevoPrestamo.php" class="btn btn-primary">Ver Carteras</a></h5>
-                        </div>
+                   
                   
                   
                 </div>
@@ -501,63 +580,92 @@ BLOQUE DE COBRADORES -->
                 <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
                 <div class="card-body">
                   <h5 class="card-title">Morosidad</h5><hr>
+                  <div class="container">
+                  <div class="row">
+                  <table class="table">
+                  <tr>
+                   <thead>
+                       <tr>
+                      <th>Nombre</th>
+                      <th>Monto en Atraso </th>
+                      <th>Dias de Atraso </th>
+                      <th>Acciones </th>
+                        </thead>
+                        </tr>
+
+                 
+                  <?php 
+                      $saldoPendiente = 0;
+                      
+                      while ($morosos = mysqli_fetch_array($query23)){
+                       if($morosos['ARREAR']>=0 && $morosos['LATE_DAYS']==NULL){
+                         $saldoPendiente= $saldoPendiente+ $morosos['CUOTA'];
+                         $id = $morosos['LOAN_ID'];                         
+                         $customer_id= $morosos['CUSTOMER_ID'];
+                         $idnumber = $morosos['ID_NUMBER'];
+
+
+                       }
+
+                       $countSaldos =0;
+                       if($saldoPendiente>0){
+                         $countSaldos= $countSaldos+1;
+                      ?>   
                   
 
                   <div class="container">
                   <div class="row">
-                    <div class="col"><h6>Sandra Bermudez</h6></div>
-                    <div class="col">₡ 250 000</div>
-                    <div class="w-100"></div>
-                    <div class="col"><h6>Mario Jimenezz</h6></div>
-                    <div class="col">₡ 180 000</div>
-                    <div class="w-100"></div>
-                    <div class="col"><h6>Jennifer Soto</h6></div>
-                    <div class="col">₡ 179 000</div>
-                    <div class="w-100"></div>
-                    <div class="col"><h6>Jesus Lopez</h6></div>
-                    <div class="col">₡ 175 000</div>
-                    <div class="w-100"></div>
-                    <div class="col"><h6>Fernando Gomez</h6></div>
-                    <div class="col">₡ 110 000</div>  
+                 
+                     
+                     <tbody>
                     
-                  </div>
+                       <td>
+                    
+                       <?php
+                       
+                       
+                        echo $morosos['FIRST_NAME'], ' ',$morosos['LAST_NAME'], ' ',$morosos['SECOND_LAST_NAME']
+                         ?>
 
+                      
+                      
+                       
+                       </td>
+                       <td><?php echo number_format( $saldoPendiente,2)?></td>
+
+                       <td><?php echo number_format( $morosos['ARREAR'])?></td>
+                       <?php
+                    
+                      
+                      }
+                      
+                     ?>
+
+                    <td><?php echo "<a href='prestamosdetalle.php?LOAN_ID=$id&ID_NUMBER=$idnumber&CUSTOMER_ID=$customer_id&LOANID=$id'>Ver Detalles</a>"?></td>
+                       </tr>
+                     
+                     
+                     </tbody>
+       
+         
+        
+
+                   <?php } ?>  
+                    <?php 
+
+                    ini_set( "display_errors", 0); 
+                     if($countSaldos==0){
+                      echo "No hay saldos pendientes a la fecha";
+                    }
+                    ?>
+                    </table> 
+                  </div>
+</div>
                   
                 </div><br>
-                <div class="col">
-                          <h5><a href="nuevoPrestamo.php" class="btn btn-primary">Ver Carteras</a></h5>
-                        </div>
-                </div>
-              </div>
-
-              
-              <div class="card">
-                <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-                <div class="card-body">
-                  <h5 class="card-title"> Recordatorios</h5> <hr>
-                  <h5>Llamar a Sandra Bermudez para cobro de cuota </h5> <hr>
-                  <h5>Coordinar Arreglo de pago con Mario Jimenez</h5> <hr>
-                  <h5>Enviar balance a Jesus Lopez</h5><br><hr>
-                  
-
-                  <div class="container">
-                      <div class="row">
-                        <div class="col-lg">
-                          <h5><a href="#" class="btn btn-primary">Ver Recordatorios</a></h5>
-                          
-                        
-                        
-                      </div>
-                    </div>
-                  
-                  
                 
-                  
-                </div>
-              </div>
-            </div>  
-  </div><br><hr>
-
+               
+                
   <!-- MAnipulacion de los graficos        -->
   <script>
             new Chart(document.getElementById("line-chart"), {
@@ -584,34 +692,41 @@ BLOQUE DE COBRADORES -->
               });
             </script>
 
+</div>
 
- 
 
  
 
 <!-- < -->
 
-<div class="container">
-
-</div>
-      
-<div class="container">
-  <div class="row">
-    <div class="col">
-          
-
-
-    </div>
-    
-  </div>
   
-</div>
 
 
 
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/pooper.js/1.14.7/umd/pooper.min.js" ></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"></script>
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/js/dataTables.bootstrap4.min.js" integrity="sha512-T970v+zvIZu3UugrSpRoyYt0K0VknTDg2G0/hH7ZmeNjMAfymSRoY+CajxepI0k6VMFBXxgsBhk4W2r7NFg6ag==" crossorigin="anonymous"></script>
+      <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.js"></script>
+      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css"/>
 
+      <script src="juliojs.js"></script>
 
+      <script>
+      $('.myDataTable').DataTable({
+          order:[[5,"desc"]],
+          pagingType:'full_numbers'
+          
+      }); 
+  </script>
+    </div> </div> 
+    
 
+   
+                <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+                <div class="card-body">
 
               <h1>Prestamos</h1><hr>
 
@@ -636,7 +751,7 @@ BLOQUE DE COBRADORES -->
         <th>Pago Solo Intereses </th>
         <th>Pago Amortizacion </th>
         <th>Analista </th>
-        <th>Dias de Atraso </th>
+        
         <th>Total Atraso </th>
         
         <th>Acciones </th>
@@ -659,18 +774,15 @@ BLOQUE DE COBRADORES -->
 <tr>
     <td><?php echo $datos['FIRST_NAME'], ' ', $datos['LAST_NAME']. ' ', $datos['SECOND_LAST_NAME']  ?></td>
     <td><?php echo $datos['ID_NUMBER']?></td>
-    <td><?php echo $datos['LOAN_AMOUNT']?></td>
+    <td><?php echo number_format( $datos['LOAN_AMOUNT'])?></td>
     <td><?php echo $datos['LOAN_ID']?></td>
     <td><?php echo $datos['STAR_DATE']?></td>
-    <td><?php echo $datos['MONTO_CUOTA_TOTAL']?></td>
-    <td><?php echo $datos['MONTO_SOLO_INTERESES']?></td> 
-    <td><?php echo  $datos['MONTO_CUOTA_TOTAL']-$datos['MONTO_SOLO_INTERESES']?></td>                  
+    <td><?php echo number_format( $datos['MONTO_CUOTA_TOTAL'])?></td>
+    <td><?php echo number_format($datos['MONTO_SOLO_INTERESES'])?></td> 
+    <td><?php echo number_format ( $datos['MONTO_CUOTA_TOTAL']-$datos['MONTO_SOLO_INTERESES'])?></td>                  
     <td><?php echo $datos['USER_CLIENTE_ID']?></td>
     
-    <td>
-    <?php echo $datos['ARREAR']?>
     
-    </td>
     <td>
     <?php   
         
@@ -709,36 +821,18 @@ BLOQUE DE COBRADORES -->
 
 
 </tbody>
-            </div>
-
-        </div>
-      </div>
+           
       
         
+    
+
+
+              
+              
           
-    
-
-
-
-
-    
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/pooper.js/1.14.7/umd/pooper.min.js" ></script>
-      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"></script>
-    
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/js/dataTables.bootstrap4.min.js" integrity="sha512-T970v+zvIZu3UugrSpRoyYt0K0VknTDg2G0/hH7ZmeNjMAfymSRoY+CajxepI0k6VMFBXxgsBhk4W2r7NFg6ag==" crossorigin="anonymous"></script>
-      <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.js"></script>
-      <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css"/>
-
-      <script src="juliojs.js"></script>
-
-      <script>
-      $('.myDataTable').DataTable({
-          order:[[5,"desc"]],
-          pagingType:'full_numbers'
-          
-      }); 
-  </script>
-    
+         
+           
+  </div><br>
+</div>
     </body>
   </html>

@@ -4,11 +4,30 @@
   <?php 
   include  ('conexion.php');
 
+  session_start();  
+  $varsession = $_SESSION['emailsess'];
+
+  
+  
+
+  $querySes = mysqli_query($conn, "SELECT `idUSERS`, `ID_NUMBER`, `FIRST_NAME`, `LAST_NAME`, `SECOND_LAST_NAME`, `USER_USER`, `PHONE_NUMBER`, `EMAIL_NUMBER`, `DATE_OF_BIRTH`, `AGE`, `JOB`, `USER_PASSWORD`
+   FROM `users` WHERE EMAIL_NUMBER = '$varsession'");
+  $rowses = mysqli_fetch_array($querySes);
+  $nombrein = $rowses['FIRST_NAME'];
+ 
+ 
+  if ($varsession == NULL || $varsession = ""){
+    header("LOCATION: nuevo.php")
+    ;
+    die();
+
+  }
+
  
   $query3 = mysqli_query($conn, " SELECT customers.FIRST_NAME, customers.LAST_NAME, customers.SECOND_LAST_NAME, customers.ID_NUMBER, customers.CUSTOMER_ID,
-  loans.LOAN_ID, loans.STAR_DATE, loans.MONTO_CUOTA_TOTAL, loans.LOAN_AMOUNT, loans.MONTO_SOLO_INTERESES,loans.USER_CLIENTE_ID
+  loans.LOAN_ID, loans.STAR_DATE, loans.MONTO_CUOTA_TOTAL, sum(LOAN_AMOUNT), loans.MONTO_SOLO_INTERESES,loans.USER_CLIENTE_ID
     FROM customers AS customers
-  INNER JOIN loans AS loans ON customers.CUSTOMER_ID = loans.CUSTOMER_ID");
+  INNER JOIN loans AS loans ON customers.CUSTOMER_ID = loans.CUSTOMER_ID GROUP BY CUSTOMER_ID");
   
   
   ?>
@@ -31,11 +50,36 @@
           
     </head>
     <body>
+    <div class= "wrapper " >
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" style="height: 50px;color:#222831; ">
+    <a href="#" class="navbar-brand">Master Loan</a>
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarCollapse" >
+        <div class="navbar-nav">
+            <a href="#" class="nav-item nav-link active"></a>
+            <a href="#" class="nav-item nav-link"></a>
+            <a href="#" class="nav-item nav-link"></a>
+            <a href="#" class="nav-item nav-link disabled" tabindex="-1"></a>
+        </div>
+        <div class="navbar-nav ml-auto">
+            <a href="#" class="nav-item nav-link">Bienvenido <?php echo $nombrein?></a> <h2 >|</h2>
+            <a href="../masterlender/nuevoPrestamo.php" class="nav-item nav-link">Nuevo Credito </a> 
+            <a href="../masterlender/nuevoCliente.php" class="nav-item nav-link">Nuevo Cliente </a> 
+            <a href="../masterlender/cerrasesion.php" class="nav-item nav-link">Cerrar Sesion </a> 
+        </div>
+    </div>
+</nav>
+</div>
       
-      <div class="wrapper d-flex align-items-stretch" >
-        <nav id="sidebar" class="active " style="background-color:#222831" >
-          <h1><a href="index.html" class="logo">ML</a></h1>
+      <div class="wrapper d-flex align-items-stretch" style="margin-top:50px">
+        <nav id="sidebar" class="active " style="background-color:#343a40" >
+         
           <ul class="list-unstyled components mb-5"  style=" position: fixed">
+
+          <h1><a href="index.html" class="logo">ML</a></h1>
             <li class="active" >
               <a href="dashboard.php"><span class="fa fa-home"></span> Dashboard</a>
             </li>
@@ -138,12 +182,12 @@
               <tr>
                   <td><?php echo $datos['FIRST_NAME'], ' ', $datos['LAST_NAME']. ' ', $datos['SECOND_LAST_NAME']  ?></td>
                   <td><?php echo $datos['ID_NUMBER']?></td>
-                  <td><?php echo $datos['LOAN_AMOUNT']?></td>
+                  <td><?php echo number_format( $datos['sum(LOAN_AMOUNT)'])?></td>
                   <td><?php echo $datos['LOAN_ID']?></td>
                   <td><?php echo $datos['STAR_DATE']?></td>
-                  <td><?php echo $datos['MONTO_CUOTA_TOTAL']?></td>
-                  <td><?php echo $datos['MONTO_SOLO_INTERESES']?></td> 
-                  <td><?php echo  $datos['MONTO_CUOTA_TOTAL']-$datos['MONTO_SOLO_INTERESES']?></td>                  
+                  <td><?php echo number_format( $datos['MONTO_CUOTA_TOTAL'])?></td>
+                  <td><?php echo number_format($datos['MONTO_SOLO_INTERESES'])?></td> 
+                  <td><?php echo  number_format($datos['MONTO_CUOTA_TOTAL']-$datos['MONTO_SOLO_INTERESES'])?></td>                  
                   <td><?php echo $datos['USER_CLIENTE_ID']?></td>
                   
                   <td>0</td>

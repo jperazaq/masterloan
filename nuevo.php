@@ -7,7 +7,11 @@
 </head>
 <body>
     
+<h4>
 
+    USUARIO NO AUTORIZADO <br> 
+    <small>Por favor <a href="http://localhost:8080/masterLoan/masterlender/index.php">ingrese aqui</a> a su cuenta</small>
+</h4>
 
 
 <p id="canton"></p>

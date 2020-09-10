@@ -49,13 +49,36 @@ $query2 = mysqli_query($conn, "SELECT * FROM  users");
 
 <body>
 
+< <div class= "wrapper " >
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" style="height: 50px; background-color:#222831; ">
+    <a href="#" class="navbar-brand">Master Loan</a>
+    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
+    <div class="collapse navbar-collapse" id="navbarCollapse" >
+        <div class="navbar-nav">
+            <a href="#" class="nav-item nav-link active"></a>
+            <a href="#" class="nav-item nav-link"></a>
+            <a href="#" class="nav-item nav-link"></a>
+            <a href="#" class="nav-item nav-link disabled" tabindex="-1"></a>
+        </div>
+        <div class="navbar-nav ml-auto">
+            <a href="#" class="nav-item nav-link">Bienvenido <?php echo $nombrein?></a> <h2 >|</h2>
+            <a href="../masterlender/nuevoPrestamo.php" class="nav-item nav-link">Nuevo Credito </a> 
+            <a href="../masterlender/nuevoCliente.php" class="nav-item nav-link">Nuevo Cliente </a> 
+            <a href="../masterlender/cerrasesion.php" class="nav-item nav-link">Cerrar Sesion </a> 
+        </div>
+    </div>
+</nav>
+</div>
 
       
       <div class="wrapper d-flex align-items-stretch"    >
-        <nav id="sidebar" class="active " style="background-color:#222831" >
-          <h1><a href="index.html" class="logo">ML</a></h1>
+        <nav id="sidebar" class="active " style="background-color:#343a40; margin-top:25px" >
+          
           <ul class="list-unstyled components mb-5"  style=" position: fixed">
+          <h1><a href="index.html" class="logo">ML</a></h1>
             <li class="active" >
               <a href="dashboard.php"><span class="fa fa-home"></span> Dashboard</a>
             </li>

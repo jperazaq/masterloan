@@ -2,8 +2,10 @@
 
 include ("conexion.php");
 
-      error_reporting(E_ALL ^ E_NOTICE);
-      ini_set('error_reporting', E_ALL ^ E_NOTICE);
+ini_set( "display_errors", 0); 
+
+error_reporting(E_ALL ^ E_NOTICE);
+ini_set('error_reporting', E_ALL ^ E_NOTICE);
     
 
 if(isset($_POST['guardarUsuario'])){
