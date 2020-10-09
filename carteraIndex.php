@@ -4,7 +4,7 @@
     <?php
     include  ('conexion.php');
     include  ('enviarPago.php');
-    include  ('enviarComentarioCliente.php');
+    include  ('enviarCartera.php');
 
     session_start();  
     $varsession = $_SESSION['emailsess'];
@@ -145,7 +145,7 @@
 
     ?>
 <head>
-    <title> Cobros <?php    
+    <title> Cartera <?php    
 
 while($datos = mysqli_fetch_array($query31)){  
   ?>
@@ -166,6 +166,7 @@ while($datos = mysqli_fetch_array($query31)){
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/botones.css">
     <link rel="stylesheet" href="css/styleTable.css">
 
 
@@ -251,9 +252,8 @@ while($datos = mysqli_fetch_array($query31)){
     <div class="container col-lg-12">
     <div class="row">
     <div class="col-sm">
-    <h1>Cobros</h1><hr>
-    <a href="nuevoUsuario.php" class="btn btn-primary">Crear Cobrador</a>
-    </div>
+    <h1>Carteras</h1><hr>
+    
     
 
 
@@ -268,232 +268,12 @@ while($datos = mysqli_fetch_array($query31)){
 
 <!-- 
 MODAL DE PAGO -->
-   
-    <div class="modal fade exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-        
-        <form action="" method='post'>
-        <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Registrar Pago  </h5>
-        </div>
-        <div class="modal-body">
-        
 
-        <?php 
-    while($datos6 = mysqli_fetch_array($query6)){  
-      $idCliente= $datos6['CUSTOMER_ID'];
-      ?>
-
-<div class="form-group row">
-                <label for="inputPassword3" class="col-sm-2 col-form-label">ID Cliente</label>
-                <div class="col-lg-10">
-
-                <label for="<?php $datos6['CUSTOMER_ID'] ?>" type="text" class="col-sm-2 col-form-label" id="idCliente" name="idCliente" ><?php echo $datos6['CUSTOMER_ID'] ?></label>
-                
-                </div>
-
-                <label for="customerCedula" class="col-sm-2 col-form-label">Cedula</label>
-                <div class="col-lg-10">
-
-                <label for="text  " class="col-sm-2 col-form-label " style ="size:100%"><?php echo $datos6['ID_NUMBER'] ?></label>
-                
-                </div>
-        </div>
-
-       
-    <?php }?>
-         
-
-        <div class="form-group row">
-                                <label for="inputPassword3" class="col-sm-2 col-form-label">Credito</label>
-                                <div class="col-sm-10">                                
-
-                                <select  class="custom-select my-1 mr-sm-2" id="prestamo1" name="prestamo1" required>
-                                    <option selected>Seleccione...</option>
-                                    <?php 
-                                      while($datos = mysqli_fetch_array($query5)){                                    
-                                    ?>
-                                    <option value="<?php echo $datos['LOAN_ID']?>"> <?php echo $datos['LOAN_ID'] ?> </option>
-                                    <?php 
-                                      }
-                                    ?>
-                                       
-                                </select>                           
-                                     
-                            </div>         
-          </div>
-
-          <div class="form-group row">
-                                <label for="inputPassword3" class="col-sm-2 col-form-label">Aplicar a Cuota</label>
-                                <div class="col-sm-10">                                
-
-                                <select  class="custom-select my-1 mr-sm-2" id="prestamoCuota" name="prestamo" required>
-                                    <option selected>Seleccione...</option>
-                                    <?php 
-                                      while($datos9 = mysqli_fetch_array($query9)){                                    
-                                    ?>
-                                    <option value="<?php echo $datos9['AMORT_TABLE_ID']?>"> <?php echo "Prestamo",' ', $datos9['LOAN_ID'],' ', "Num Cuota", ' ', $datos9['NUM_PAGO']   ?> </option>
-                                    <?php 
-                                      }
-                                    ?>
-                                       
-                                </select>                           
-                                     
-                            </div>         
-          </div>
-
-
-
-          <div class="form-group row">
-                                <label for="inputPassword3" class="col-sm-2 col-form-label">Metodo de Pago</label>
-                                <div class="col-sm-10">                                
-
-                                <select  class="custom-select my-1 mr-sm-2" id="metodo" name="metodo" required>
-                                    <option selected>Seleccione...</option>
-                                    <option value="efectivo">Efectivo</option>
-                                    <option value="transferencia_bancaria" >Transferencia Bancaria</option>
-                                    <option value="otro">Otro</option>
-
-                                    
-                                       
-                                </select>                           
-                                     
-                            </div>         
-          </div>
-        <div class="form-group row">
-                <label for="inputPassword3" class="col-sm-2 col-form-label">Monto del Pago</label>
-                <div class="col-sm-10">
-                <input type="text" class="form-control" id="montoPrestamo" name= "montoPago" placeholder=" Ejemplo: 250,000" required>
-                </div>
-        </div>
-
-        <div class="form-group row">
-                <label for="inputPassword3" class="col-sm-2 col-form-label">Banco</label>
-                <div class="col-sm-10">
-                <input type="text" class="form-control" id="montoPrestamo" name= "banco" placeholder=" Ejemplo: BAC, Banco Nacional, BCR" required>
-                </div>
-        </div>
-
-        <div class="form-group row">
-                <label for="inputPassword3" class="col-sm-2 col-form-label">Numero de Recibo</label>
-                <div class="col-sm-10">
-                <input type="text" class="form-control" id="montoPrestamo" name= "numRecibo" placeholder=" Ejemplo: 256352 " required>
-                </div>
-        </div>
-
-        <div class="form-group row">
-                <label for="inputPassword3" class="col-sm-2 col-form-label">Fecha</label>
-                <div class="col-sm-10">
-                <input type="date" class="form-control" id="fecha_pago" name= "fecha_pago" placeholder="  " required>
-                </div>
-        </div>
-        
-
-        <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-        <button type="submit" class="btn btn-primary"id="guardarPago" name="guardarPago">Registrar Pago</button>
-
-        </div>
-        </form>
-    </div>
-        </div>
-      </div>
-    </div>
-
-    
-    </div>
-    </div>
-    </div>
     </div><br>
 
 
 
-    </div>
-
-
-
-    <head>
   
-
-    </head>    
-
-
-    <table class="table table-striped table-bordered myDataTable " style="width:100%; text-align:center" >
-    
-    <thead class= "thead-dark">
-                  <tr>
-                      <th colspan="1" rowspan="2">Nombre</th>
-                     
-
-                  </tr>
-                  <tr>
-                      
-                      <th>Cedula</th>
-                      <th>Monto del Prestamo </th>
-                      <th>Prestamo ID </th>
-                      <th>Fecha de Pago </th>
-                      <th>Pago mensual </th>
-                      <th>Numero de Cuota</th>
-                      <th>Dias de Atraso</th>
-                      <th>Monto en Atraso </th>
-                     
-                      
-                      <th>Acciones </th>
-
-                      
-
-                      
-                  </tr>
-                  
-              </thead>
-                  
-              <tbody>
-              <?php 
-                  while($datos = mysqli_fetch_array($query22)){   
-                   $customer_id= $datos['CUSTOMER_ID'];
-                   $id = $datos['LOAN_ID'];
-                   $idnumber=$datos['ID_NUMBER']
-                                             
-                ?>
-              <tr>
-                  <td><?php echo $datos['FIRST_NAME'], ' ', $datos['LAST_NAME']. ' ', $datos['SECOND_LAST_NAME']  ?></td>
-                  <td><?php echo $datos['ID_NUMBER']?></td>
-                  <td><?php echo number_format($datos['LOAN_AMOUNT'],2)?></td>
-                  <td><?php echo $datos['LOAN_ID']?></td>
-                  <td><?php echo $datos['PAYMENT_DATE']?></td>
-                  <td><?php echo number_format($datos['CUOTA'],2)?></td>
-                  <td><?php echo $datos['NUM_PAGO']?></td> 
-                  <td><?php echo $datos['ARREAR']?></td>                  
-                  <td><?php echo number_format ($datos['CUOTA']-$datos['PAYMENT_AMOUNT'],2)?></td>
-                  
-                 
-        
-
-                  <td><?php echo "<a href='prestamosdetalle.php?LOAN_ID=$id&ID_NUMBER=$idnumber&CUSTOMER_ID=$customer_id&LOANID=$id'>Ver Detalles</a>"?></td>
-                  
-                  
-                    <?php 
-                  }
-                ?>
-                 
-                  
-                  
-              </tr>
-             
-             </td>
-             
-
-
-              
-              </tbody>
-
-    </table>
-    </div>
-
-    </div>
-    </div> <hr>
-
 
 
 
@@ -505,9 +285,17 @@ MODAL DE PAGO -->
     
   </div>
 </div> 
-
+</div>
   
+<div class="container"style="display:flex;">
+<div class="btn-group btn-group-center" style="margin-left:auto; margin-right:auto; ">
+  <a href='nuevaCartera.php' class="botonNuevaCartera" style="margin:30px;">Crear Cartera</a>
+  <a href='consultaCartera.php'  class="botonNuevaCartera" style="margin:30px;">Consultar cartera</a>
+ 
 
+</div>
+
+</div>
 
 
 

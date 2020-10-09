@@ -11,6 +11,7 @@ include  ('enviarTablaDinamica.php');
 include  ('conexion.php');
 $query = mysqli_query($conn, "SELECT * FROM  customers");
 $query2 = mysqli_query($conn, "SELECT * FROM  users");
+$query3 = mysqli_query($conn, "SELECT * FROM  carteras");
 
 
 ?>
@@ -36,7 +37,8 @@ $query2 = mysqli_query($conn, "SELECT * FROM  users");
 
           
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/4.5.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
@@ -90,6 +92,10 @@ $query2 = mysqli_query($conn, "SELECT * FROM  users");
             </li>
             <li>
               <a href="cobros.php"><span class="fa fa-money"></span> Cobros</a>
+            </li>
+
+            <li>
+              <a href="cobros.php"><span class="fa fa-suitcase"></span> Cartera</a>
             </li>
             <li>
               <a href="perfil.php"><span class="fa fa-address-card-o"></span> Perfil</a>
@@ -190,7 +196,36 @@ $query2 = mysqli_query($conn, "SELECT * FROM  users");
                             </div>         
                         </div>
 
+                        <div class="form-group row">
+                                <label for="inputPassword3" class="col-sm-2 col-form-label">Cartera</label>
+                                <div class="col-sm-10">
+
+                                
+
+                                <select  class="custom-select my-1 mr-sm-2" id="cartera" name="cartera" required>
+                                    <option selected>Seleccione...</option>
+                                    <?php 
+                                      while($datos3 = mysqli_fetch_array($query3)){                                    
+                                    ?>
+                                    <option value="<?php echo $datos3['CARTERA_ID']?>"> Codigo: <?php echo  $datos3['CARTERA_ID'] ?> </option>
+                                    <?php 
+                                      }
+                                    ?>
+                                       
+                                </select>                             
+                                     
+                                                                
+                               
+                            </div>         
+                        </div>
                         
+
+                        <div class="form-group row">
+                <label for="inputPassword3" class="col-sm-2 col-form-label">Tasa de Multa</label>
+                <div class="col-sm-10">
+                <input type="text" class="form-control" id="multa" name= "multa" placeholder=" Ejemplo: 3% " required>
+                </div>
+            </div>
 
                 <div class="form-group row">
                 <label for="inputPassword3" class="col-sm-2 col-form-label">Tipo de cuota</label>
@@ -211,7 +246,7 @@ $query2 = mysqli_query($conn, "SELECT * FROM  users");
 
                   <div class="form-check" >
                     <input class="form-check-input" type="radio" name="radioCuota" id="tipoCuota" value="cuota_plana"required>
-                    <label class="form-check-label" for="exampleRadios2"  >
+                    <label class="form-check-label" for="exampleRadios3"  >
                       Cuota Plana
                     </label><br>
                     <small>Monto principal entre el periodo del prestamo mas el monto de interes mensual calculado sobre el principal</small>
@@ -271,8 +306,9 @@ $query2 = mysqli_query($conn, "SELECT * FROM  users");
           <div class="button-box col-lg-12" margin=12px>
               <button type=""  class="btn btn-primary" data-target="#exampleModal" data-toggle="modal" >Guardar Credito</button>
               <button type="" id= "calcular1" class="btn btn-primary">Calcular</button>
-              </div>
-            <p id="pagoAlMes"></p>
+          </div>
+<br>
+            
             <div class="card">
                 <div class="card-header">
                 <h5 class="card-title"> Resumen del credito</h5> 
@@ -324,40 +360,40 @@ $query2 = mysqli_query($conn, "SELECT * FROM  users");
             
         <div>
     </div><hr>
-               
-
-    <!-- Tabla de amortizacion -->
+           <div>    
+<!-- 
+    Tabla de amortizacion -->
     <div class="col-xs-12">
     <div class="text-center" style="position:center  ">
-    <h2>Cuadro de Amortizacion</h2>
-    <h5>En caso de que el cliente solo cancele los intereses, favor referirse al resumen de credito "Cuota Solo Intereses"</h5>
+    <!-- <h2>Cuadro de Amortizacion</h2>
+    <h5>En caso de que el cliente solo cancele los intereses, favor referirse al resumen de credito "Cuota Solo Intereses"</h5> -->
     </div>
     </div>
-    <form id="tablaPrestamo" name="tablaPrestamo">
+    <!-- <form id="tablaPrestamo" name="tablaPrestamo"> -->
     <table id ='lista-tabla' name="tablaPrestamo" class="table table-striped table-bordered myDataTable " style="width:100%; text-align:center" >
-              <thead class= "thead-dark">
+              <thead class= "">
                   <tr>
                                   
                       
                       
-                      <th>Fecha de Pago </th>
+                      <!-- <th>Fecha de Pago </th>
                       <th>Cuota </th>
                       <th>Capital </th>
                       <th>Interes </th>
-                      <th>Saldo</th>
+                      <th>Saldo</th> -->
                              
                    </tr>
                   
               </thead>
-                  
-              <tbody></tbody>           
+               
+              <tbody></tbody>            
             
             
 
             
             
-             
-            </form>
+<!--              
+            </form> -->
             </div>   
               
               
@@ -368,17 +404,17 @@ $query2 = mysqli_query($conn, "SELECT * FROM  users");
             </div>
 
         </div>
-      </div>  
+      </div>   
   </div>
 </div>
 
+<script src="juliojs.js?n=1"></script>
 
 
 
+<script language="JavaScript" src="moment.js"></script>
 
-<script src="moment.js"></script>
 
-<script src="juliojs.js"></script>
 
     
     </body>

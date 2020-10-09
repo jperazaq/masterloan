@@ -25,6 +25,9 @@ if (isset($_POST['guardar'])){
     $radioMonedaSim = $_POST['radioMoneda']; 
     $clienteIDNumber = $_POST['clienteId'];
     $seGuarda= true;
+    $carteraID = $_POST['cartera'];
+    $multa = $_POST['multa'];
+
     
    
 };
@@ -34,6 +37,7 @@ if (isset($_POST['guardar'])){
 
 $montoCuota = $prestamo*((($tasaInt/100)*(pow((1+$tasaInt/100),$periodoMeses)))/(pow(1+($tasaInt/100),$periodoMeses)-1));
 $pagoInt = $prestamo*($tasaInt/100);
+$pagoInt1 = $prestamo*($tasaInt/100);
 $fechaFinal =date ('Y-m-d',strtotime($openDate."$periodoMeses month"));
 $cuotaPlana = ($prestamo/$periodoMeses)+($prestamo*($tasaInt/100));
 $intPlano= $prestamo*($tasaInt/100);
@@ -42,22 +46,22 @@ $amortPlano = $prestamo/$periodoMeses;
 
 if($seGuarda){
 if($radioCuotaMonto == "cuota_completa"){
-$sql = "INSERT INTO loans ( LOAN_AMOUNT, INTEREST_RATE, NET_TERMS,TIPO_DE_CUOTA, MONEDA,MONTO_CUOTA_TOTAL,MONTO_SOLO_INTERESES, STAR_DATE,END_DATE,USER_CLIENTE_ID, CUSTOMER_ID)
-VALUES ('$prestamo', '$tasaInt','$periodoMeses','$radioCuotaMonto','$radioMonedaSim','$montoCuota','$pagoInt','$openDate','$fechaFinal','$cobradorClienteAcargo','$clienteIDNumber')";
+$sql = "INSERT INTO loans ( LOAN_AMOUNT, INTEREST_RATE, NET_TERMS,TIPO_DE_CUOTA,MULTA, MONEDA,MONTO_CUOTA_TOTAL,MONTO_SOLO_INTERESES, STAR_DATE,END_DATE,USER_CLIENTE_ID, ID_CARTERA, CUSTOMER_ID)
+VALUES ('$prestamo', '$tasaInt','$periodoMeses','$radioCuotaMonto','$multa','$radioMonedaSim','$montoCuota','$pagoInt','$openDate','$fechaFinal','$cobradorClienteAcargo','$CARTERA_ID','$clienteIDNumber')";
 
-$sqlAmort= "INSERT INTO amortization (TODAY) VALUES ('$openDate')";
+$sqlAmort= mysqli_query("INSERT INTO amortization (TODAY) VALUES ('$openDate')");
  
  
 }
 
-elseif($radioCuotaMonto="cuota_plana"){
-    $sql = "INSERT INTO loans ( LOAN_AMOUNT, INTEREST_RATE, NET_TERMS,TIPO_DE_CUOTA, MONEDA,MONTO_CUOTA_TOTAL,MONTO_AMORTIZACION,MONTO_SOLO_INTERESES, STAR_DATE,END_DATE,USER_CLIENTE_ID, CUSTOMER_ID)
-VALUES                       ('$prestamo', '$tasaInt','$periodoMeses','$radioCuotaMonto','$radioMonedaSim','$cuotaPlana','$amortPlano','$intPlano','$openDate','$fechaFinal','$cobradorClienteAcargo','$clienteIDNumber')";
+elseif($radioCuotaMonto == "cuota_plana"){
+    $sql = "INSERT INTO loans ( LOAN_AMOUNT, INTEREST_RATE, NET_TERMS,TIPO_DE_CUOTA,MULTA, MONEDA,MONTO_CUOTA_TOTAL,MONTO_SOLO_INTERESES,MONTO_AMORTIZACION, STAR_DATE,END_DATE,USER_CLIENTE_ID,ID_CARTERA, CUSTOMER_ID)
+VALUES ('$prestamo', '$tasaInt','$periodoMeses','$radioCuotaMonto','$multa','$radioMonedaSim','$cuotaPlana','$amortPlano','$intPlano','$openDate','$fechaFinal','$cobradorClienteAcargo', '$carteraID','$clienteIDNumber')";
 $sqlAmort= "INSERT INTO amortization (TODAY) VALUES ('$openDate')";
 }
-else{
-$sql = "INSERT INTO loans ( LOAN_AMOUNT, INTEREST_RATE, NET_TERMS,TIPO_DE_CUOTA, MONEDA,MONTO_SOLO_INTERESES, STAR_DATE,END_DATE,USER_CLIENTE_ID, CUSTOMER_ID)
-VALUES ('$prestamo', '$tasaInt','$periodoMeses','$radioCuotaMonto','$radioMonedaSim','$pagoInt','$openDate','$fechaFinal','$cobradorClienteAcargo','$clienteIDNumber')";
+elseif($radioCuotaMonto == "cuotaSoloIntereses"){
+$sql = "INSERT INTO loans ( LOAN_AMOUNT, INTEREST_RATE, NET_TERMS,TIPO_DE_CUOTA,MULTA, MONEDA,MONTO_CUOTA_TOTAL,MONTO_SOLO_INTERESES, STAR_DATE,END_DATE,USER_CLIENTE_ID,ID_CARTERA, CUSTOMER_ID)
+VALUES ('$prestamo', '$tasaInt','$periodoMeses','$radioCuotaMonto', '$multa','$radioMonedaSim','$pagoInt1','$pagoInt','$openDate','$fechaFinal','$cobradorClienteAcargo','$carteraID','$clienteIDNumber')";
 
 $sqlAmort= "INSERT INTO amortization (TODAY) VALUES ('$openDate')";
 
@@ -83,6 +87,22 @@ if(mysqli_query($conn, $sql)){
        
     }   
     ;
+
+
+    if(mysqli_query($conn, $sqlAmort)){      
+
+        $latest_id = $conn->insert_id; 
+    
+         
+    
+        echo "<script>window.alert('Registro Satisfactorio en la Base de datos!');
+        </script>";  
+      
+        
+    } else{
+           
+        }   
+        ;
 
     ini_set( "display_errors", 0); 
    

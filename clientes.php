@@ -32,7 +32,7 @@
   
   ?>
     <head>
-      <title>Sidebar 07</title>
+      <title>Clientes</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -91,6 +91,9 @@
             </li>
             <li>
               <a href="cobros.php"><span class="fa fa-money"></span> Cobros</a>
+            </li>
+            <li>
+              <a href="cobros.php"><span class="fa fa-suitcase"></span> Cartera</a>
             </li>
             <li>
               <a href="perfil.php"><span class="fa fa-address-card-o"></span> Perfil</a>

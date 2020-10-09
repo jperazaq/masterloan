@@ -53,7 +53,7 @@
 
     $query11 = mysqli_query($conn, "SELECT sum(MONTO_CUOTA_TOTAL) FROM  loans WHERE CUSTOMER_ID = $customers_id");
 
-    $query12 = mysqli_query($conn, "SELECT sum(PAYMENT_AMOUNT) FROM  amortization WHERE CUSTOMER_ID = $customers_id");
+    $query12 = mysqli_query($conn, "SELECT sum(AMORTIZACION_PAGADA) FROM  amortization WHERE CUSTOMER_ID = $customers_id");
     
     $query13= mysqli_query($conn, "SELECT * FROM  amortization WHERE CUSTOMER_ID = $customer_id");
 
@@ -114,7 +114,7 @@
     $prestamosActivos = $row['count(*)'];
     $monto= $row1['sum(LOAN_AMOUNT)'];
     $cuota= $row2['sum(MONTO_CUOTA_TOTAL)'];
-    $pagado= $row3['sum(PAYMENT_AMOUNT)'];
+    $pagado= $row3['sum(AMORTIZATION)'];
     $promDias= $row5['AVG(LATE_DAYS)'];
     $totalpago= mysqli_fetch_array($query7);
     $totalPagado= $totalpago['sum(PAYMENT_AMOUNT)'];
@@ -129,9 +129,11 @@
 
 
    
-    $saldoTotalPrestamos= $monto-$pagado;
+    $saldoTotalPrestamos= $monto-$pagado;//buscar el monto de amortizacion de este prestamo y restarlo
     $today= date('Y-m-d');
    
+
+    //Actualiza al dia de hoy para calculo de arrear
     for($i = 0;$i<$cuenta;$i++){
       $now= date('Y-m-d');
     $fechaDeHoy= "UPDATE amortization SET TODAY = '$now'  WHERE CUSTOMER_ID = $customers_id";
@@ -275,6 +277,9 @@ while($datos = mysqli_fetch_array($query31)){
     </li>
     <li>
     <a href="cobros.php"><span class="fa fa-money"></span> Cobros</a>
+    </li>
+    <li>
+    <a href="cobros.php"><span class="fa fa-suitcase"></span> Cartera</a>
     </li>
     <li>
     <a href="perfil.php"><span class="fa fa-address-card-o"></span> Perfil</a>
@@ -882,6 +887,8 @@ MODAL DE PAGO -->
         }
         
         echo number_format($lateAmount1,2);
+        $now= date('Y-m-d');
+    $fechaDeHoy= "UPDATE amortization SET TODAY = '$now'  WHERE CUSTOMER_ID = $customers_id";
 
 ?>
                   

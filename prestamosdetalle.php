@@ -53,7 +53,7 @@
 
     $query11 = mysqli_query($conn, "SELECT sum(MONTO_CUOTA_TOTAL) FROM  loans WHERE LOAN_ID = $loan_id");
 
-    $query12 = mysqli_query($conn, "SELECT sum(PAYMENT_AMOUNT) FROM  amortization WHERE LOAN_ID = $loan_id");
+    $query12 = mysqli_query($conn, "SELECT sum(AMORTIZACION_PAGADA) FROM  amortization WHERE LOAN_ID = $loan_id");
     
     $query13= mysqli_query($conn, "SELECT * FROM  amortization WHERE CUSTOMER_ID = $customer_id");
 
@@ -82,8 +82,8 @@
 
     $query24 = mysqli_query($conn,"SELECT MAX(ARREAR) FROM amortization WHERE CUSTOMER_ID = $customers_id");
     
-    $query25 = mysqli_query($conn,"SELECT payments.PAYMENT_ID, payments.CUSTOMER_ID_NUMBER, payments.PAYMENT_AMOUNT, payments.PAYMENT_DATE, payments.PAYMENT_METHOD, payments.FINANCIAL_INSTITUTION, payments.PAYMENT_REFERENCE,
-    payments.CUSTOMER_ID, amortization.PAYMENT_DATE,  amortization.ARREAR, amortization.LOAN_ID, amortization.SALDO_PAGO_ABIERTO, amortization.PAY_DATE_RECEIVED FROM payments AS payments INNER JOIN amortization AS AMORTIZATION 
+    $query25 = mysqli_query($conn,"SELECT payments.PAYMENT_ID, payments.CUSTOMER_ID_NUMBER, payments.PAYMENT_AMOUNT, payments.PAYMENT_DATE1, payments.PAYMENT_METHOD, payments.FINANCIAL_INSTITUTION, payments.PAYMENT_REFERENCE,
+    payments.CUSTOMER_ID, amortization.PAYMENT_DATE,  amortization.ARREAR, amortization.LOAN_ID, amortization.SALDO_PAGO_ABIERTO, amortization.PAY_DATE_RECEIVED, amortization.NUM_PAGO FROM payments AS payments INNER JOIN amortization AS AMORTIZATION 
     ON payments.AMORT_TABLE_ID = amortization.AMORT_TABLE_ID WHERE payments.LOAN_ID = $loan_id ");
 
     $query26 = mysqli_query($conn, "SELECT  * FROM  amortization WHERE LOAN_ID = $loan_id");
@@ -97,6 +97,11 @@
 
     $query30= mysqli_query($conn, "SELECT  * FROM  comentarios WHERE LOAN_ID = $loan_id ORDER BY TIME_STAMP DESC");
 
+    $query31 = mysqli_query($conn, "SELECT  * FROM  amortization WHERE LOAN_ID = $loan_id");
+
+    
+    $query32 = mysqli_query($conn, "SELECT sum(CUOTA) FROM  amortization WHERE LOAN_ID = $loan_id");
+
     $row = mysqli_fetch_array($query3);
     $row1 = mysqli_fetch_array($query4);
     $row2 = mysqli_fetch_array($query11);
@@ -107,10 +112,15 @@
     $row7 = mysqli_fetch_array($query20);
     $row8 = mysqli_fetch_array($query21);
     $row9 =  mysqli_fetch_array($query23);
+    $row10 =  mysqli_fetch_array($query5);
+
+    
+    $tasaMulta = $row1['MULTA'];
     $prestamosActivos = $row['count(*)'];
+    $tasaInteres = $row1['INTEREST_RATE'];
     $monto= $row1['LOAN_AMOUNT'];
     $cuota= $row2['sum(MONTO_CUOTA_TOTAL)'];
-    $pagado= $row3['sum(PAYMENT_AMOUNT)'];
+    $pagado= $row3['sum(AMORTIZACION_PAGADA)'];
     $promDias= $row5['AVG(LATE_DAYS)'];
     $totalpago= mysqli_fetch_array($query7);
     $totalPagado= $totalpago['sum(PAYMENT_AMOUNT)'];
@@ -119,29 +129,33 @@
     $totalCuota= $row7['sum(CUOTA)'];
     $amortPagada =$row8['sum(AMORTIZACION_PAGADA)'];
     $diaMayor= $row9['ARREAR'];
+    $moneda = $row1['MONEDA'];
+    $atraso= $row9['ARREAR'];
+    $montoPagado = $row9['PAYMENT_AMOUNT'];
+    $cuotaAPagar = $row9['CUOTA'];
    
   
-
+echo $cuotaAPagar;
 
 
    
     $saldoTotalPrestamos= $monto-$pagado;
     $today= date('Y-m-d');
    
-    for($i = 0;$i<$cuenta;$i++){
-      $now= date('Y-m-d');
-    $fechaDeHoy= "UPDATE amortization SET TODAY = '$now'  WHERE CUSTOMER_ID = $customers_id";
+    // for($i = 0;$i<$cuenta;$i++){
+    //   $now= date('Y-m-d');
+    // $fechaDeHoy= "UPDATE amortization SET TODAY = '$now'  WHERE CUSTOMER_ID = $customers_id";
     
-    if(mysqli_query($conn,$fechaDeHoy)){   
+    // if(mysqli_query($conn,$fechaDeHoy)){   
                             
                                    
             
-    } else{
-      echo 'ERROR: Could not able to execute $Update. ' . mysqli_error($conn,$Update);  
-        };    
+    // } else{
+    //   echo 'ERROR: Could not able to execute $Update. ' . mysqli_error($conn,$Update);  
+    //     };    
           
     
-      }
+    //   }
 
 
     for($i = 0;$i<$cuenta;$i++){
@@ -241,8 +255,9 @@
 
     <div class="wrapper d-flex align-items-stretch" >
     <nav id="sidebar" class="active " style="background-color:#343a40" >
-    <h1><a href="index.html" class="logo">ML</a></h1>
+    
     <ul class="list-unstyled components mb-5"  style=" position: fixed">
+    <h1><a href="index.html" class="logo">ML</a></h1>
     <li class="active" >
     <a href="dashboard.php"><span class="fa fa-home"></span> Dashboard</a>
     </li>
@@ -254,6 +269,10 @@
     </li>
     <li>
     <a href="cobros.php"><span class="fa fa-money"></span> Cobros</a>
+    </li>
+
+    <li>
+    <a href="cobros.php"><span class="fa fa-suitcase"></span> Cartera</a>
     </li>
     <li>
     <a href="perfil.php"><span class="fa fa-address-card-o"></span> Perfil</a>
@@ -360,10 +379,94 @@
             <h5>Monto Prestado</h5>
           </div>
           <div class="col">
-            <h5><?php echo   number_format($monto,2); ?></h5>
+            <h5><?php echo   number_format($monto,0); ?></h5>
           </div>
         </div>
       </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h5>Tasa de Interes Mensual</h5>
+          </div>
+          <div class="col">
+            <h5><?php echo   number_format($tasaInteres,0),"%"; ?></h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h5>Total Intereses Pagados</h5>
+          </div>
+          <div class="col">
+            <h5> <?php echo number_format($totalPagado-$amortPagada,0) ?></h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h5>Multa Por Atraso</h5>
+          </div>
+          <div class="col"><h5>
+            <h5><?php echo   number_format($tasaMulta,0), "%"; ?></h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h5>Multas Abiertas</h5>
+
+           
+          </div>
+          <div class="col"><h5>
+          <?php
+           $multaAPagar = 0;
+      while ($calculoMulta = mysqli_fetch_array($query23)){
+
+        
+       if($calculoMulta['ARREAR']>0){
+          $multaporcentaje = $tasaMulta/100;
+          
+          $multaAPagar =$multaAPagar+($calculoMulta['CUOTA']*$multaporcentaje);
+          
+         
+      }
+    }
+    echo $multaAPagar;
+    ?></h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h5>Total Multas Pagadas</h5>
+          </div>
+          <div class="col">
+            <h5><?php echo   number_format($monto,0); ?></h5>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h5>Amortizacion Pagada </h5>
+          </div>
+          <div class="col">
+            <h5><?php echo   number_format($pagado,0); ?></h5>
+          </div>
+        </div>
+      </div>
+
+
 
       <div class="container">
         <div class="row">
@@ -393,7 +496,7 @@
             <h5>Monto Pagado</h5>
           </div>
           <div class="col">
-            <h5><?php echo   number_format($totalPagado,2); ?></h5>
+            <h5><?php echo   number_format($totalPagado,0); ?></h5>
           </div>
         </div>
       </div>
@@ -407,7 +510,7 @@
             <h5>Total Cuota</h5>
           </div>
           <div class="col">
-            <h5><?php echo number_format($cuota ,2) ?></h5>
+            <h5><?php echo number_format($cuota ,0) ?></h5>
           </div>
         </div>
       </div>
@@ -437,7 +540,7 @@
         
         ?>
           
-            <h5><?php echo number_format($lateAmount,2)?></h5>
+            <h5><?php echo number_format($lateAmount,0)?></h5>
 
         
           </div>
@@ -450,12 +553,31 @@
             <h5>Dias Promedio de Pago</h5>
           </div>
           <div class="col">
-            <h5><?php echo number_format($promDias,2) ?></h5>
+            <h5><?php echo number_format($promDias,0) ?></h5>
           </div>
         </div>
     </div>
 
-    
+    <div class="container">
+        <div class="row">
+          <div class="col">
+            <h5>Moneda </h5>
+          </div>
+          <div class="col">
+            <h5>
+              <?php 
+              
+              if($moneda == "colones"){
+                echo "Colones";
+              }
+              else{
+                echo "Dolares";
+              }
+              
+               ?></h5>
+          </div>
+        </div>
+      </div>
 
 
 
@@ -639,6 +761,55 @@ MODAL DE PAGO -->
     <tbody>
       <tr>
       <?php
+   
+
+      $aldiaPendiente= 0;
+      $unoTreintaPendiente=0;
+      $treintaSesentaPendiente=0;
+      $sesentanoventaPendiente = 0;
+      $over90Pendiente=0;
+      $totalAPagar1Pendiente=0;
+      $totalAPagar2 = 0;
+                                      
+      while($pendingAging = mysqli_fetch_array($query31)){
+
+       
+
+      if($pendingAging['SALDO_ABIERTO_CUOTA']<0){
+
+        if($pendingAging['ARREAR']<=0){
+
+          $totalAPagar2 = $totalAPagar1+$pendingAging['CUOTA']-$pendingAging['PAYMENT_AMOUNT'];
+          $aldiaPendiente= $aldiaPendiente+abs($pendingAging['SALDO_ABIERTO_CUOTA']);   
+               
+          
+          
+          }
+        
+        
+        
+        elseif($aging['ARREAR']>0 && $aging['ARREAR']<=30){
+          
+          $unoTreintaPendiente= ($unoTreintaPendiente+$aging['SALDO_ABIERTO_CUOTA']);
+
+        }elseif($aging['ARREAR']>30 && $aging['ARREAR']<=60){
+          
+          $treintaSesentaPendiente= $treintaSesentaPendiente+$aging['SALDO_ABIERTO_CUOTA'];
+
+        }
+          elseif($aging['ARREAR']>60 && $aging['ARREAR']<=90){
+            
+            $sesentanoventa= $sesentanoventaPendiente+$aging['SALDO_ABIERTO_CUOTA'];
+
+          }else{
+           
+            $over90Pendiente = $over90Pendiente+$aging['SALDO_ABIERTO_CUOTA'];
+          }
+        
+        
+      }
+      }
+
       $aldia= 0;
       $unoTreinta=0;
       $treintaSesenta=0;
@@ -646,17 +817,29 @@ MODAL DE PAGO -->
       $over90=0;
       $totalAPagar1=0;
 
+
+
       while($aging = mysqli_fetch_array($query18) ){
+
         
-       
+        
+       if($aging['PAYMENT_AMOUNT']<=0 ) {
 
-        if($aging['ARREAR']<0){
-          $totalAPagar1 = $totalAPagar1+$aging['CUOTA'];
-          $aldia= $aldia+$aging['CUOTA'];
+        
 
-        }elseif($aging['ARREAR']>0 && $aging['ARREAR']<=30){
-          $totalAPagar1 = $totalAPagar1+$aging['CUOTA'];
-          $unoTreinta= $unoTreinta+$aging['CUOTA'];
+          if($aging['ARREAR']<=0){
+            
+          $totalAPagar1 = $totalAPagar1+$aging['AMORTIZATION'];
+          $aldia= $aldia+$aging['AMORTIZATION'];          
+          
+          
+          }
+        
+        
+        
+        elseif($aging['ARREAR']>0 && $aging['ARREAR']<=30){
+          $totalAPagar1 = ($totalAPagar1+$aging['CUOTA']);
+          $unoTreinta= ($unoTreinta+$aging['CUOTA'])-$aging['AMORTIZACION_PAGADA'];
 
         }elseif($aging['ARREAR']>30 && $aging['ARREAR']<=60){
           $totalAPagar1 = $totalAPagar1+$aging['CUOTA'];
@@ -675,20 +858,27 @@ MODAL DE PAGO -->
         
         
       }
+    
+    }
       //  
-
+  $alDiaFinal = $aldia+$aldiaPendiente; 
+  $unoTreintaFinal=$unoTreinta+$unoTreintaFinal;
+  $treintaSesentaFinal=$treintaSesenta+$treintaSesentaPendiente;
+  $sesentanoventaFinal = $sesentanoventa+$sesentanoventaPendiente;
+  $over90Final=$over90+$over90Pendiente;
+  $totalAPagarfinal = $totalAPagar1+$totalAPagar2;
 
 ?>
-        <th ><?php echo number_format($aldia,2) ?></th>
-        <th scope="row"><?php echo ($aldia/$totalAPagar1)*100 ?></th>
-        <th ><?php echo number_format($unoTreinta,2) ?></th>
-        <th scope="row"><?php echo ($unoTreinta/$totalAPagar1)*100  ?></th>
-        <th><?php echo number_format($treintaSesenta,2) ?></td>
-        <th scope="row"><?php echo  ($treintaSesenta/$totalAPagar1)*100  ?></th>
-        <th><?php echo number_format($sesentanoventa,2) ?></td>
-        <th scope="row"><?php echo($sesentanoventa/$totalAPagar1)*100  ?></th>
-        <th><?php echo number_format($over90,2) ?></td>
-        <th scope="row"><?php echo($over90/$totalAPagar1)*100  ?></th>
+        <th ><?php echo number_format($alDiaFinal,2) ?></th>
+        <th scope="row"><?php echo ($alDiaFinal/$totalAPagarfinal)*100 ?></th>
+        <th ><?php echo number_format($unoTreintaFinal,2) ?></th>
+        <th scope="row"><?php echo ($unoTreintaFinal/$totalAPagarfinal)*100  ?></th>
+        <th><?php echo number_format($treintaSesentaFinal,2) ?></td>
+        <th scope="row"><?php echo  ($treintaSesentaFinal/$totalAPagarfinal)*100  ?></th>
+        <th><?php echo number_format($sesentanoventaFinal,2) ?></td>
+        <th scope="row"><?php echo($sesentanoventaFinal/$totalAPagarfinal)*100  ?></th>
+        <th><?php echo number_format($over90Final,2) ?></td>
+        <th scope="row"><?php echo($over90Final/$totalAPagarfinal)*100  ?></th>
     
       </tr>
       
@@ -836,8 +1026,8 @@ MODAL DE PAGO -->
     ?>
     
     <td><?php echo $pagosTabla['PAYMENT_DATE'] ?></td>
-    <td><?php echo $pagosTabla['PAYMENT_DATE'] ?></td>
-    <td><?php echo $pagosTabla['PAY_DATE_RECEIVED'] ?></td>
+    <td><?php echo $pagosTabla['PAYMENT_DATE1'] ?></td>
+    <td><?php echo $pagosTabla['NUM_PAGO'] ?></td>
     <td><?php echo number_format($pagosTabla['PAYMENT_AMOUNT'],2) ?></td>
     <td><?php echo number_format($pagosTabla['ARREAR'],2) ?></td>
     <td><?php echo number_format($pagosTabla['SALDO_PAGO_ABIERTO'],2) ?></td>
@@ -967,7 +1157,9 @@ MODAL DE PAGO -->
     </tr>
     <tr>
         
-        <th>Monto a Pagar</th>
+        <th>Cuota</th>
+        <th>Multa</th>
+        <th>Total A Pagar</th>
         <th>ID Cliente</th>
         <th>ID Prestamo</th>
         <th>Dias de Atraso </th>
@@ -993,10 +1185,37 @@ MODAL DE PAGO -->
     <tr>
     <td><?php echo $tablaPendientes['PAYMENT_DATE'] ?></td>
     <td><?php echo number_format( $tablaPendientes['CUOTA'],2) ?></td>
+
+    
+                                 
+    <td>
+    <?php
+      if ($tablaPendientes['ARREAR']>0){
+
+       
+          $multaporcentaje = $tasaMulta/100;
+          
+          $multaAPagar = $tablaPendientes['CUOTA']*$multaporcentaje;
+          
+          echo $multaAPagar;
+      }else{
+        echo 0;
+      }
+
+    ?>
+    </td>
+
+    <td>
+    <?php
+    
+   echo number_format($tablaPendientes['CUOTA']+$multaAPagar,2);
+    
+    
+    ?>
+    </td>
     <td><?php echo $tablaPendientes['CUSTOMER_ID'] ?></td>
     <td><?php echo $tablaPendientes['LOAN_ID'] ?></td>
     <td><?php echo $tablaPendientes['ARREAR'] ?></td>
-                                 
     <td>
     <button type=""  class="btn btn-primary" data-target=".exampleModal" data-toggle="modal">Registrar Pago </button >
     </td>
@@ -1053,7 +1272,6 @@ MODAL DE PAGO -->
     </div>
 
     
-
 
     
 

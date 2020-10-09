@@ -3,7 +3,7 @@
     <head>
     <?php
        include  ("conexion.php");
-       include  ("enviarNuevoUser.php");
+       include  ('enviarCartera.php');
 
        session_start();  
       $varsession = $_SESSION['emailsess'];
@@ -98,8 +98,10 @@
       
       <div class="wrapper d-flex align-items-stretch"    >
         <nav id="sidebar" class="active " style="background-color:#222831; margin-top:25px" >
-          <h1><a href="index.html" class="logo">ML</a></h1>
+          
           <ul class="list-unstyled components mb-5"  style=" position: fixed">
+
+          <h1><a href="index.html" class="logo">ML</a></h1>
             <li class="active" >
               <a href="dashboard.php"><span class="fa fa-home"></span> Dashboard</a>
             </li>
@@ -144,20 +146,25 @@
               
           <div class="container col-lg-12" >
             
-            <h1 >Clientes</h1><hr>
+            <h1 >Crear Nueva Cartera</h1><hr>
                    
                   
-                  <a href="#" class="btn btn-primary">Crear nuevo credito</a><br>
+          <?php $error ?>
 
                 
 
 
 
             <div class="container" style="">
-            <form action ="nuevoCliente.php" method="post">
+            <form action ="nuevaCartera.php" method="POST">
 
            
-            <h3>Crear Nuevo Cliente</h3><br><hr>
+            <div class="form-group row">
+                <label for="inputPassword3" class="col-sm-2 col-form-label"><strong><h4>Monto de la Cartera</h4></strong></label>
+                <div class="col-sm-10">
+                <input type="text" class="form-control" id="montoCartera" name="montoCartera" placeholder=" Ejemplo: 50,000,000.00 " required>
+                </div>
+            </div>
             
             <p>Datos Personales</p><hr>
             <div class="form-group row">
@@ -202,12 +209,7 @@
                 </div>
             </div>
 
-            <div class="form-group row">
-                <label for="inputPassword3" class="col-sm-2 col-form-label">Fecha de Nacimiento</label>
-                <div class="col-sm-10">
-                <input type="date" class="form-control" id="nacimiento_cliente" name="nacimiento_cliente" placeholder=""required>
-                </div>
-            </div>
+            
 
             <div class="form-group row">
                 <label for="inputPassword3" class="col-sm-2 col-form-label">Provincia</label>
@@ -592,65 +594,12 @@
                             <div class="col-sm-10">
                             <input type="text" class="form-control" id="senas_cliente" name="senas_cliente" placeholder="Ejemplo: 222 metros este Escuela" required>
                             </div>
-                        </div><hr>
-
-                        <div class="form-group row">
-                                <label for="inputPassword3" class="col-sm-2 col-form-label">Cobrador</label>
-                                <div class="col-sm-10">
-
-                                
-
-                                <select class="custom-select my-1 mr-sm-2" id="cobrador_cliente" name="cobrador_cliente" required>
-                                    <option selected>Seleccione...</option>
-                                    <?php 
-                                      while($datos = mysqli_fetch_array($query)){                                    
-                                    ?>
-                                    <option value="<?php echo $datos['idUSERS']?>"> <?php echo $datos['FIRST_NAME'], ' ', $datos['LAST_NAME']  ?> </option>
-                                    <?php 
-                                      }
-                                    ?>
-                                       
-                                </select>
-                                
-                                     
-                                                                
-                               
-                            </div>         
                         </div>
 
 
 
-                            <p>Datos Economicos</p><hr>
 
-                            <div class="form-group row">
-                            
-                            <label for="cedula" class="col-sm-2 col-form-label">Ocupacion</label>
-                            <div class="col-sm-10">
-                            <input type="text" class="form-control" id="ocupacion_cliente" name="ocupacion_cliente" placeholder="Ejemplo: Abogado, Trabajador independiente" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="inputPassword3" class="col-sm-2 col-form-label">Ingreso Promedio Mensual</label>
-                            <div class="col-sm-10">
-                            <input type="text" class="form-control" id="ingreso_cliente" name="ingreso_cliente" placeholder=" Ejemplo: 500 000 " required>
-                            </div>
-                        </div>
-                        
-
-                        <div class="form-group row">
-                        <label for="inputPassword3" class="col-sm-2 col-form-label">Tiempo de dedicarse a la actividad</label>
-                        <div class="col-sm-10">
-
-                        <select class="custom-select my-1 mr-sm-2" id="dedicacion_cliente" name="dedicacion_cliente" required>
-                            <option selected>Seleccione...</option>
-                                
-                            <option value="Menos de un annio">Menos de un año</option>
-                            <option value="2-3 Annios">De 1 a 3 años</option>
-                            <option value="3-5 Annios">De 3 a 5 años</option>
-                            <option value="Mas 5 Annios">Mas de 5 años</option>
-                            
-                        </select>
+                           
                 </div>
             </div>         
         <div>
@@ -670,11 +619,11 @@
         </button>
       </div>
       <div class="modal-body">
-        Esta seguro de crear el cliente?
+        Esta seguro de crear la cartera?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
-        <button type="submit" class="btn btn-primary"id="crearCliente" name="crearCliente"   >Crear Cliente</button>
+        <button type="submit" class="btn btn-primary"id="crearCartera "name="crearCartera"  >Crear Cartera</button>
       </div>
     </div>
   </div>

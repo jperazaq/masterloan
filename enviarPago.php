@@ -1,5 +1,5 @@
 <?php 
-ini_set( "display_errors", 0); 
+// ini_set( "display_errors", 0); 
 include ("conexion.php");
 
 if (isset($_POST['guardarPago'])){
@@ -40,7 +40,7 @@ if($seguardaPago){
     $idCliente= $_GET['CUSTOMER_ID'];
     
 
-    $sql = "INSERT INTO payments (CUSTOMER_ID_NUMBER, PAYMENT_AMOUNT, PAYMENT_DATE, PAYMENT_REFERENCE,PAYMENT_METHOD, FINANCIAL_INSTITUTION, CUSTOMER_ID, LOAN_ID,AMORT_TABLE_ID)
+    $sql = "INSERT INTO payments (CUSTOMER_ID_NUMBER, PAYMENT_AMOUNT, PAYMENT_DATE1, PAYMENT_REFERENCE,PAYMENT_METHOD, FINANCIAL_INSTITUTION, CUSTOMER_ID, LOAN_ID,AMORT_TABLE_ID)
             VALUES ('$cedulaCliente','$monto','$fechaPago', '$recibo', '$metodo',  '$banco', '$idCliente','$prestamo','$pagoID')";
             $seguardaPago = false;
 
