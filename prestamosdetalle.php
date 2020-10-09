@@ -870,15 +870,15 @@ MODAL DE PAGO -->
 
 ?>
         <th ><?php echo number_format($alDiaFinal,2) ?></th>
-        <th scope="row"><?php echo ($alDiaFinal/$totalAPagarfinal)*100 ?></th>
+        <th scope="row"><?php echo number_format(($alDiaFinal/$totalAPagarfinal)*100,0) ?></th>
         <th ><?php echo number_format($unoTreintaFinal,2) ?></th>
-        <th scope="row"><?php echo ($unoTreintaFinal/$totalAPagarfinal)*100  ?></th>
+        <th scope="row"><?php echo number_format(($unoTreintaFinal/$totalAPagarfinal)*100,0)  ?></th>
         <th><?php echo number_format($treintaSesentaFinal,2) ?></td>
-        <th scope="row"><?php echo  ($treintaSesentaFinal/$totalAPagarfinal)*100  ?></th>
+        <th scope="row"><?php echo  number_format(($treintaSesentaFinal/$totalAPagarfinal)*100,0)  ?></th>
         <th><?php echo number_format($sesentanoventaFinal,2) ?></td>
-        <th scope="row"><?php echo($sesentanoventaFinal/$totalAPagarfinal)*100  ?></th>
+        <th scope="row"><?php echo number_format(($sesentanoventaFinal/$totalAPagarfinal)*100,0)  ?></th>
         <th><?php echo number_format($over90Final,2) ?></td>
-        <th scope="row"><?php echo($over90Final/$totalAPagarfinal)*100  ?></th>
+        <th scope="row"><?php echo number_format(($over90Final/$totalAPagarfinal)*100,0)  ?></th>
     
       </tr>
       
