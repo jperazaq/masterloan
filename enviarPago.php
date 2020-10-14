@@ -23,6 +23,7 @@ if (isset($_POST['guardarPago'])){
     $seguardaAmortPagada = TRUE;
     $cedulaCliente= $_GET['ID_NUMBER'];
     $idCliente= $_GET['CUSTOMER_ID'];
+    $montoMulta= $_GET['multa'];
 
     $newDate = date("Y-m-d", strtotime($payDate));
     
@@ -49,7 +50,7 @@ if($seguardaPago){
            
 
             if(mysqli_query($conn, $sql)){      
-                echo "<script>window.alert('Registro Satisfactorio en la Base de datos!');
+                echo "<script>alert('Registro Satisfactorio en la Base de datos!');
 
                 
                                   

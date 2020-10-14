@@ -593,7 +593,7 @@ echo $cuotaAPagar;
 <!-- 
 MODAL DE PAGO -->
    
-    <div class="modal fade exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="exampleModal">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
         
@@ -602,6 +602,24 @@ MODAL DE PAGO -->
         <h5 class="modal-title" id="exampleModalLabel">Registrar Pago  </h5>
         </div>
         <div class="modal-body">
+
+        <h1 style="text-align:center">TOTAL A PAGAR</h1><hr>
+        <h1 style="text-align:center" ><span class="ids"></span></h1><hr>
+
+
+      
+        <div class="form-group row">
+        <div class="col-lg-12">
+        <label for="inputPassword3" class="col-lg-2 col-form-label"> <h5 style="text-align:center">Principal</h5></label>
+        <label for="inputPassword3" class="col-lg-4 col-form-label"><h5 style="text-align:center" ><span class="cuota"></span></h5></label>
+       </div>
+       <div class="col-lg-12">
+        <label for="inputPassword3" class="col-lg-2 col-form-label"> <h5 style="text-align:center">Multa</h5></label>
+        <label for="inputPassword3" class="col-lg-4 col-form-label"><h5 style="text-align:center" ><span name="multa" class="multa"></span></h5></label>
+        </div>
+        </div><hr>
+       
+        
         
 
         <?php 
@@ -620,7 +638,7 @@ MODAL DE PAGO -->
                 <label for="customerCedula" class="col-sm-2 col-form-label">Cedula</label>
                 <div class="col-lg-10">
 
-                <label for="text  " class="col-sm-2 col-form-label " style ="size:100%"><?php echo $datos6['ID_NUMBER'] ?></label>
+                <label for="text  " class="col-sm-4 col-form-label " style ="size:100%"><?php echo $datos6['ID_NUMBER'] ?></label>
                 
                 </div>
         </div>
@@ -632,19 +650,8 @@ MODAL DE PAGO -->
         <div class="form-group row">
                                 <label for="inputPassword3" class="col-sm-2 col-form-label">Credito</label>
                                 <div class="col-sm-10">                                
-
-                                <select  class="custom-select my-1 mr-sm-2" id="prestamo1" name="prestamo1" required>
-                                    <option selected>Seleccione...</option>
-                                    <?php 
-                                      while($datos = mysqli_fetch_array($query5)){                                    
-                                    ?>
-                                    <option value="<?php echo $datos['LOAN_ID']?>"> <?php echo $datos['LOAN_ID'] ?> </option>
-                                    <?php 
-                                      }
-                                    ?>
-                                       
-                                </select>                           
-                                     
+                                <label for="inputPassword3" class="col-lg-4 col-form-label"><span style="text-align:center" class="prestamoID"></span></label>
+                                
                             </div>         
           </div>
 
@@ -652,17 +659,7 @@ MODAL DE PAGO -->
                                 <label for="inputPassword3" class="col-sm-2 col-form-label">Aplicar a Cuota</label>
                                 <div class="col-sm-10">                                
 
-                                <select  class="custom-select my-1 mr-sm-2" id="prestamo" name="prestamo" required>
-                                    <option selected>Seleccione...</option>
-                                    <?php 
-                                      while($datos9 = mysqli_fetch_array($query9)){                                    
-                                    ?>
-                                    <option value="<?php echo $datos9['AMORT_TABLE_ID']?>"> <?php echo "Prestamo",' ', $datos9['LOAN_ID'],' ', "Num Cuota", ' ', $datos9['NUM_PAGO']   ?> </option>
-                                    <?php 
-                                      }
-                                    ?>
-                                       
-                                </select>                           
+                                <label for="inputPassword3" class="col-lg-4 col-form-label"><span style="text-align:center" class="numCuota"></span></label>                 
                                      
                             </div>         
           </div>
@@ -1146,6 +1143,7 @@ MODAL DE PAGO -->
 
     </tbody>
     </table>
+    <form method='post'>
     <div class="container mb-5 mt-3 col-lg-12">
     <table class="table table-striped table-bordered myDataTable " style="width:100%; text-align:center" >
     <thead class= "thead-dark">
@@ -1156,8 +1154,8 @@ MODAL DE PAGO -->
 
     </tr>
     <tr>
-        
-        <th>Cuota</th>
+        <th>Num Cuota</th>
+        <th>Monto Cuota</th>
         <th>Multa</th>
         <th>Total A Pagar</th>
         <th>ID Cliente</th>
@@ -1184,6 +1182,7 @@ MODAL DE PAGO -->
     
     <tr>
     <td><?php echo $tablaPendientes['PAYMENT_DATE'] ?></td>
+    <td><?php echo number_format( $tablaPendientes['NUM_PAGO'],0) ?></td>
     <td><?php echo number_format( $tablaPendientes['CUOTA'],2) ?></td>
 
     
@@ -1207,8 +1206,22 @@ MODAL DE PAGO -->
 
     <td>
     <?php
+
+    if($tablaPendientes['ARREAR']>0){
+      $multaporcentaje1 = $tasaMulta/100;
+      $multaAPagar1 = $tablaPendientes['CUOTA']*$multaporcentaje;
+      $totales1 = $tablaPendientes['CUOTA']+$multaAPagar;
+      echo number_format($totales1,2);
+
+    }
+    else {
     
-   echo number_format($tablaPendientes['CUOTA']+$multaAPagar,2);
+      $multaAPagar1 = 0;
+      $totales1= $tablaPendientes['CUOTA'];
+      echo number_format($totales1,2);
+    }
+    
+  
     
     
     ?>
@@ -1217,19 +1230,43 @@ MODAL DE PAGO -->
     <td><?php echo $tablaPendientes['LOAN_ID'] ?></td>
     <td><?php echo $tablaPendientes['ARREAR'] ?></td>
     <td>
-    <button type=""  class="btn btn-primary" data-target=".exampleModal" data-toggle="modal">Registrar Pago </button >
+    <a type="" href="#exampleModal" numCuota=<?php echo  $tablaPendientes['NUM_PAGO']; ?> prestamoID=<?php echo $tablaPendientes['LOAN_ID']  ?> cuota= "<?php echo $tablaPendientes['CUOTA'] ?>"  multa="<?php echo $multaAPagar1 ?>"  data-toggle="modal" monto="<?php echo $totales1 ?>">Registrar Pago </a >
     </td>
     </tr>
 
       <?php }}?>
 
+      <script type="text/javascript">
+    $(function () {
+            $("a").click(function (e) {
+                e.preventDefault();
+                var id = $(this).attr('monto');
+               var id1= $(".ids").html(id)
+               var multa = $(this).attr('multa');
+               var cuota =  $(this).attr('cuota');
+               var prestamoID = $(this).attr('prestamoID');
+               var numCuota = $(this).attr('numCuota');
+              
+                $(".ids").html(id);
+                $(".multa").html(multa);
+                $(".cuota").html(cuota);
+                $(".prestamoID").html(prestamoID);
+                $(".numCuota").html(numCuota);
+                console.log(id);
+               
+                return id;
 
+              
+            })
+        })
+    </script>
 
 
     </tbody>
 
     
     </table><hr>
+    </form>
     </div>
 
     
