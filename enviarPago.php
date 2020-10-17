@@ -23,7 +23,7 @@ if (isset($_POST['guardarPago'])){
     $seguardaAmortPagada = TRUE;
     $cedulaCliente= $_GET['ID_NUMBER'];
     $idCliente= $_GET['CUSTOMER_ID'];
-    $montoMulta= $_GET['multa'];
+    $montoMulta= $_GET['multaAPagar1'];
 
     $newDate = date("Y-m-d", strtotime($payDate));
     
@@ -32,6 +32,30 @@ if (isset($_POST['guardarPago'])){
    
 };
 
+if($seguardaPago){
+
+  if($montoMulta >0){
+      $multaDiff = $monto - $montoMulta;
+
+      if($multaDiff<0){
+
+        $multaAGuardar = $monto;
+        $multa1 = "UPDATE amortization SET MULTA_PAGADA = $multaAGuardar WHERE AMORT_TABLE_ID = $pagoID"; 
+
+      }elseif ($multaDiff>0) {
+          $multaAGuardar = $multa;
+          $multa1 = "UPDATE amortization SET MULTA_PAGADA = $multaAGuardar WHERE AMORT_TABLE_ID = $pagoID"; 
+      }elseif ($multaDiff==0) {
+        $multaAGuardar = $multa;
+        $multa1 = "UPDATE amortization SET MULTA_PAGADA = $multaAGuardar WHERE AMORT_TABLE_ID = $pagoID"; 
+      }
+  }
+    
+    
+    
+
+
+}
 
 
 if($seguardaPago){ 
@@ -54,7 +78,7 @@ if($seguardaPago){
 
                 
                                   
-    </script>";  
+    </script>";     
     
    
             } else{
@@ -89,7 +113,7 @@ if($seguardaPago){
 
     $cuota1= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
     $rowSaldo = mysqli_fetch_array($cuota1);
-    $saldoAbierto = $monto-$rowSaldo['CUOTA'];
+    $saldoAbierto = $monto-$rowSaldo['CUOTA'];  
      
     $saldo = "UPDATE amortization SET SALDO_PAGO_ABIERTO = $saldoAbierto WHERE AMORT_TABLE_ID = $pagoID";   
 
