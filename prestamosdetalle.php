@@ -616,6 +616,7 @@ MODAL DE PAGO -->
        <div class="col-lg-12">
         <label for="inputPassword3" class="col-lg-2 col-form-label"> <h5 style="text-align:center">Multa</h5></label>
         <label for="inputPassword3" class="col-lg-4 col-form-label"><h5 style="text-align:center" ><span name="multa" class="multa"></span></h5></label>
+        <input type=""class= "multaPago" name = "multaPago" id= "multaPago">
         </div>
         </div><hr>
        
@@ -630,7 +631,7 @@ MODAL DE PAGO -->
 <div class="form-group row">
                 <label for="inputPassword3" class="col-sm-2 col-form-label">ID Cliente</label>
                 <div class="col-lg-10">
-
+                <input type=""class= "linea" name = "linea" id= "linea">
                 <label for="<?php $datos6['CUSTOMER_ID'] ?>" type="text" class="col-sm-2 col-form-label" id="idCliente" name="idCliente" ><?php echo $datos6['CUSTOMER_ID'] ?></label>
                 
                 </div>
@@ -651,16 +652,16 @@ MODAL DE PAGO -->
                                 <label for="inputPassword3" class="col-sm-2 col-form-label">Credito</label>
                                 <div class="col-sm-10">                                
                                 <label for="inputPassword3" class="col-lg-4 col-form-label"><span style="text-align:center" class="prestamoID"></span></label>
-                                
+                                <input type=""class= "idPrestamo" name = "idPrestamo" id= "idPrestamo">
                             </div>         
           </div>
 
-          <div class="form-group row">
+          <div class="form-group row" method ="POST">
                                 <label for="inputPassword3" class="col-sm-2 col-form-label">Aplicar a Cuota</label>
                                 <div class="col-sm-10">                                
 
-                                <label for="inputPassword3" class="col-lg-4 col-form-label"><span style="text-align:center" class="numCuota"></span></label>                 
-                                     
+                                <label for="inputPassword3" class="col-lg-4 col-form-label"><span style="text-align:center" value="numCuota" id="numCuota" name= "numCuota" class="numCuota"></span></label>                 
+                                     <input type=""class= "cuotaNum" name = "cuotaNum" id= "cuotaNum">
                             </div>         
           </div>
 
@@ -1230,7 +1231,7 @@ MODAL DE PAGO -->
     <td><?php echo $tablaPendientes['LOAN_ID'] ?></td>
     <td><?php echo $tablaPendientes['ARREAR'] ?></td>
     <td>
-    <a type="" href="#exampleModal" numCuota=<?php echo  $tablaPendientes['NUM_PAGO']; ?> prestamoID=<?php echo $tablaPendientes['LOAN_ID']  ?> cuota= "<?php echo $tablaPendientes['CUOTA'] ?>"  multa="<?php echo $multaAPagar1 ?>"  data-toggle="modal" monto="<?php echo $totales1 ?>">Registrar Pago </a >
+    <a type="" href="#exampleModal" numLinea=<?php echo  $tablaPendientes['AMORT_TABLE_ID']; ?>  numCuota=<?php echo  $tablaPendientes['NUM_PAGO']; ?> prestamoID=<?php echo $tablaPendientes['LOAN_ID']  ?> cuota= "<?php echo $tablaPendientes['CUOTA'] ?>"  multa="<?php echo $multaAPagar1 ?>"  data-toggle="modal" monto="<?php echo $totales1 ?>">Registrar Pago </a >
     </td>
     </tr>
 
@@ -1246,12 +1247,18 @@ MODAL DE PAGO -->
                var cuota =  $(this).attr('cuota');
                var prestamoID = $(this).attr('prestamoID');
                var numCuota = $(this).attr('numCuota');
+               var tableID = $(this).attr('numLinea');
               
                 $(".ids").html(id);
                 $(".multa").html(multa);
                 $(".cuota").html(cuota);
                 $(".prestamoID").html(prestamoID);
                 $(".numCuota").html(numCuota);
+                $("#cuotaNum").val(numCuota);
+                $('#multaPago').val(multa);
+                $('#idPrestamo').val(prestamoID);
+                $('#linea').val(tableID);
+
                 console.log(id);
                
                 return id;

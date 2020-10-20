@@ -4,14 +4,14 @@ include ("conexion.php");
 
 if (isset($_POST['guardarPago'])){
     
-    $prestamo=$_POST['prestamo1'];       
+    $prestamo=$_POST['idPrestamo'];       
     $monto = $_POST['montoPago'];
     $banco = $_POST['banco'];
     $recibo = $_POST['numRecibo'];
     $fechaPago = $_POST['fecha_pago'];
     $metodo = $_POST['metodo'];
     $loan_id = $_GET['LOANID'];
-    $pagoID = $_POST['prestamo'];
+    $pagoID = $_POST['linea'];
     $payDate = $_POST['fecha_pago'];    
     $seguardaPago = TRUE;
     $seguardaMonto = TRUE;
@@ -20,10 +20,11 @@ if (isset($_POST['guardarPago'])){
     $seguardaSaldoAmort= TRUE;
     $seguardaFecha= TRUE;
     $seguardaDias= TRUE;
+    $seguardaMulta= TRUE;
     $seguardaAmortPagada = TRUE;
     $cedulaCliente= $_GET['ID_NUMBER'];
     $idCliente= $_GET['CUSTOMER_ID'];
-    $montoMulta= $_GET['multaAPagar1'];
+    $montoMulta= $_POST['multaPago'];
 
     $newDate = date("Y-m-d", strtotime($payDate));
     
@@ -32,32 +33,9 @@ if (isset($_POST['guardarPago'])){
    
 };
 
-if($seguardaPago){
-
-  if($montoMulta >0){
-      $multaDiff = $monto - $montoMulta;
-
-      if($multaDiff<0){
-
-        $multaAGuardar = $monto;
-        $multa1 = "UPDATE amortization SET MULTA_PAGADA = $multaAGuardar WHERE AMORT_TABLE_ID = $pagoID"; 
-
-      }elseif ($multaDiff>0) {
-          $multaAGuardar = $multa;
-          $multa1 = "UPDATE amortization SET MULTA_PAGADA = $multaAGuardar WHERE AMORT_TABLE_ID = $pagoID"; 
-      }elseif ($multaDiff==0) {
-        $multaAGuardar = $multa;
-        $multa1 = "UPDATE amortization SET MULTA_PAGADA = $multaAGuardar WHERE AMORT_TABLE_ID = $pagoID"; 
-      }
-  }
-    
-    
-    
 
 
-}
-
-
+//Guardar en tabla de pagos
 if($seguardaPago){ 
     
    
@@ -106,6 +84,38 @@ if($seguardaPago){
                 
         
                 
+  }
+
+
+  if($seguardaMulta){
+
+    if($montoMulta >0){
+        $multaDiff = $monto - $montoMulta;
+  
+        if($multaDiff<0){
+  
+          $multaAGuardar = $monto;
+         
+  
+        }elseif ($multaDiff>0) {
+            $multaAGuardar = $multa;
+         
+        }elseif ($multaDiff==0) {
+          $multaAGuardar = $multa;
+          
+        }
+    }
+    
+    $multa1 = "UPDATE amortization SET MULTA_PAGADA = $multaAGuardar WHERE AMORT_TABLE_ID = $pagoID"; 
+      if(mysqli_query($conn,$multa1)){
+
+      }else{
+        echo 'ERROR: Could not able to execute $sqlMulta. ' . mysqli_error($conn);
+      }
+      
+      $seguardaMulta = FALSE;
+  
+  
   }
 
 
