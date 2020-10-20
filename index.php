@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php  
  session_start();
 ini_set( "display_errors", 0); 
@@ -122,3 +123,21 @@ if($filas >0){
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </body>
 </html>
+=======
+<?php  
+
+require("masterloan.php"); 
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hola</h1>
+</body>
+</html>
+>>>>>>> e90219b47302d82c4d9aa683e2636f89eae7be42

@@ -4,6 +4,7 @@
   <?php 
   include  ('conexion.php');
 
+<<<<<<< HEAD
   session_start();  
   $varsession = $_SESSION['emailsess'];
 
@@ -28,11 +29,22 @@
   loans.LOAN_ID, loans.STAR_DATE, loans.MONTO_CUOTA_TOTAL, sum(LOAN_AMOUNT), loans.MONTO_SOLO_INTERESES,loans.USER_CLIENTE_ID
     FROM customers AS customers
   INNER JOIN loans AS loans ON customers.CUSTOMER_ID = loans.CUSTOMER_ID GROUP BY CUSTOMER_ID");
+=======
+ 
+  $query3 = mysqli_query($conn, " SELECT customers.FIRST_NAME, customers.LAST_NAME, customers.SECOND_LAST_NAME, customers.ID_NUMBER, customers.CUSTOMER_ID,
+  loans.LOAN_ID, loans.STAR_DATE, loans.MONTO_CUOTA_TOTAL, loans.LOAN_AMOUNT, loans.MONTO_SOLO_INTERESES,loans.USER_CLIENTE_ID
+    FROM customers AS customers
+  INNER JOIN loans AS loans ON customers.CUSTOMER_ID = loans.CUSTOMER_ID");
+>>>>>>> e90219b47302d82c4d9aa683e2636f89eae7be42
   
   
   ?>
     <head>
+<<<<<<< HEAD
       <title>Clientes</title>
+=======
+      <title>Sidebar 07</title>
+>>>>>>> e90219b47302d82c4d9aa683e2636f89eae7be42
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -50,6 +62,7 @@
           
     </head>
     <body>
+<<<<<<< HEAD
     <div class= "wrapper " >
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" style="height: 50px;color:#222831; ">
     <a href="#" class="navbar-brand">Master Loan</a>
@@ -80,6 +93,13 @@
           <ul class="list-unstyled components mb-5"  style=" position: fixed">
 
           <h1><a href="index.html" class="logo">ML</a></h1>
+=======
+      
+      <div class="wrapper d-flex align-items-stretch" >
+        <nav id="sidebar" class="active " style="background-color:#222831" >
+          <h1><a href="index.html" class="logo">ML</a></h1>
+          <ul class="list-unstyled components mb-5"  style=" position: fixed">
+>>>>>>> e90219b47302d82c4d9aa683e2636f89eae7be42
             <li class="active" >
               <a href="dashboard.php"><span class="fa fa-home"></span> Dashboard</a>
             </li>
@@ -93,9 +113,12 @@
               <a href="cobros.php"><span class="fa fa-money"></span> Cobros</a>
             </li>
             <li>
+<<<<<<< HEAD
               <a href="cobros.php"><span class="fa fa-suitcase"></span> Cartera</a>
             </li>
             <li>
+=======
+>>>>>>> e90219b47302d82c4d9aa683e2636f89eae7be42
               <a href="perfil.php"><span class="fa fa-address-card-o"></span> Perfil</a>
             </li>
           </ul>
@@ -185,12 +208,21 @@
               <tr>
                   <td><?php echo $datos['FIRST_NAME'], ' ', $datos['LAST_NAME']. ' ', $datos['SECOND_LAST_NAME']  ?></td>
                   <td><?php echo $datos['ID_NUMBER']?></td>
+<<<<<<< HEAD
                   <td><?php echo number_format( $datos['sum(LOAN_AMOUNT)'])?></td>
                   <td><?php echo $datos['LOAN_ID']?></td>
                   <td><?php echo $datos['STAR_DATE']?></td>
                   <td><?php echo number_format( $datos['MONTO_CUOTA_TOTAL'])?></td>
                   <td><?php echo number_format($datos['MONTO_SOLO_INTERESES'])?></td> 
                   <td><?php echo  number_format($datos['MONTO_CUOTA_TOTAL']-$datos['MONTO_SOLO_INTERESES'])?></td>                  
+=======
+                  <td><?php echo $datos['LOAN_AMOUNT']?></td>
+                  <td><?php echo $datos['LOAN_ID']?></td>
+                  <td><?php echo $datos['STAR_DATE']?></td>
+                  <td><?php echo $datos['MONTO_CUOTA_TOTAL']?></td>
+                  <td><?php echo $datos['MONTO_SOLO_INTERESES']?></td> 
+                  <td><?php echo  $datos['MONTO_CUOTA_TOTAL']-$datos['MONTO_SOLO_INTERESES']?></td>                  
+>>>>>>> e90219b47302d82c4d9aa683e2636f89eae7be42
                   <td><?php echo $datos['USER_CLIENTE_ID']?></td>
                   
                   <td>0</td>
