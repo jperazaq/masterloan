@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!doctype html>
     <html lang="en">
 
@@ -1339,5 +1338,43 @@ MODAL DE PAGO -->
     </script>
 
     </body>
+io['TIME_STAMP'] ?></h6>
+  </div>
+  <div class="card-body">
+    
+  <h6><?php echo $comentario['COMENTARIO'] ?></h6>
+    
+  </div>
+</div> <br>
 
+
+
+
+    </div> <br>
+          
+    </div>
+
+    
+
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pooper.js/1.14.7/umd/pooper.min.js" ></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.20/js/dataTables.bootstrap4.min.js" integrity="sha512-T970v+zvIZu3UugrSpRoyYt0K0VknTDg2G0/hH7ZmeNjMAfymSRoY+CajxepI0k6VMFBXxgsBhk4W2r7NFg6ag==" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.21/datatables.min.css"/>
+
+    <script src="juliojs.js"></script>
+
+    <script>
+    $('.myDataTable').DataTable({
+    order:[[5,"desc"]],
+    pagingType:'full_numbers'
+
+    }); 
+    </script>
+
+    </body>
     </html>

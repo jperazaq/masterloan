@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!doctype html>
   <html lang="en">
 
@@ -36,12 +35,6 @@
   ?>
     <head>
       <title>Prestamos</title>
-=======
-  <!doctype html>
-  <html lang="en">
-    <head>
-      <title>Sidebar 07</title>
->>>>>>> e90219b47302d82c4d9aa683e2636f89eae7be42
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -59,7 +52,6 @@
           
     </head>
     <body>
-<<<<<<< HEAD
 
     < <div class= "wrapper " >
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" style="height: 50px; background-color:#222831; ">
@@ -90,13 +82,6 @@
           
           <ul class="list-unstyled components mb-5"  style=" position: fixed">
           <h1><a href="index.html" class="logo">ML</a></h1>
-=======
-      
-      <div class="wrapper d-flex align-items-stretch" >
-        <nav id="sidebar" class="active " style="background-color:#222831" >
-          <h1><a href="index.html" class="logo">ML</a></h1>
-          <ul class="list-unstyled components mb-5"  style=" position: fixed">
->>>>>>> e90219b47302d82c4d9aa683e2636f89eae7be42
             <li class="active" >
               <a href="dashboard.php"><span class="fa fa-home"></span> Dashboard</a>
             </li>
@@ -109,13 +94,10 @@
             <li>
               <a href="cobros.php"><span class="fa fa-money"></span> Cobros</a>
             </li>
-<<<<<<< HEAD
 
             <li>
               <a href="cobros.php"><span class="fa fa-suitcase"></span> Cartera</a>
             </li>
-=======
->>>>>>> e90219b47302d82c4d9aa683e2636f89eae7be42
             <li>
               <a href="perfil.php"><span class="fa fa-address-card-o"></span> Perfil</a>
             </li>
@@ -137,7 +119,6 @@
 
            
 
-<<<<<<< HEAD
               
             <header >
             <div class="collapse navbar-collapse" id="navbarSupportedContent"  >
@@ -172,251 +153,6 @@
                   <tr>
                       <th colspan="1" rowspan="2">Nombre</th>
                      
-=======
-              <!-- <button type="button" id="sidebarCollapse" class="btn btn-primary">
-                <i class="fa fa-bars"></i>
-                <span class="sr-only">Toggle Menu</span>
-              </button> -->
-              <!-- <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                  <i class="fa fa-bars"></i>
-              </button> -->
-            <header >
-           
-              
-          <div class="container col-lg-12" >
-            <h1  >Prestamos</h1><hr>
-            
-            <h5 class="card-title"> Resumen de creditos</h5> 
-                  <table class="table" style="text-align:center; background-color:#e4e3e3">
-                  <thead class= "thead-dark">
-                    <tr >
-
-                    
-                        <th scope="col">Al dia</th>
-                        <th scope="col">%</th>
-                        <th scope="col">1-30</th>
-                        <th scope="col">%</th>
-                        <th scope="col">31-60</th>
-                        <th scope="col">%</th>
-                        <th scope="col">61-90</th>
-                        <th scope="col">%</th>
-                        <th scope="col">Mas de 90</th>
-                        <th scope="col">%</th>
-
-                       
-                    
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <th >¢ 90 000 000</th>
-                      <th scope="row">90%</th>
-                      <th >¢ 7 000 000</th>
-                      <th scope="row">7%</th>
-                      <td>¢ 1 000 000</td>
-                      <th scope="row">1%</th>
-                      <td>¢ 500 000</td>
-                      <th scope="row">1%</th>
-                      <td>¢ 112 000</td>
-                      <th scope="row">0.5%</th>
-                      
-                    </tr>
-                   
-                  </tbody>
-                </table>
-          
-          <!-- Bloque de graficos -->
-            <div class="card-deck">
-              <div class="card" class="col-lg-12">
-                <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-                <div class="card-body">
-                  <h5 class="card-title">Atraso</h5><hr>
-
-                  <p class="card-text"><canvas id="line-chart1" width="200" height="150"></canvas></p>
-
-                  
-                  
-                </div>
-              </div>
-              <div class="card">
-                <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-                <div class="card-body">
-                  <h5 class="card-title">Cantidad de Prestamos</h5><hr>
-                  <p class="card-text"><p class="card-text"><canvas id="line-chart" width="200" height="150"></canvas></p></p>
-                  
-                </div>
-              </div>
-
-              
-              <div class="card">
-                <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-                <div class="card-body">
-                  <h5 class="card-title"> Resumen de creditos</h5> <hr>
-                  <h5>Total de la Cartera:</h5> <h4  style="color:#00adb5"> ₡ 150 000 000</h4>
-                  <h5>Creditos Otorgados:</h5> <h4  style="color:#00adb5"> ₡ 150 000 000</h4>
-                  <h5>Dias de Pago promedio:</h5> <h4  style="color:#00adb5"> 43 dias</h4>
-                  <h5>Total en Atraso</h5> <h4  style="color:#00adb5"> ₡ 2 650 000</h4>
-                  <h5>Cantidad de Clientes</h5> <h4  style="color:#00adb5"> 175</h4>
-
-                  <div class="container">
-                      <div class="row">
-                        <div class="col-lg">
-                          <h5><a href="#" class="btn btn-primary">Ver Clientes</a></h5>
-                          
-                        </div>
-                        <div class="col">
-                          <h5><a href="nuevoPrestamo.php" class="btn btn-primary">Crear Credito</a></h5>
-                        </div>
-
-                        <div class="col">
-                          <h5><a href="#" class="btn btn-primary">Ver Pagos</a></h5>
-                        </div>
-                        
-                      </div>
-                    </div>
-                  
-                  
-                
-                  
-                </div>
-              </div>
-            </div>  
-  </div><br><hr>
-
-  <!-- MAnipulacion de los graficos        -->
-  <script>
-            new Chart(document.getElementById("line-chart"), {
-                responsive:true,
-                type: 'line',
-                data: {
-                  labels: ["Enero","Febrero","Marzo","Abril","Mayo","Julio","Julio","Agosto","Septiembre","Octubre"],
-                  datasets: [{ 
-                      data: [5500000,1200000,800000,5670000,9900000,1687899,5550700,2300000,7980214,6878543],
-                      label: "Prestamos",
-                      borderColor: "#3e95cd",
-                      fill: false
-                    }
-                  ]
-                },
-                options: {
-                  title: {
-                    display: true,
-                    text: 'Total de Prestamos Otorgados'
-                  }
-                }
-              });
-            </script>
-
-
- 
-
-  <script>
-            new Chart(document.getElementById("line-chart2"), {
-                responsive: true,
-                type: 'radar',
-                data: {
-                  labels: ["Al dia","1-30","31-60","61-90","Mas de 90 dias"],
-                  datasets: [{ 
-                      data: [5500000,1200000,800000,5670000,9900000],
-                      label: "Prestamos",
-                      borderColor: "#3e95cd",
-                      fill: false
-                    }
-                  ]
-                },
-                options: {
-                  
-                  title: {
-                    display: true,
-                    text: 'Lista de Periodo de Atraso',
-                  }
-                  
-                }
-                
-              });
-    </script>
-
-<script>
-            new Chart(document.getElementById("pie-chart"), {
-                responsive: true,
-                type: 'pie',
-                data: {
-                  labels: ["Al dia","1-30","31-60","61-90","Mas de 90 dias"],
-                  datasets: [{ 
-                      data: [5500000,1200000,800000,5670000,9900000],
-                      label: "Prestamos",
-                      borderColor: "#3e95cd",
-                      fill: false
-                    }
-                  ]
-                },
-                options: {
-                  
-                  title: {
-                    display: true,
-                    text: 'Lista de Periodo de Atraso',
-                  }
-                  
-                }
-                
-              });
-    </script>
-
-<div class="container">
-
-</div>
-      
-<div class="container">
-  <div class="row">
-    <div class="col">
-          
-
-
-    </div>
-    
-  </div>
-  
-</div>
-
-
-
-            
-
-
-              <script>
-                new Chart(document.getElementById("line-chart1"), {
-                  type: 'pie',
-                  data: {
-                    labels: ["Al dia", "1-30", "31-60", "61-09", "Sobre 90"],
-                    datasets: [{
-                      label: "Analisis de Mora",
-                      backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-                      data: [2478,5267,734,784,433]
-                    }]
-                  },
-                  options: {
-                    title: {
-                      display: true,
-                      text: 'Atrasos por periodo'
-                    }
-
-
-                    
-                  }
-              });
-              </script>
-              
-
-
-              <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-              
-              <table class="table table-striped table-bordered myDataTable " style="width:100%; text-align:center" >
-              <thead class= "thead-dark">
-                  <tr>
-                      <th colspan="1" rowspan="2">Nombre</th>
-                      <!-- <th colspan="2" >Hr Information</th> -->
-                      <!-- <th colspan="3">Contact</th> -->
->>>>>>> e90219b47302d82c4d9aa683e2636f89eae7be42
 
                   </tr>
                   <tr>
@@ -426,13 +162,9 @@
                       <th>Prestamo ID </th>
                       <th>Fecha Apertura </th>
                       <th>Pago mensual </th>
-<<<<<<< HEAD
                       <th>Pago Solo Intereses </th>
                       <th>Pago Amortizacion </th>
                       <th>Analista </th>
-=======
-                      <th>Fecha de Pago </th>
->>>>>>> e90219b47302d82c4d9aa683e2636f89eae7be42
                       <th>Dias de Atraso </th>
                       <th>Total Atraso </th>
                       
@@ -446,7 +178,6 @@
               </thead>
                   
               <tbody>
-<<<<<<< HEAD
               <?php 
                   while($datos = mysqli_fetch_array($query3)){   
                     $id= $datos['LOAN_ID'];                     
@@ -481,259 +212,6 @@
              
              </td>
              
-=======
-              <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>121212</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
-                  <td>$320,800</td>
-                  <td>$1090</td>
-                  
-                  <td><a href="prestamosdetalle.php">Detalles</a></td>
-              </tr>
-
-              <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>121212</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
-                  <td>$320,800</td>
-                  <td>$1090</td>
-                  
-                  <td><a href="prestamosdetalle.php">Detalles</a></td>
-              </tr>
-
-              <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>121212</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
-                  <td>$320,800</td>
-                  <td>$1090</td>
-                  
-                  <td><a href="prestamosdetalle.php">Detalles</a></td>
-              </tr>
-
-              <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>121212</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
-                  <td>$320,800</td>
-                  <td>$1090</td>
-                  
-                  <td><a href="prestamosdetalle.php">Detalles</a></td>
-              </tr>
-
-              <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>121212</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
-                  <td>$320,800</td>
-                  <td>$1090</td>
-                  
-                  <td><a href="prestamosdetalle.php">Detalles</a></td>
-              </tr>
-
-              <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>121212</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
-                  <td>$320,800</td>
-                  <td>$1090</td>
-                  
-                  <td><a href="prestamosdetalle.php">Detalles</a></td>
-              </tr>
-
-              <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>121212</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
-                  <td>$320,800</td>
-                  <td>$1090</td>
-                  
-                  <td><a href="prestamosdetalle.php">Detalles</a></td>
-              </tr>
-
-              <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>121212</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
-                  <td>$320,800</td>
-                  <td>$1090</td>
-                  
-                  <td><a href="prestamosdetalle.php">Detalles</a></td>
-              </tr>
-
-              <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>121212</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
-                  <td>$320,800</td>
-                  <td>$1090</td>
-                  
-                  <td><a href="prestamosdetalle.php">Detalles</a></td>
-              </tr>
-
-              <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>121212</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
-                  <td>$320,800</td>
-                  <td>$1090</td>
-                  
-                  <td><a href="prestamosdetalle.php">Detalles</a></td>
-              </tr>
-
-              <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>121212</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
-                  <td>$320,800</td>
-                  <td>$1090</td>
-                  
-                  <td><a href="prestamosdetalle.php">Detalles</a></td>
-              </tr>
-
-              <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>121212</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
-                  <td>$320,800</td>
-                  <td>$1090</td>
-                  
-                  <td><a href="prestamosdetalle.php">Detalles</a></td>
-              </tr>
-
-              <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>121212</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
-                  <td>$320,800</td>
-                  <td>$1090</td>
-                  
-                  <td><a href="prestamosdetalle.php">Detalles</a></td>
-              </tr>
-
-              <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>121212</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
-                  <td>$320,800</td>
-                  <td>$1090</td>
-                  
-                  <td><a href="prestamosdetalle.php">Detalles</a></td>
-              </tr>
-
-              <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>121212</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
-                  <td>$320,800</td>
-                  <td>$1090</td>
-                  
-                  <td><a href="prestamosdetalle.php">Detalles</a></td>
-              </tr>
-
-              <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>121212</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
-                  <td>$320,800</td>
-                  <td>$1090</td>
-                  
-                  <td><a href="prestamosdetalle.php">Detalles</a></td>
-              </tr>
-
-              <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>121212</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
-                  <td>$320,800</td>
-                  <td>$1090</td>
-                  
-                  <td><a href="prestamosdetalle.php">Detalles</a></td>
-              </tr>
-
-              <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>121212</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
-                  <td>$320,800</td>
-                  <td>$1090</td>
-                  
-                  <td><a href="prestamosdetalle.php">Detalles</a></td>
-              </tr>
->>>>>>> e90219b47302d82c4d9aa683e2636f89eae7be42
 
 
               
