@@ -68,8 +68,13 @@ if($seguardaPago){
   }
 
   if($seguardaMonto){ 
+
+    $cuota2= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
+    $rowSaldo = mysqli_fetch_array($cuota2);
+    $saldoAbierto5 = $monto-$rowSaldo['CUOTA']; 
+
     $pago1 = "UPDATE amortization SET PAYMENT_AMOUNT = $monto WHERE AMORT_TABLE_ID = $pagoID";   
-    $saldo = "UPDATE amortization SET SALDO_PAGO_ABIERTO = $saldoAbierto WHERE AMORT_TABLE_ID = $pagoID";   
+    $saldo = "UPDATE amortization SET SALDO_PAGO_ABIERTO = $saldoAbierto5 WHERE AMORT_TABLE_ID = $pagoID";   
 
    $seguardaMonto= FALSE;  
            
@@ -80,7 +85,7 @@ if($seguardaPago){
         
    
             } else{
-                    echo 'ERROR: Could not able to execute $sqlMONTO. ' . mysqli_error($conn);
+                    echo 'ERROR: Could not able to execute $sqlSaldoAbierto. ' . mysqli_error($conn);
                 };        
                 
         
@@ -99,10 +104,10 @@ if($seguardaPago){
          
   
         }elseif ($multaDiff>0) {
-            $multaAGuardar = $multa;
+            $multaAGuardar = $montoMulta;
          
         }elseif ($multaDiff==0) {
-          $multaAGuardar = $multa;
+          $multaAGuardar = $montoMulta;
           
         }
         }else{
@@ -110,6 +115,7 @@ if($seguardaPago){
     }
     
     $multa1 = "UPDATE amortization SET MULTA_PAGADA = $multaAGuardar WHERE AMORT_TABLE_ID = $pagoID"; 
+
       if(mysqli_query($conn,$multa1)){
 
       }else{
