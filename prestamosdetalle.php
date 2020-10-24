@@ -653,6 +653,7 @@ MODAL DE PAGO -->
                                 <div class="col-sm-10">                                
                                 <label for="inputPassword3" class="col-lg-4 col-form-label"><span style="text-align:center" class="prestamoID"></span></label>
                                 <input type=""class= "idPrestamo" name = "idPrestamo" id= "idPrestamo">
+                                <input type=""class= "linea" name = "linea" id= "linea">
                             </div>         
           </div>
 

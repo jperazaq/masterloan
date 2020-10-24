@@ -69,17 +69,17 @@ if($seguardaPago){
 
   if($seguardaMonto){ 
 
-    $cuota2= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
-    $rowSaldo = mysqli_fetch_array($cuota2);
-    $saldoAbierto5 = $monto-$rowSaldo['CUOTA']; 
+    $cuota99= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
+    $rowSaldo99 = mysqli_fetch_array($cuota99);
+    $saldoAbierto99 = $monto-$rowSaldo99['CUOTA']; 
 
-    $pago1 = "UPDATE amortization SET PAYMENT_AMOUNT = $monto WHERE AMORT_TABLE_ID = $pagoID";   
-    $saldo = "UPDATE amortization SET SALDO_PAGO_ABIERTO = $saldoAbierto5 WHERE AMORT_TABLE_ID = $pagoID";   
+    $pago99 = "UPDATE amortization SET PAYMENT_AMOUNT = $monto WHERE AMORT_TABLE_ID = $pagoID";   
+    $saldo = "UPDATE amortization SET SALDO_PAGO_ABIERTO = $saldoAbierto99 WHERE AMORT_TABLE_ID = $pagoID";   
 
    $seguardaMonto= FALSE;  
            
 
-            if(mysqli_query($conn, $pago1)){      
+            if(mysqli_query($conn, $pago99)){      
                         
                                   
         
