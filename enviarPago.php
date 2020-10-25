@@ -26,6 +26,7 @@ if (isset($_POST['guardarPago'])){
     $cedulaCliente= $_GET['ID_NUMBER'];
     $idCliente= $_GET['CUSTOMER_ID'];
     $montoMulta= $_POST['multaPago'];
+    $montoMultaSaldoAbierto= $_POST['multaPago'];
 
     $newDate = date("Y-m-d", strtotime($payDate));
     
@@ -34,6 +35,7 @@ if (isset($_POST['guardarPago'])){
    
 };
 
+$montoMenosMulta = $monto - $montoMultaSaldoAbierto;
 
 
 //Guardar en tabla de pagos
@@ -68,13 +70,16 @@ if($seguardaPago){
   }
 
   if($seguardaMonto){ 
-
+    
     $cuota99= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
     $rowSaldo99 = mysqli_fetch_array($cuota99);
-    $saldoAbierto99 = $monto-$rowSaldo99['CUOTA']; 
+    $cuotaNuevaConMulta= $rowSaldo99['CUOTA']+$montoMultaSaldoAbierto;
+   
+    $saldoAbierto99 = $monto-$cuotaNuevaConMulta; 
+    echo $saldoAbierto99;
 
     $pago99 = "UPDATE amortization SET PAYMENT_AMOUNT = $monto WHERE AMORT_TABLE_ID = $pagoID";   
-    $saldo = "UPDATE amortization SET SALDO_PAGO_ABIERTO = $saldoAbierto99 WHERE AMORT_TABLE_ID = $pagoID";   
+    $saldo = "UPDATE amortization SET SALDO_PAGO_ABIERTO  = $saldoAbierto99 WHERE AMORT_TABLE_ID = $pagoID";   
 
    $seguardaMonto= FALSE;  
            
@@ -128,27 +133,27 @@ if($seguardaPago){
   }
 
 
-  if($seguardaAbierto){ 
+  // if($seguardaAbierto){ 
 
-    $cuota1= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
-    $rowSaldo = mysqli_fetch_array($cuota1);
-    $saldoAbierto = $monto-$rowSaldo['CUOTA'];  
+  //   $cuota1= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
+  //   $rowSaldo = mysqli_fetch_array($cuota1);
+  //   $saldoAbierto = $monto-$rowSaldo['CUOTA'];  
      
-    $saldo = "UPDATE amortization SET SALDO_PAGO_ABIERTO = $saldoAbierto WHERE AMORT_TABLE_ID = $pagoID";   
+  //   $saldo = "UPDATE amortization SET SALDO_PAGO_ABIERTO = $saldoAbierto WHERE AMORT_TABLE_ID = $pagoID";   
 
-   $seguardaAbierto= FALSE;  
+  //  $seguardaAbierto= FALSE;  
            
 
-            if(mysqli_query($conn, $saldo)){      
+  //           if(mysqli_query($conn, $saldo)){      
          
    
-            } else{
-                    echo 'ERROR: Could not able to execute $sqlMONTO. ' . mysqli_error($conn);
-                };        
+  //           } else{
+  //                   echo 'ERROR: Could not able to execute $sqlMONTO. ' . mysqli_error($conn);
+  //               };        
                 
         
                 
-  }
+  // }
 
 
   if($seguardaSaldoInt){ 
@@ -156,20 +161,23 @@ if($seguardaPago){
     $cuota2= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
     $rowSaldo2 = mysqli_fetch_array($cuota2); 
     $interes = $rowSaldo2['INTEREST_AMOUNT'];   
-    $alcanzaPago1 = $monto-$interes;
-
+    $alcanzaPago1 = ($monto-$montoMulta)-$interes;
+    echo $alcanzaPago1;
         if($alcanzaPago1<0){
             
-            $saldoAbiertoInt = $monto- $interes;
+            $saldoAbiertoInt = $montoMenosMulta- $interes;
+            $pagoDeIntereses = $montoMenosMulta;
             
         }
         elseif ($alcanzaPago1>=0) {
             $cubreinteres1 =$interes;
             $saldoAbiertoInt = $cubreinteres1-$interes;
+            $pagoDeIntereses = $interes;
             
               };  
     
-    $saldoInt2 = "UPDATE amortization SET SALDO_ABIERTO_INTERESES= $saldoAbiertoInt WHERE AMORT_TABLE_ID = $pagoID";   
+    $saldoInt2 = "UPDATE amortization SET SALDO_ABIERTO_INTERESES= $saldoAbiertoInt WHERE AMORT_TABLE_ID = $pagoID"; 
+    $saldoInt2 = "UPDATE amortization SET INTERESES_PAGADOS= $pagoDeIntereses WHERE AMORT_TABLE_ID = $pagoID";     
 
    $seguardaSaldoInt= FALSE;  
            
@@ -193,7 +201,7 @@ if($seguardaPago){
         
     
             if($alcanzaPago1>$interes){
-                $restaSaldo = $monto-$interes;
+                $restaSaldo = $montoMenosMulta-$interes;
                 $saldoAbiertoInt3 = $restaSaldo- $amortization;
                
               
@@ -231,7 +239,7 @@ if($seguardaPago){
     
             if($alcanzaPago1>$interes){
            
-                $amortizacionPagada = $monto-$interes;
+                $amortizacionPagada = $montoMenosMulta-$interes;
               
             }
             elseif ($alcanzaPago1<=$interes) {
