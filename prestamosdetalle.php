@@ -4,6 +4,7 @@
     <?php
     include  ('conexion.php');
     include  ('enviarPago.php');
+    include  ('enviarSaldoPendiente.php');
     include  ('enviarComentario.php');
     session_start();  
     $varsession = $_SESSION['emailsess'];
@@ -83,7 +84,7 @@
     $query24 = mysqli_query($conn,"SELECT MAX(ARREAR) FROM amortization WHERE CUSTOMER_ID = $customers_id");
     
     $query25 = mysqli_query($conn,"SELECT payments.PAYMENT_ID, payments.CUSTOMER_ID_NUMBER, payments.PAYMENT_AMOUNT, payments.PAYMENT_DATE1, payments.PAYMENT_METHOD, payments.FINANCIAL_INSTITUTION, payments.PAYMENT_REFERENCE,
-    payments.CUSTOMER_ID, amortization.PAYMENT_DATE,  amortization.ARREAR, amortization.LOAN_ID, amortization.SALDO_PAGO_ABIERTO, amortization.PAY_DATE_RECEIVED, amortization.NUM_PAGO FROM payments AS payments INNER JOIN amortization AS AMORTIZATION 
+    payments.CUSTOMER_ID, amortization.PAYMENT_DATE,  amortization.ARREAR, amortization.LOAN_ID, amortization.AMORT_TABLE_ID,amortization.SALDO_PAGO_ABIERTO, amortization.PAY_DATE_RECEIVED, amortization.NUM_PAGO FROM payments AS payments INNER JOIN amortization AS AMORTIZATION 
     ON payments.AMORT_TABLE_ID = amortization.AMORT_TABLE_ID WHERE payments.LOAN_ID = $loan_id ");
 
     $query26 = mysqli_query($conn, "SELECT  * FROM  amortization WHERE LOAN_ID = $loan_id");
@@ -724,6 +725,146 @@ MODAL DE PAGO -->
       </div>
     </div>
 
+    <!-- Final del modal -->
+
+
+<!-- 
+MODAL DE PAGO PENDIENTE -->
+   
+<div class="modal fade exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modalPendiente">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        
+        <form action="" method='post'>
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Registrar Pago Pendiente </h5>
+        </div>
+        <div class="modal-body">
+
+        <h1 style="text-align:center">TOTAL A PAGAR</h1><hr>
+        <h1 style="text-align:center" ><span class="pendiente"></span></h1><hr>
+
+
+      
+       
+        
+        
+
+        <?php 
+    while($datos6 = mysqli_fetch_array($query6)){  
+      $idCliente= $datos6['CUSTOMER_ID'];
+      ?>
+
+<div class="form-group row">
+                <label for="inputPassword3" class="col-sm-2 col-form-label">ID Cliente</label>
+                <div class="col-lg-10">
+
+                <label for="<?php $datos6['CUSTOMER_ID'] ?>" type="text" class="col-sm-2 col-form-label" id="idCliente" name="idCliente" ><?php echo $datos6['CUSTOMER_ID'] ?></label>
+                
+                </div>
+
+                <label for="customerCedula" class="col-sm-2 col-form-label">Cedula</label>
+                <div class="col-lg-10">
+
+                <label for="text  " class="col-sm-4 col-form-label " style ="size:100%"><?php echo $datos6['ID_NUMBER'] ?></label>
+                
+                </div>
+        </div>
+
+       
+    <?php }?>
+         
+
+        <div class="form-group row">
+                                <label for="inputPassword3" class="col-sm-2 col-form-label">Credito</label>
+                                <div class="col-sm-10">                                
+                                <label for="inputPassword3" class="col-lg-4 col-form-label"><span style="text-align:center" class="prestamoID"></span></label>
+                                <input type=""class= "idPrestamoPen" name = "idPrestamoPen" id= "idPrestamoPen">
+                                <input type=""class= "lineaPendiente" name = "lineaPendiente" id= "lineaPendiente">
+                            </div>         
+          </div>
+
+          <div class="form-group row" method ="POST">
+                                <label for="inputPassword3" class="col-sm-2 col-form-label">Aplicar a Cuota</label>
+                                <div class="col-sm-10">                                
+
+                                <label for="inputPassword3" class="col-lg-4 col-form-label"><span style="text-align:center" value="numCuota" id="numCuota" name= "numCuota" class="numCuota"></span></label>                 
+                                     <input type=""class= "cuotaNumPen" name = "cuotaNumPen" id= "cuotaNumPen">
+                            </div>         
+          </div>
+
+
+
+          <div class="form-group row">
+                                <label for="inputPassword3" class="col-sm-2 col-form-label">Metodo de Pago</label>
+                                <div class="col-sm-10">                                
+
+                                <select  class="custom-select my-1 mr-sm-2" id="metodo" name="metodo" required>
+                                    <option selected>Seleccione...</option>
+                                    <option value="efectivo">Efectivo</option>
+                                    <option value="transferencia_bancaria" >Transferencia Bancaria</option>
+                                    <option value="otro">Otro</option>
+
+                                    
+                                       
+                                </select>                           
+                                     
+                            </div>         
+          </div>
+        <div class="form-group row">
+                <label for="inputPassword3" class="col-sm-2 col-form-label">Monto del Pago</label>
+                <div class="col-sm-10">
+                <input type="text" class="form-control" id="montoPrestamo" name= "montoPagoPendiente" placeholder=" Ejemplo: 250,000" required>
+                </div>
+        </div>
+
+        <div class="form-group row">
+                <label for="inputPassword3" class="col-sm-2 col-form-label">Banco</label>
+                <div class="col-sm-10">
+                <input type="text" class="form-control" id="montoPrestamo" name= "banco" placeholder=" Ejemplo: BAC, Banco Nacional, BCR" required>
+                </div>
+        </div>
+
+        <div class="form-group row">
+                <label for="inputPassword3" class="col-sm-2 col-form-label">Numero de Recibo</label>
+                <div class="col-sm-10">
+                <input type="text" class="form-control" id="montoPrestamo" name= "numRecibo" placeholder=" Ejemplo: 256352 " required>
+                </div>
+        </div>
+
+        <div class="form-group row">
+                <label for="inputPassword3" class="col-sm-2 col-form-label">Fecha</label>
+                <div class="col-sm-10">
+                <input type="date" class="form-control" id="fecha_pago" name= "fecha_pago" placeholder="  " required>
+                </div>
+        </div>
+        
+
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+        <button type="submit" class="btn btn-primary"id="guardarPagoPendiente" name="guardarPagoPendiente">Registrar Pago</button>
+
+        </div>
+        </form>
+    </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final del modal de pago pendiente -->
+
+
+
+
+
+
+
+
+
+
+
+
+
     <button type=""  class="btn btn-primary" data-target=".exampleModal" data-toggle="modal">Registrar Pago </button >
 
     <a href="nuevoPrestamo.php" class="btn btn-primary">Crear nuevo credito</a>
@@ -1007,6 +1148,7 @@ MODAL DE PAGO -->
         <th>Numero de Deposito </th>
         <th>ID Prestamo</th>        
         <th>Banco Deposito</th>
+        <th>Pagar Pendiente</th>
        
         
                          
@@ -1029,10 +1171,20 @@ MODAL DE PAGO -->
     <td><?php echo $pagosTabla['NUM_PAGO'] ?></td>
     <td><?php echo number_format($pagosTabla['PAYMENT_AMOUNT'],2) ?></td>
     <td><?php echo number_format($pagosTabla['ARREAR'],2) ?></td>
-    <td><?php echo number_format($pagosTabla['SALDO_PAGO_ABIERTO'],2) ?></td>
+    <td>
+     <?php echo $pagosTabla['SALDO_PAGO_ABIERTO'];  ?>
+    </td>
     <td><?php echo $pagosTabla['PAYMENT_REFERENCE'] ?></td>
     <td><?php echo $pagosTabla['LOAN_ID'] ?></td>
     <td><?php echo $pagosTabla['FINANCIAL_INSTITUTION'] ?></td>
+
+
+    <td><a type="" href="#modalPendiente" numLinea=<?php echo 
+     $pagosTabla['AMORT_TABLE_ID']; ?>  numCuota=<?php echo  $pagosTabla['NUM_PAGO']; ?> 
+     prestamoID=<?php echo $pagosTabla['LOAN_ID']  ?> 
+     cuota= "<?php echo number_format($pagosTabla['SALDO_PAGO_ABIERTO'],2) ?>"  
+     multa="<?php echo $multaAPagar1 ?>"  data-toggle="modal" 
+     monto="<?php echo abs( number_format($pagosTabla['SALDO_PAGO_ABIERTO'],2))  ?>">Registrar Pago </a ></td>
     
     
 
@@ -1042,6 +1194,39 @@ MODAL DE PAGO -->
 
 
 <?php } ?>
+
+
+<script type="text/javascript">
+    $(function () {
+            $("a").click(function (e) {
+                e.preventDefault();
+                var id = $(this).attr('monto');
+               var id1= $(".ids").html(id)
+               var multa = $(this).attr('multa');
+               var cuota =  $(this).attr('cuota');
+               var prestamoID = $(this).attr('prestamoID');
+               var numCuota = $(this).attr('numCuota');
+               var tableID = $(this).attr('numLinea');
+              
+                $(".pendiente").html(id);
+                $(".multa").html(multa);
+                $(".cuota").html(cuota);
+                $(".prestamoID").html(prestamoID);
+                $(".numCuota").html(numCuota);
+                $("#cuotaNumPen").val(numCuota);
+                $('#multaPago').val(multa);
+                $('#idPrestamoPen').val(prestamoID);
+                $('#lineaPendiente').val(tableID);
+
+                console.log(id);
+               
+                return id;
+
+              
+            })
+        })
+    </script>
+
 
 
     </tbody>
@@ -1271,7 +1456,7 @@ MODAL DE PAGO -->
     </script>
 
 
-    </tbody>
+    
 
     
     </table><hr>

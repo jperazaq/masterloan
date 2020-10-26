@@ -86,14 +86,14 @@ if($seguardaPago){
 
             if(mysqli_query($conn, $pago99)){      
                         
-                                  
+                            
         
    
             } else{
                     echo 'ERROR: Could not able to execute $sqlSaldoAbierto. ' . mysqli_error($conn);
                 };        
                 
-        
+                $seguardaMonto= FALSE;   
                 
   }
 
@@ -133,27 +133,27 @@ if($seguardaPago){
   }
 
 
-  // if($seguardaAbierto){ 
+  if($seguardaAbierto){ 
 
-  //   $cuota1= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
-  //   $rowSaldo = mysqli_fetch_array($cuota1);
-  //   $saldoAbierto = $monto-$rowSaldo['CUOTA'];  
+    $cuota1= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
+    $rowSaldo = mysqli_fetch_array($cuota1);
+    $saldoAbierto = $rowSaldo['CUOTA']+$montoMulta-$monto;  
      
-  //   $saldo = "UPDATE amortization SET SALDO_PAGO_ABIERTO = $saldoAbierto WHERE AMORT_TABLE_ID = $pagoID";   
+    $saldo = "UPDATE amortization SET SALDO_PAGO_ABIERTO = $saldoAbierto WHERE AMORT_TABLE_ID = $pagoID";   
 
-  //  $seguardaAbierto= FALSE;  
+     
            
 
-  //           if(mysqli_query($conn, $saldo)){      
+            if(mysqli_query($conn, $saldo)){      
          
    
-  //           } else{
-  //                   echo 'ERROR: Could not able to execute $sqlMONTO. ' . mysqli_error($conn);
-  //               };        
+            } else{
+                    echo 'ERROR: Could not able to execute $sqlMONTO. ' . mysqli_error($conn);
+                };        
                 
-        
+                $seguardaAbierto= FALSE;
                 
-  // }
+  }
 
 
   if($seguardaSaldoInt){ 
@@ -176,20 +176,32 @@ if($seguardaPago){
             
               };  
     
-    $saldoInt2 = "UPDATE amortization SET SALDO_ABIERTO_INTERESES= $saldoAbiertoInt WHERE AMORT_TABLE_ID = $pagoID"; 
+    $saldoInt1 = "UPDATE amortization SET SALDO_ABIERTO_INTERESES= $saldoAbiertoInt WHERE AMORT_TABLE_ID = $pagoID"; 
+   
     $saldoInt2 = "UPDATE amortization SET INTERESES_PAGADOS= $pagoDeIntereses WHERE AMORT_TABLE_ID = $pagoID";     
 
-   $seguardaSaldoInt= FALSE;  
+  
            
 
-            if(mysqli_query($conn, $saldoInt2)){      
+            if(mysqli_query($conn, $saldoInt1)){      
         
    
             } else{
                     echo 'ERROR: Could not able to execute $sqlMONTO. ' . mysqli_error($conn);
                 };        
-                
+
+          if(mysqli_query($conn, $saldoInt2)){      
+  
+
+          } else{
+                  echo 'ERROR: Could not able to execute $sqlMONTO. ' . mysqli_error($conn);
+              };        
+          $seguardaSaldoInt= FALSE;  
     }
+
+
+
+    // Guardar Pago de intereses
 
 
     if($seguardaSaldoAmort){ 
@@ -216,7 +228,7 @@ if($seguardaPago){
          $saldoInt3 = "UPDATE amortization SET SALDO_ABIERTO_CUOTA= $saldoAbiertoInt3 WHERE AMORT_TABLE_ID = $pagoID"; 
            
     
-    $seguardaSaldoAmort= FALSE;  
+   
                
     
                 if(mysqli_query($conn, $saldoInt3)){      
@@ -225,7 +237,7 @@ if($seguardaPago){
                  } else{
                          echo 'ERROR: Could not able to execute $sqlMONTO. ' . mysqli_error($conn);
                  };        
-                    
+                 $seguardaSaldoAmort= FALSE;      
       }
 
 
@@ -251,7 +263,7 @@ if($seguardaPago){
          
          $saldoInt004 = "UPDATE amortization SET AMORTIZACION_PAGADA= $amortizacionPagada WHERE AMORT_TABLE_ID = $pagoID";     
     
-    $seguardaAmortPagada= FALSE;  
+   
                
     
                 if(mysqli_query($conn, $saldoInt004)){      
@@ -260,7 +272,7 @@ if($seguardaPago){
                  } else{
                          echo 'ERROR: Could not able to execute $sqlaMORTI. ' . mysqli_error($conn);
                  };        
-                    
+                 $seguardaAmortPagada= FALSE;  
       }
 
 
@@ -270,8 +282,7 @@ if($seguardaPago){
         
     $date10 = "UPDATE amortization SET PAY_DATE_RECEIVED= '$newDate' WHERE AMORT_TABLE_ID = '$pagoID'";   
      
-    $seguardaFecha= FALSE;  
-               
+
      
                 if(mysqli_query($conn, $date10)){      
             
@@ -279,7 +290,8 @@ if($seguardaPago){
                  } else{
                          echo 'ERROR: Could not able to execute $sqlFecha. ' . mysqli_error($conn);
                  };        
-                    
+                 $seguardaFecha= FALSE;  
+                         
      }
 
 
@@ -304,7 +316,7 @@ if($seguardaPago){
         
         $date12 = "UPDATE amortization SET LATE_DAYS= $interval1 WHERE AMORT_TABLE_ID = $pagoID";   
         // echo $payDate;
-        $seguardaDias= FALSE;  
+         
                    
          
                     if(mysqli_query($conn, $date12)){      
@@ -313,7 +325,7 @@ if($seguardaPago){
                      } else{
                              echo 'ERROR: Could not able to execute $sqlFecha. ' . mysqli_error($conn);
                      };        
-                        
+                     $seguardaDias= FALSE;      
          }
 
 ?>
