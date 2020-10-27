@@ -27,6 +27,7 @@ if (isset($_POST['guardarPago'])){
     $idCliente= $_GET['CUSTOMER_ID'];
     $montoMulta= $_POST['multaPago'];
     $montoMultaSaldoAbierto= $_POST['multaPago'];
+    $seguardaAbiertoenPayments = TRUE;
 
     $newDate = date("Y-m-d", strtotime($payDate));
     
@@ -44,10 +45,19 @@ if($seguardaPago){
    
     $cedulaCliente= $_GET['ID_NUMBER'];
     $idCliente= $_GET['CUSTOMER_ID'];
-    
+    $saldoPendienteARestar= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
 
-    $sql = "INSERT INTO payments (CUSTOMER_ID_NUMBER, PAYMENT_AMOUNT, PAYMENT_DATE1, PAYMENT_REFERENCE,PAYMENT_METHOD, FINANCIAL_INSTITUTION, CUSTOMER_ID, LOAN_ID,AMORT_TABLE_ID)
-            VALUES ('$cedulaCliente','$monto','$fechaPago', '$recibo', '$metodo',  '$banco', '$idCliente','$prestamo','$pagoID')";
+    $cuota55= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
+    $rowSaldo55 = mysqli_fetch_array($cuota55);
+    $cuotaNuevaConMulta55= $rowSaldo55['CUOTA']+$montoMultaSaldoAbierto;
+   
+    $saldoAbierto55 = $cuotaNuevaConMulta55-$monto; 
+    echo $saldoAbierto55;
+
+
+
+    $sql = "INSERT INTO payments (CUSTOMER_ID_NUMBER, PAYMENT_AMOUNT, SALDO_PENDIENTE, PAYMENT_DATE1, PAYMENT_REFERENCE,PAYMENT_METHOD, FINANCIAL_INSTITUTION, CUSTOMER_ID, LOAN_ID,AMORT_TABLE_ID)
+            VALUES ('$cedulaCliente','$monto','$saldoAbierto55','$fechaPago', '$recibo', '$metodo',  '$banco', '$idCliente','$prestamo','$pagoID')";
             $seguardaPago = false;
 
             
@@ -134,26 +144,71 @@ if($seguardaPago){
 
 
   if($seguardaAbierto){ 
+    
 
     $cuota1= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
     $rowSaldo = mysqli_fetch_array($cuota1);
     $saldoAbierto = $rowSaldo['CUOTA']+$montoMulta-$monto;  
      
     $saldo = "UPDATE amortization SET SALDO_PAGO_ABIERTO = $saldoAbierto WHERE AMORT_TABLE_ID = $pagoID";   
+   
 
-     
+
+    if(mysqli_query($conn, $saldo)){      
+         
+   
+    } else{
+            echo 'ERROR: Could not able to execute $sqlMONTO. ' . mysqli_error($conn);
+        };        
            
 
             if(mysqli_query($conn, $saldo)){      
          
    
             } else{
-                    echo 'ERROR: Could not able to execute $sqlMONTO. ' . mysqli_error($conn);
+                    echo 'ERROR:NO se puede guardar saldo abierto en amortizacion. ' . mysqli_error($conn);
                 };        
                 
                 $seguardaAbierto= FALSE;
                 
   }
+
+
+  // if($seguardaAbiertoenPayments){ 
+
+
+
+  //   $cuota55= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
+  //   $rowSaldo55 = mysqli_fetch_array($cuota55);
+  //   $cuotaNuevaConMulta55= $rowSaldo55['CUOTA']+$montoMultaSaldoAbierto;
+   
+  //   $saldoAbierto55 = $cuotaNuevaConMulta55-$monto; 
+  //   echo $saldoAbierto55;
+
+    
+      
+  //   $saldoAbiertoEnPayments = "INSERT INTO payments (SALDO_PENDIENTE) VALUES '$saldoAbierto55' ";
+
+
+  //   if(mysqli_query($conn, $saldoAbiertoEnPayments)){      
+         
+   
+  //   } else{
+  //           echo 'NO SE PUEDO AGREGAR EL SALDO ABIERTO EN PAYMENTS ' . mysqli_error($conn);
+  //       };        
+           
+
+                
+                
+  //               $seguardaAbiertoenPayments= FALSE;
+                
+  // }
+
+
+
+
+
+
 
 
   if($seguardaSaldoInt){ 
@@ -187,14 +242,14 @@ if($seguardaPago){
         
    
             } else{
-                    echo 'ERROR: Could not able to execute $sqlMONTO. ' . mysqli_error($conn);
+                    echo 'ERROR: No se pudo guardar intereses. ' . mysqli_error($conn);
                 };        
 
           if(mysqli_query($conn, $saldoInt2)){      
   
 
           } else{
-                  echo 'ERROR: Could not able to execute $sqlMONTO. ' . mysqli_error($conn);
+                  echo 'ERROR: No se pudo guardar intereses. ' . mysqli_error($conn);
               };        
           $seguardaSaldoInt= FALSE;  
     }
@@ -235,7 +290,7 @@ if($seguardaPago){
             
        
                  } else{
-                         echo 'ERROR: Could not able to execute $sqlMONTO. ' . mysqli_error($conn);
+                         echo 'ERROR: No se pudo guardar amortizacion. ' . mysqli_error($conn);
                  };        
                  $seguardaSaldoAmort= FALSE;      
       }

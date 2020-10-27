@@ -91,8 +91,8 @@ if($seguardaPagoPendiente){
     
     $saldoAbiertoPendiente = $querySaldoPendienteARestar['SALDO_PAGO_ABIERTO'] - $monto;
 
-    $sql = "INSERT INTO payments (CUSTOMER_ID_NUMBER, PAGO_PENDIENTE, SALDO_PENDIENTE, PAYMENT_DATE1, PAYMENT_REFERENCE,PAYMENT_METHOD, FINANCIAL_INSTITUTION, CUSTOMER_ID, LOAN_ID,AMORT_TABLE_ID)
-            VALUES ('$cedulaCliente','$monto', '$saldoAbiertoPendiente','$fechaPago', '$recibo', '$metodo',  '$banco', '$idCliente','$prestamo','$pagoID')";
+    $sql = "INSERT INTO payments (CUSTOMER_ID_NUMBER, PAYMENT_AMOUNT,PAGO_PENDIENTE, SALDO_PENDIENTE, PAYMENT_DATE1, PAYMENT_REFERENCE,PAYMENT_METHOD, FINANCIAL_INSTITUTION, CUSTOMER_ID, LOAN_ID,AMORT_TABLE_ID)
+            VALUES ('$cedulaCliente','$monto','$monto', '$saldoAbiertoPendiente','$fechaPago', '$recibo', '$metodo',  '$banco', '$idCliente','$prestamo','$pagoID')";
            
 
             

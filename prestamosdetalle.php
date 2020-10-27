@@ -83,7 +83,7 @@
 
     $query24 = mysqli_query($conn,"SELECT MAX(ARREAR) FROM amortization WHERE CUSTOMER_ID = $customers_id");
     
-    $query25 = mysqli_query($conn,"SELECT payments.PAYMENT_ID, payments.CUSTOMER_ID_NUMBER, payments.PAYMENT_AMOUNT, payments.PAYMENT_DATE1, payments.PAYMENT_METHOD, payments.FINANCIAL_INSTITUTION, payments.PAYMENT_REFERENCE,
+    $query25 = mysqli_query($conn,"SELECT payments.PAYMENT_ID, payments.SALDO_PENDIENTE,payments.CUSTOMER_ID_NUMBER, payments.PAYMENT_AMOUNT, payments.PAYMENT_DATE1, payments.PAYMENT_METHOD, payments.FINANCIAL_INSTITUTION, payments.PAYMENT_REFERENCE,
     payments.CUSTOMER_ID, amortization.PAYMENT_DATE,  amortization.ARREAR, amortization.LOAN_ID, amortization.AMORT_TABLE_ID,amortization.SALDO_PAGO_ABIERTO, amortization.PAY_DATE_RECEIVED, amortization.NUM_PAGO FROM payments AS payments INNER JOIN amortization AS AMORTIZATION 
     ON payments.AMORT_TABLE_ID = amortization.AMORT_TABLE_ID WHERE payments.LOAN_ID = $loan_id ");
 
@@ -231,7 +231,7 @@ echo $cuotaAPagar;
     </head>
     <body>
     <div class= "wrapper " >
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" style="height: 50px;color:#222831; ">
+<!-- <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" style="height: 50px;color:#222831; ">
     <a href="#" class="navbar-brand">Master Loan</a>
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
@@ -252,7 +252,7 @@ echo $cuotaAPagar;
         </div>
     </div>
 </nav>
-</div>
+</div> -->
 
     <div class="wrapper d-flex align-items-stretch" >
     <nav id="sidebar" class="active " style="background-color:#343a40" >
@@ -1172,7 +1172,7 @@ MODAL DE PAGO PENDIENTE -->
     <td><?php echo number_format($pagosTabla['PAYMENT_AMOUNT'],2) ?></td>
     <td><?php echo number_format($pagosTabla['ARREAR'],2) ?></td>
     <td>
-     <?php echo $pagosTabla['SALDO_PAGO_ABIERTO'];  ?>
+     <?php echo $pagosTabla['SALDO_PENDIENTE'];  ?>
     </td>
     <td><?php echo $pagosTabla['PAYMENT_REFERENCE'] ?></td>
     <td><?php echo $pagosTabla['LOAN_ID'] ?></td>
