@@ -742,8 +742,8 @@ MODAL DE PAGO PENDIENTE -->
         <div class="modal-body">
 
         <h1 style="text-align:center">TOTAL A PAGAR</h1><hr>
-        <h1 style="text-align:center" ><span class="pendiente"></span></h1><hr>
-
+        <h1 style="text-align:center" ><span class="pendiente" id="cuota"></span></h1><hr>
+        <input type=""class= "pendinte" name = "pendiente" id= "pendiente">
 
       
        
@@ -970,7 +970,7 @@ MODAL DE PAGO PENDIENTE -->
           if($aging['ARREAR']<=0){
             
           $totalAPagar1 = $totalAPagar1+$aging['AMORTIZATION'];
-          $aldia= $aldia+$aging['AMORTIZATION'];          
+          $aldia= $aldia+($aging['AMORTIZATION']);          
           
           
           }
@@ -1001,13 +1001,13 @@ MODAL DE PAGO PENDIENTE -->
     
     }
       //  
-  $alDiaFinal = $aldia+$aldiaPendiente; 
+  
   $unoTreintaFinal=$unoTreinta+$unoTreintaFinal;
   $treintaSesentaFinal=$treintaSesenta+$treintaSesentaPendiente;
   $sesentanoventaFinal = $sesentanoventa+$sesentanoventaPendiente;
   $over90Final=$over90+$over90Pendiente;
-  $totalAPagarfinal = $totalAPagar1+$totalAPagar2;
-
+  $totalAPagarfinal = $saldoTotalPrestamos;
+  $alDiaFinal = $saldoTotalPrestamos-$unoTreintaFinal-$treintaSesentaFinal-$sesentanoventaFinal-$over90Final; 
 ?>
         <th ><?php echo number_format($alDiaFinal,2) ?></th>
         <th scope="row"><?php echo number_format(($alDiaFinal/$totalAPagarfinal)*100,0) ?></th>
@@ -1184,7 +1184,7 @@ MODAL DE PAGO PENDIENTE -->
      prestamoID=<?php echo $pagosTabla['LOAN_ID']  ?> 
      cuota= "<?php echo number_format($pagosTabla['SALDO_PAGO_ABIERTO'],2) ?>"  
      multa="<?php echo $multaAPagar1 ?>"  data-toggle="modal" 
-     monto="<?php echo abs( number_format($pagosTabla['SALDO_PAGO_ABIERTO'],2))  ?>">Registrar Pago </a ></td>
+     monto="<?php echo abs( number_format($pagosTabla['SALDO_PENDIENTE'],2))  ?>">Registrar Pago </a ></td>
     
     
 
@@ -1210,13 +1210,14 @@ MODAL DE PAGO PENDIENTE -->
               
                 $(".pendiente").html(id);
                 $(".multa").html(multa);
-                $(".cuota").html(cuota);
+                $(".cuota").html(id);
                 $(".prestamoID").html(prestamoID);
                 $(".numCuota").html(numCuota);
                 $("#cuotaNumPen").val(numCuota);
                 $('#multaPago').val(multa);
                 $('#idPrestamoPen').val(prestamoID);
                 $('#lineaPendiente').val(tableID);
+                $('#pendiente').val(id);
 
                 console.log(id);
                
@@ -1264,7 +1265,7 @@ MODAL DE PAGO PENDIENTE -->
       
       $cuotasPorPagar=0;
       while($cuotasAbiertas = mysqli_fetch_array($query26)){
-        if($cuotasAbiertas['PAYMENT_AMOUNT'] <=0){
+        if($cuotasAbiertas['PAYMENT_AMOUNT'] >=0){
           $cuotasPorPagar+=1;
         }
       }
@@ -1281,7 +1282,7 @@ MODAL DE PAGO PENDIENTE -->
       <?php   
         
         $lateAmount2 = 0;
-        $lateAmount= number_format( $lateAmount2,2);
+        $lateAmount2= number_format( $lateAmount2,2);
         while($payDateAmounts2 = mysqli_fetch_array($query28)){
 
           if($payDateAmounts2['ARREAR']>0){

@@ -13,6 +13,7 @@ if (isset($_POST['guardarPagoPendiente'])){
     $metodo = $_POST['metodo'];
     $loan_id = $_GET['LOANID'];
     $pagoID = $_POST['lineaPendiente'];
+    $cuotaAPagar = $_POST['pendiente'];
     $payDate = $_POST['fecha_pago'];    
     $seguardaSaldoFinal = TRUE;
     $seguardaMonto = TRUE;
@@ -40,7 +41,7 @@ if (isset($_POST['guardarPagoPendiente'])){
 if($seguardaMonto){  
 
 
-   $pagoPendiente= "UPDATE amortization SET SALDO_PENDIENTE_PAGADO = $monto WHERE AMORT_TABLE_ID = $pagoID";
+   $pagoPendiente= "INSERT INTO payments (PAYMENT_AMOUNT) VALUES '$monto' WHERE AMORT_TABLE_ID = $pagoID";
 
 
 if(mysqli_query($conn, $pagoPendiente)){      
@@ -59,24 +60,24 @@ if(mysqli_query($conn, $pagoPendiente)){
 
 
 // Actualizar Saldo Final
-if($seguardaSaldoFinal){
-    $nuevoSaldoPendiente= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
-    $querySaldoPendiente = mysqli_fetch_array($nuevoSaldoPendiente);
+// if($seguardaSaldoFinal){
+//     $nuevoSaldoPendiente= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
+//     $querySaldoPendiente = mysqli_fetch_array($nuevoSaldoPendiente);
 
-    $nuevoSaldoPendienteFinal = $querySaldoPendiente['SALDO_PAGO_ABIERTO']-$monto;
+//     $nuevoSaldoPendienteFinal = $querySaldoPendiente['SALDO_PAGO_ABIERTO']-$monto;
 
-    $actualizarSaldoFinal = "UPDATE amortization SET SALDO_PAGO_ABIERTO = $nuevoSaldoPendienteFinal WHERE AMORT_TABLE_ID = $pagoID";
-}
-if(mysqli_query($conn, $actualizarSaldoFinal)){      
+//     $actualizarSaldoFinal = "UPDATE amortization SET SALDO_PAGO_ABIERTO = $nuevoSaldoPendienteFinal WHERE AMORT_TABLE_ID = $pagoID";
+// }
+// if(mysqli_query($conn, $actualizarSaldoFinal)){      
                         
                             
         
    
-} else{
-        echo 'ERROR: Could not able to execute $pagoPendiente. ' . mysqli_error($conn);
-    };        
+// } else{
+//         echo 'ERROR: Could not able to execute $pagoPendiente. ' . mysqli_error($conn);
+//     };        
     
-    $seguardaMonto= FALSE;   
+//     $seguardaMonto= FALSE;   
 
 // Guardar en tabla de Pago
 
@@ -89,7 +90,7 @@ if($seguardaPagoPendiente){
     $saldoPendienteARestar= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
     $querySaldoPendienteARestar = mysqli_fetch_array($saldoPendienteARestar);
     
-    $saldoAbiertoPendiente = $querySaldoPendienteARestar['SALDO_PAGO_ABIERTO'] - $monto;
+    $saldoAbiertoPendiente = $cuotaAPagar - $monto;
 
     $sql = "INSERT INTO payments (CUSTOMER_ID_NUMBER, PAYMENT_AMOUNT,PAGO_PENDIENTE, SALDO_PENDIENTE, PAYMENT_DATE1, PAYMENT_REFERENCE,PAYMENT_METHOD, FINANCIAL_INSTITUTION, CUSTOMER_ID, LOAN_ID,AMORT_TABLE_ID)
             VALUES ('$cedulaCliente','$monto','$monto', '$saldoAbiertoPendiente','$fechaPago', '$recibo', '$metodo',  '$banco', '$idCliente','$prestamo','$pagoID')";
