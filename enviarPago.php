@@ -246,15 +246,50 @@ if($seguardaPago){
             } else{
                     echo 'ERROR: No se pudo guardar intereses. ' . mysqli_error($conn);
                 };        
+              
+
+
 
           if(mysqli_query($conn, $saldoInt2)){      
   
 
           } else{
                   echo 'ERROR: No se pudo guardar intereses. ' . mysqli_error($conn);
-              };        
-          $seguardaSaldoInt= FALSE;  
-    }
+              };  
+              
+              
+              
+              $guardarIntEnPayments = "UPDATE payments SET INTERES_PAGADO= $pagoDeIntereses WHERE AMORT_TABLE_ID = $pagoID";
+              $guardarIntPenEnPayments = "UPDATE payments SET SALDO_ABIERTO_INTERES= $saldoAbiertoInt WHERE AMORT_TABLE_ID = $pagoID";
+
+              if(mysqli_query($conn, $guardarIntEnPayments)){      
+                  echo"se guardo int en payments";
+             
+              } else{
+                      echo 'ERROR: Could not able to execute el guadado del int en payments. ' . mysqli_error($conn);
+              };  
+
+            
+              if(mysqli_query($conn, $guardarIntPenEnPayments)){      
+                echo"se guardo int en payments";
+           
+            } else{
+                    echo 'ERROR: Could not able to execute el guadado del int en payments. ' . mysqli_error($conn);
+            };  
+    
+
+
+
+              
+              $seguardaSaldoInt= FALSE;   
+            }
+
+
+
+
+
+          
+    
 
 
 
@@ -329,7 +364,21 @@ if($seguardaPago){
                  } else{
                          echo 'ERROR: Could not able to execute $sqlaMORTI. ' . mysqli_error($conn);
                  };        
-                 $seguardaAmortPagada= FALSE;  
+
+
+
+        $guardarAmortEnPayments = "UPDATE payments SET AMORTIZACION_PAGADA= $amortizacionPagada WHERE AMORT_TABLE_ID = $pagoID";
+
+
+        if(mysqli_query($conn, $guardarAmortEnPayments)){      
+            echo"se guardo amort en payments";
+       
+        } else{
+                echo 'ERROR: Could not able to execute el guadado del amort en payments. ' . mysqli_error($conn);
+        };  
+
+        
+        
       }
 
 

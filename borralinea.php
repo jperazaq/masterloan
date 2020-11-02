@@ -60,7 +60,7 @@ if(mysqli_query($conn, $pagoPendiente)){
     $cuota100= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
     $rowSaldo100 = mysqli_fetch_array($cuota100);
     
-    $nuevoPagoSaldo = $rowSaldo100['PAYMENT_AMOUNT']-$monto-$monto;
+    $nuevoPagoSaldo = $rowSaldo100['PAYMENT_AMOUNT']-$monto;
 
 
     $pago100 = "UPDATE amortization SET PAYMENT_AMOUNT = $nuevoPagoSaldo WHERE AMORT_TABLE_ID = $pagoID";   

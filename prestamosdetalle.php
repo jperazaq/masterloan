@@ -104,6 +104,32 @@
     
     $query32 = mysqli_query($conn, "SELECT sum(CUOTA) FROM  amortization WHERE LOAN_ID = $loan_id");
 
+    
+    $queryInt = mysqli_query($conn, "SELECT sum(INTERES_PAGADO) from payments WHERE LOAN_ID = $loan_id");
+    $intpaidrow= mysqli_fetch_array($queryInt);
+    $intPaid = $intpaidrow['sum(INTERES_PAGADO)'];
+
+
+
+    $queryAmort = mysqli_query($conn, "SELECT sum(AMORTIZACION_PAGADA) from payments WHERE LOAN_ID = $loan_id");
+    $intpaidrowamort= mysqli_fetch_array($queryAmort);
+    $amortPaid = $intpaidrowamort['sum(AMORTIZACION_PAGADA)'];
+
+    $queryPaidTotal = mysqli_query($conn, "SELECT sum(PAYMENT_AMOUNT) from payments WHERE LOAN_ID = $loan_id");
+    $paidTotalF= mysqli_fetch_array($queryPaidTotal);
+    $TotalPaid = $paidTotalF['sum(PAYMENT_AMOUNT)'];
+
+    $queryAmort1 = mysqli_query($conn, "SELECT sum(AMORTIZACION_PAGADA) from payments WHERE LOAN_ID = $loan_id");
+    $intpaidrowamort1= mysqli_fetch_array($queryAmort1);
+    $amortPaid1 = $intpaidrowamort1['sum(AMORTIZACION_PAGADA)'];
+
+    $queryFromAmort = mysqli_query($conn ,"SELECT * FROM loans WHERE LOAN_ID = $loan_id");
+    $saldoAmort = mysqli_fetch_array($queryFromAmort);
+    $montoPrestamo = $saldoAmort['LOAN_AMOUNT'];
+    $saldoDelPrestamo = $montoPrestamo- $amortPaid1;
+
+
+
     $row = mysqli_fetch_array($query3);
     $row1 = mysqli_fetch_array($query4);
     $row2 = mysqli_fetch_array($query11);
@@ -1111,7 +1137,15 @@ MODAL de Borrado-->
       <div class="card lg-4">           
           <div class="card-body">
               <h5 class="card-title" style="text-align:center">Intereses Pagados</h5>
-              <h3 style="text-align:center">  <?php echo number_format($totalPagado-$amortPagada,2) ?></h3> 
+              <h3 style="text-align:center">  <?php 
+              
+              if($intPaid >0){
+                echo  $intPaid;
+              } else{
+                echo 0;
+                }
+              
+              ?></h3> 
           </div>
       </div>    
     </div>
@@ -1122,7 +1156,15 @@ MODAL de Borrado-->
       <div class="card lg-4">           
           <div class="card-body">
               <h5 class="card-title" style="text-align:center">Pago al Capital</h5>
-              <h3 style="text-align:center">  <?php echo number_format( $amortPagada,2)?></h3> 
+              <h3 style="text-align:center">  <?php 
+               if($intPaid >0){
+                echo  $amortPaid;
+              } else{
+                echo 0;
+                }
+              
+              
+              ?></h3> 
           </div>
       </div>    
     </div>
@@ -1133,7 +1175,16 @@ MODAL de Borrado-->
       <div class="card lg-4">           
           <div class="card-body">
               <h5 class="card-title" style="text-align:center">Total Pagado</h5>
-              <h3 style="text-align:center">  <?php echo   number_format($totalPagado,2); ?></h3> 
+              <h3 style="text-align:center">  <?php 
+              if($intPaid >0){
+                echo  $TotalPaid  ;
+              } else{
+                echo 0;
+                }
+              
+              
+              
+               ?></h3> 
           </div>
       </div>    
     </div>
@@ -1148,12 +1199,21 @@ MODAL de Borrado-->
     <div class="card lg-12">           
       <div class="card-body"style="text-align:center">
           <h5 class="card-title">Saldo</h5>
-          <h3 class="card-title" style="text-align:center"><?php if($saldoTotalPrestamos<=0){
+          <h3 class="card-title" style="text-align:center"><?php 
 
-            echo number_format(0,2);
-            }else{
-            echo number_format($saldoTotalPrestamos,2);
-            }?></h3>
+
+            if($saldoDelPrestamo >0){
+              echo  $saldoDelPrestamo  ;
+            } else{
+              echo 0;
+  }
+
+              
+
+
+
+          
+          ?></h3>
       </div>
     </div>    
     </div>
@@ -1340,15 +1400,16 @@ MODAL de Borrado-->
     <tbody>
       <tr>
       <th scope="row">Monto Abierto</th>
-      <td><?php
-            
-            if($saldoTotalPrestamos<=0){
+      <td><?php      
+        
 
-              echo number_format(0,2);
-            }else{
-              echo number_format($saldoTotalPrestamos,2);
-            }
-              ?> </td>                    
+        if($saldoDelPrestamo >0){
+          echo  $saldoDelPrestamo  ;
+        } else{
+          echo 0;
+}
+
+?> </td>                    
       </tr>
 
       <tr>
