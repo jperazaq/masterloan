@@ -14,7 +14,8 @@ if (isset($_POST['guardarPagoPendiente'])){
     $loan_id = $_GET['LOANID'];
     $pagoID = $_POST['lineaPendiente'];
     $cuotaAPagar = $_POST['pendiente'];
-    $payDate = $_POST['fecha_pago'];    
+    $payDate = $_POST['fecha_pago'];   
+    $numCuota = $_POST['cuotaNumPen'];
     $seguardaSaldoFinal = TRUE;
     $seguardaMonto = TRUE;
     $seguardaSaldoPendientePayments = TRUE;
@@ -38,24 +39,6 @@ if (isset($_POST['guardarPagoPendiente'])){
 
 // Acutalizar Pago de Saldo Pendiente
 
-if($seguardaMonto){  
-
-
-   $pagoPendiente= "INSERT INTO payments (PAYMENT_AMOUNT) VALUES '$monto' WHERE AMORT_TABLE_ID = $pagoID";
-
-
-if(mysqli_query($conn, $pagoPendiente)){      
-                        
-                            
-        
-   
-} else{
-        echo 'ERROR: Could not able to execute $pagoPendiente. ' . mysqli_error($conn);
-    };        
-    
-    $seguardaMonto= FALSE;   
-    
-}
 
 
 
@@ -92,8 +75,8 @@ if($seguardaPagoPendiente){
     
     $saldoAbiertoPendiente = $cuotaAPagar - $monto;
 
-    $sql = "INSERT INTO payments (CUSTOMER_ID_NUMBER, PAYMENT_AMOUNT,PAGO_PENDIENTE, SALDO_PENDIENTE, PAYMENT_DATE1, PAYMENT_REFERENCE,PAYMENT_METHOD, FINANCIAL_INSTITUTION, CUSTOMER_ID, LOAN_ID,AMORT_TABLE_ID)
-            VALUES ('$cedulaCliente','$monto','$monto', '$saldoAbiertoPendiente','$fechaPago', '$recibo', '$metodo',  '$banco', '$idCliente','$prestamo','$pagoID')";
+    $sql = "INSERT INTO payments (CUSTOMER_ID_NUMBER, PAYMENT_AMOUNT,PAGO_PENDIENTE, SALDO_PENDIENTE,REF_CUOTA, PAYMENT_DATE1, PAYMENT_REFERENCE,PAYMENT_METHOD, FINANCIAL_INSTITUTION, CUSTOMER_ID, LOAN_ID,AMORT_TABLE_ID)
+            VALUES ('$cedulaCliente','$monto','$monto', '$saldoAbiertoPendiente','$numCuota','$fechaPago', '$recibo', '$metodo',  '$banco', '$idCliente','$prestamo','$pagoID')";
            
 
             
@@ -128,3 +111,50 @@ if($seguardaPagoPendiente){
 
 
 // }
+
+
+
+if($seguardaMonto){  
+
+    $queryPagoPen = mysqli_query($conn, "SELECT sum(PAYMENT_AMOUNT) FROM  payments WHERE REF_CUOTA = $numCuota");
+
+    // $totalPagosPen = 0;
+
+    // while($pagosAcuota= mysqli_fetch_array($queryPagoPen)){
+    //     $totalPagosPen = $totalPagosPen+ $pagosAcuota['PAYMENT_AMOUNT'];
+    // }
+
+    $rowPagoPen = mysqli_fetch_array($queryPagoPen);
+    $totalPagosPen= $rowPagoPen['sum(PAYMENT_AMOUNT)'];
+
+    $pagoPenFinal = $totalPagosPen + $monto-$monto;
+
+
+    
+   $pagoPendiente= "UPDATE payments SET SUMA_TOTAL_PAGADO = $pagoPenFinal WHERE REF_CUOTA = $numCuota";
+
+
+if(mysqli_query($conn, $pagoPendiente)){      
+                        
+               echo $totalPagosPen;             
+        
+   
+} else{
+        echo 'ERROR: Could not able to execute $pagoPendiente. ' . mysqli_error($conn);
+    };        
+    
+    $queryPagoPenAmort = "UPDATE amortization SET PAYMENT_AMOUNT = $pagoPenFinal WHERE AMORT_TABLE_ID = $pagoID";
+
+    if(mysqli_query($conn, $queryPagoPenAmort)){      
+                              
+        echo $totalPagosPen;             
+ 
+
+} else{
+ echo 'ERROR: Could not able to execute $pagoPendiente. ' . mysqli_error($conn);
+};     
+
+
+    $seguardaMonto= FALSE;   
+    
+}

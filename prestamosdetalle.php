@@ -6,6 +6,7 @@
     include  ('enviarPago.php');
     include  ('enviarSaldoPendiente.php');
     include  ('enviarComentario.php');
+    include ('borralinea.php');
     session_start();  
     $varsession = $_SESSION['emailsess'];
   
@@ -83,8 +84,8 @@
 
     $query24 = mysqli_query($conn,"SELECT MAX(ARREAR) FROM amortization WHERE CUSTOMER_ID = $customers_id");
     
-    $query25 = mysqli_query($conn,"SELECT payments.PAYMENT_ID, payments.SALDO_PENDIENTE,payments.CUSTOMER_ID_NUMBER, payments.PAYMENT_AMOUNT, payments.PAYMENT_DATE1, payments.PAYMENT_METHOD, payments.FINANCIAL_INSTITUTION, payments.PAYMENT_REFERENCE,
-    payments.CUSTOMER_ID, amortization.PAYMENT_DATE,  amortization.ARREAR, amortization.LOAN_ID, amortization.AMORT_TABLE_ID,amortization.SALDO_PAGO_ABIERTO, amortization.PAY_DATE_RECEIVED, amortization.NUM_PAGO FROM payments AS payments INNER JOIN amortization AS AMORTIZATION 
+    $query25 = mysqli_query($conn,"SELECT payments.PAYMENT_ID, payments.SALDO_PENDIENTE,payments.CUSTOMER_ID_NUMBER,payments.SUMA_TOTAL_PAGADO, payments.PAYMENT_AMOUNT, payments.PAYMENT_DATE1, payments.PAYMENT_METHOD, payments.FINANCIAL_INSTITUTION, payments.PAYMENT_REFERENCE,
+    payments.CUSTOMER_ID, amortization.PAYMENT_DATE,  amortization.ARREAR, amortization.LOAN_ID, amortization.CUOTA, amortization.AMORT_TABLE_ID,amortization.SALDO_PAGO_ABIERTO, amortization.PAY_DATE_RECEIVED, amortization.NUM_PAGO FROM payments AS payments INNER JOIN amortization AS AMORTIZATION 
     ON payments.AMORT_TABLE_ID = amortization.AMORT_TABLE_ID WHERE payments.LOAN_ID = $loan_id ");
 
     $query26 = mysqli_query($conn, "SELECT  * FROM  amortization WHERE LOAN_ID = $loan_id");
@@ -230,8 +231,8 @@ echo $cuotaAPagar;
 
     </head>
     <body>
-    <div class= "wrapper " >
-<!-- <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" style="height: 50px;color:#222831; ">
+    <!-- <div class= "wrapper " >
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" style="height: 50px;color:#222831; ">
     <a href="#" class="navbar-brand">Master Loan</a>
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
@@ -617,7 +618,7 @@ MODAL DE PAGO -->
        <div class="col-lg-12">
         <label for="inputPassword3" class="col-lg-2 col-form-label"> <h5 style="text-align:center">Multa</h5></label>
         <label for="inputPassword3" class="col-lg-4 col-form-label"><h5 style="text-align:center" ><span name="multa" class="multa"></span></h5></label>
-        <input type=""class= "multaPago" name = "multaPago" id= "multaPago">
+        <input type="hidden"class= "multaPago" name = "multaPago" id= "multaPago">
         </div>
         </div><hr>
        
@@ -653,8 +654,8 @@ MODAL DE PAGO -->
                                 <label for="inputPassword3" class="col-sm-2 col-form-label">Credito</label>
                                 <div class="col-sm-10">                                
                                 <label for="inputPassword3" class="col-lg-4 col-form-label"><span style="text-align:center" class="prestamoID"></span></label>
-                                <input type=""class= "idPrestamo" name = "idPrestamo" id= "idPrestamo">
-                                <input type=""class= "linea" name = "linea" id= "linea">
+                                <input type="hidden"class= "idPrestamo" name = "idPrestamo" id= "idPrestamo">
+                                <input type="hidden"class= "linea" name = "linea" id= "linea">
                             </div>         
           </div>
 
@@ -663,7 +664,7 @@ MODAL DE PAGO -->
                                 <div class="col-sm-10">                                
 
                                 <label for="inputPassword3" class="col-lg-4 col-form-label"><span style="text-align:center" value="numCuota" id="numCuota" name= "numCuota" class="numCuota"></span></label>                 
-                                     <input type=""class= "cuotaNum" name = "cuotaNum" id= "cuotaNum">
+                                     <input type="hidden"class= "cuotaNum" name = "cuotaNum" id= "cuotaNum">
                             </div>         
           </div>
 
@@ -743,7 +744,7 @@ MODAL DE PAGO PENDIENTE -->
 
         <h1 style="text-align:center">TOTAL A PAGAR</h1><hr>
         <h1 style="text-align:center" ><span class="pendiente" id="cuota"></span></h1><hr>
-        <input type=""class= "pendinte" name = "pendiente" id= "pendiente">
+        <input type="hidden"class= "pendinte" name = "pendiente" id= "pendiente">
 
       
        
@@ -779,8 +780,8 @@ MODAL DE PAGO PENDIENTE -->
                                 <label for="inputPassword3" class="col-sm-2 col-form-label">Credito</label>
                                 <div class="col-sm-10">                                
                                 <label for="inputPassword3" class="col-lg-4 col-form-label"><span style="text-align:center" class="prestamoID"></span></label>
-                                <input type=""class= "idPrestamoPen" name = "idPrestamoPen" id= "idPrestamoPen">
-                                <input type=""class= "lineaPendiente" name = "lineaPendiente" id= "lineaPendiente">
+                                <input type="hidden"class= "idPrestamoPen" name = "idPrestamoPen" id= "idPrestamoPen">
+                                <input type="hidden"class= "lineaPendiente" name = "lineaPendiente" id= "lineaPendiente">
                             </div>         
           </div>
 
@@ -789,7 +790,7 @@ MODAL DE PAGO PENDIENTE -->
                                 <div class="col-sm-10">                                
 
                                 <label for="inputPassword3" class="col-lg-4 col-form-label"><span style="text-align:center" value="numCuota" id="numCuota" name= "numCuota" class="numCuota"></span></label>                 
-                                     <input type=""class= "cuotaNumPen" name = "cuotaNumPen" id= "cuotaNumPen">
+                                     <input type="hidden"class= "cuotaNumPen" name = "cuotaNumPen" id= "cuotaNumPen">
                             </div>         
           </div>
 
@@ -843,6 +844,51 @@ MODAL DE PAGO PENDIENTE -->
         <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
         <button type="submit" class="btn btn-primary"id="guardarPagoPendiente" name="guardarPagoPendiente">Registrar Pago</button>
+
+        </div>
+        </form>
+    </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final del modal de pago pendiente -->
+
+
+
+
+
+<!-- 
+MODAL de Borrado-->
+   
+<div class="modal fade exampleModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modalBorrarPago">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+        
+        <form action="" method='post'>
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Borrar Pago </h5>
+        </div>
+        <div class="modal-body">     
+      
+                            <div class="form-group row" >
+                                
+                                <label for="inputPassword3" class="col-lg-12 col-form-label"><h4>Seguro que desea borrar pago #<span style="text-align:center" value="pagoid" id="pagoid" name= "pagoid" class="pagoid"></span></h4></label> 
+                                <input type=""class="pagoid" name ="pagoid"  id="pagoid">
+                                <input type=""class="paymentAmt" name ="paymentAmt"  id="paymentAmt">
+                                <input type=""class="cuotaNumPen" name ="cuotaNumPen"  id="cuotaNumPen">
+                                <input type=""class="lineaPendiente" name ="lineaPendiente"  id="lineaPendiente">                        
+
+                                  
+                                            
+                               
+                            </div>         
+          </div>          
+        
+
+        <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Salir</button>
+        <button type="submit" class="btn btn-danger"id="borrarRegistro" name="borrarRegistro">Borrar</button>
 
         </div>
         </form>
@@ -1143,12 +1189,13 @@ MODAL DE PAGO PENDIENTE -->
         <th>Fecha de Pago</th>
         <th>Numero de Cuota</th>
         <th>Monto de Pago</th>
+        <th>Id De Pago</th>
         <th>Dias de Atraso </th>
         <th>Saldo Abierto</th>
         <th>Numero de Deposito </th>
         <th>ID Prestamo</th>        
         <th>Banco Deposito</th>
-        <th>Pagar Pendiente</th>
+        <th>Acciones</th>
        
         
                          
@@ -1170,21 +1217,38 @@ MODAL DE PAGO PENDIENTE -->
     <td><?php echo $pagosTabla['PAYMENT_DATE1'] ?></td>
     <td><?php echo $pagosTabla['NUM_PAGO'] ?></td>
     <td><?php echo number_format($pagosTabla['PAYMENT_AMOUNT'],2) ?></td>
+    <td><?php $idDePago= $pagosTabla['PAYMENT_ID'];  echo number_format($idDePago) ?></td>
+
     <td><?php echo number_format($pagosTabla['ARREAR'],2) ?></td>
     <td>
-     <?php echo $pagosTabla['SALDO_PENDIENTE'];  ?>
+     <?php 
+     $montoPendiente = $pagosTabla['CUOTA']-$pagosTabla['SUMA_TOTAL_PAGADO'];
+     echo $montoPendiente  ?>
     </td>
     <td><?php echo $pagosTabla['PAYMENT_REFERENCE'] ?></td>
     <td><?php echo $pagosTabla['LOAN_ID'] ?></td>
     <td><?php echo $pagosTabla['FINANCIAL_INSTITUTION'] ?></td>
 
 
-    <td><a type="" href="#modalPendiente" numLinea=<?php echo 
+    <td><a class="" type="" href="#modalPendiente" numLinea=<?php echo 
      $pagosTabla['AMORT_TABLE_ID']; ?>  numCuota=<?php echo  $pagosTabla['NUM_PAGO']; ?> 
      prestamoID=<?php echo $pagosTabla['LOAN_ID']  ?> 
      cuota= "<?php echo number_format($pagosTabla['SALDO_PAGO_ABIERTO'],2) ?>"  
      multa="<?php echo $multaAPagar1 ?>"  data-toggle="modal" 
-     monto="<?php echo abs( number_format($pagosTabla['SALDO_PENDIENTE'],2))  ?>">Registrar Pago </a ></td>
+     monto="<?php echo $pagosTabla['CUOTA']-$pagosTabla['SUMA_TOTAL_PAGADO']  ?>">Registrar Pago |</a >
+     
+
+     <a class= "" name="borrar" id="borrar" type="" href="#modalBorrarPago" numLinea=<?php echo 
+     $pagosTabla['AMORT_TABLE_ID']; ?>  numCuota=<?php echo  $pagosTabla['NUM_PAGO']; ?> 
+     prestamoID=<?php echo $pagosTabla['LOAN_ID']  ?> identPago= "<?php echo ($idDePago)?>"
+     cuota= "<?php echo number_format($pagosTabla['SALDO_PAGO_ABIERTO'],2) ?>"  
+     multa="<?php echo $multaAPagar1 ?>"  data-toggle="modal" 
+     monto="<?php echo $pagosTabla['CUOTA']-$pagosTabla['SUMA_TOTAL_PAGADO']?>"
+     paymentAmt = "<?php echo number_format($pagosTabla['PAYMENT_AMOUNT'],2) ?>"
+     >
+     Borrar Pago   </a >
+     
+     </td>
     
     
 
@@ -1201,25 +1265,54 @@ MODAL DE PAGO PENDIENTE -->
             $("a").click(function (e) {
                 e.preventDefault();
                 var id = $(this).attr('monto');
-               var id1= $(".ids").html(id)
+               var id1= $(".ids").html(id);
                var multa = $(this).attr('multa');
                var cuota =  $(this).attr('cuota');
                var prestamoID = $(this).attr('prestamoID');
                var numCuota = $(this).attr('numCuota');
                var tableID = $(this).attr('numLinea');
+               var idPago1 = $(this).attr('identPago');
+               var paymentAmt = $(this).attr('paymentAmt');
+
               
                 $(".pendiente").html(id);
+                $(".pendiente").val(id);
                 $(".multa").html(multa);
                 $(".cuota").html(id);
                 $(".prestamoID").html(prestamoID);
                 $(".numCuota").html(numCuota);
                 $("#cuotaNumPen").val(numCuota);
+                $(".cuotaNumPen").val(numCuota)
                 $('#multaPago').val(multa);
                 $('#idPrestamoPen').val(prestamoID);
                 $('#lineaPendiente').val(tableID);
+                $('.lineaPendiente').val(tableID);
                 $('#pendiente').val(id);
+                $('.pagoid').html(idPago1);
+                $('.pagoid').val(idPago1);
+                $('.paymentAmt').val(paymentAmt);
 
                 console.log(id);
+               
+                return id;
+
+              
+            })
+        })
+
+
+
+
+        $(function () {
+            $(".borrar").click(function (e) {
+                e.preventDefault();
+                
+               var idPago1 = $(this).attr('idpago');
+              
+                
+                $('.pagoid').val(idpago1);
+
+                alert("hola");
                
                 return id;
 
@@ -1286,7 +1379,7 @@ MODAL DE PAGO PENDIENTE -->
         while($payDateAmounts2 = mysqli_fetch_array($query28)){
 
           if($payDateAmounts2['ARREAR']>0){
-            $lateAmount2 = $lateAmount2 + $payDateAmounts['CUOTA'];
+            $lateAmount2 = $lateAmount2 + $payDateAmounts2['CUOTA'];
 
           }
 

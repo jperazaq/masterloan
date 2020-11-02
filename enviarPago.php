@@ -13,7 +13,9 @@ if (isset($_POST['guardarPago'])){
     $metodo = $_POST['metodo'];
     $loan_id = $_GET['LOANID'];
     $pagoID = $_POST['linea'];
-    $payDate = $_POST['fecha_pago'];    
+    $payDate = $_POST['fecha_pago'];   
+    $cuotaApagar = $_POST['cuotaNum']; 
+    $seactualizaTotal= TRUE;
     $seguardaPago = TRUE;
     $seguardaMonto = TRUE;
     $seguardaAbierto = TRUE;
@@ -56,8 +58,8 @@ if($seguardaPago){
 
 
 
-    $sql = "INSERT INTO payments (CUSTOMER_ID_NUMBER, PAYMENT_AMOUNT, SALDO_PENDIENTE, PAYMENT_DATE1, PAYMENT_REFERENCE,PAYMENT_METHOD, FINANCIAL_INSTITUTION, CUSTOMER_ID, LOAN_ID,AMORT_TABLE_ID)
-            VALUES ('$cedulaCliente','$monto','$saldoAbierto55','$fechaPago', '$recibo', '$metodo',  '$banco', '$idCliente','$prestamo','$pagoID')";
+    $sql = "INSERT INTO payments (CUSTOMER_ID_NUMBER, PAYMENT_AMOUNT, SALDO_PENDIENTE, REF_CUOTA, PAYMENT_DATE1, PAYMENT_REFERENCE,PAYMENT_METHOD, FINANCIAL_INSTITUTION, CUSTOMER_ID, LOAN_ID,AMORT_TABLE_ID)
+            VALUES ('$cedulaCliente','$monto','$saldoAbierto55', '$cuotaApagar','$fechaPago', '$recibo', '$metodo',  '$banco', '$idCliente','$prestamo','$pagoID')";
             $seguardaPago = false;
 
             
@@ -383,4 +385,49 @@ if($seguardaPago){
                      $seguardaDias= FALSE;      
          }
 
+
+         if($seactualizaTotal){  
+
+          $queryPagoPen = mysqli_query($conn, "SELECT sum(PAYMENT_AMOUNT) FROM  payments WHERE REF_CUOTA = $cuotaApagar");
+      
+          // $totalPagosPen = 0;
+      
+          // while($pagosAcuota= mysqli_fetch_array($queryPagoPen)){
+          //     $totalPagosPen = $totalPagosPen+ $pagosAcuota['PAYMENT_AMOUNT'];
+          // }
+      
+          $rowPagoPen = mysqli_fetch_array($queryPagoPen);
+          $totalPagosPen= $rowPagoPen['sum(PAYMENT_AMOUNT)'];
+      
+          $pagoPenFinal = $totalPagosPen + $monto-$monto;
+      
+      
+          
+         $pagoPendiente= "UPDATE payments SET SUMA_TOTAL_PAGADO = $pagoPenFinal WHERE REF_CUOTA = $cuotaApagar";
+      
+
+
+         
+
+      
+      if(mysqli_query($conn, $pagoPendiente)){      
+                              
+                     echo $totalPagosPen;             
+              
+         
+      } else{
+              echo 'ERROR: Could not able to execute $pagoPendiente. ' . mysqli_error($conn);
+          };     
+          
+
+          $cuota100= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
+          $rowSaldo100 = mysqli_fetch_array($cuota100);
+          
+          $nuevoPagoSaldo = $rowSaldo100['PAYMENT_AMOUNT']-$
+          $pago100 = "UPDATE amortization SET PAYMENT_AMOUNT = $monto WHERE AMORT_TABLE_ID = $pagoID";   
+          
+          $seactualizaTotal= FALSE;   
+          
+      }
 ?>
+
