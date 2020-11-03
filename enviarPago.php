@@ -42,44 +42,7 @@ $montoMenosMulta = $monto - $montoMultaSaldoAbierto;
 
 
 //Guardar en tabla de pagos
-if($seguardaPago){ 
-    
-   
-    $cedulaCliente= $_GET['ID_NUMBER'];
-    $idCliente= $_GET['CUSTOMER_ID'];
-    $saldoPendienteARestar= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
 
-    $cuota55= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
-    $rowSaldo55 = mysqli_fetch_array($cuota55);
-    $cuotaNuevaConMulta55= $rowSaldo55['CUOTA']+$montoMultaSaldoAbierto;
-   
-    $saldoAbierto55 = $cuotaNuevaConMulta55-$monto; 
-    echo $saldoAbierto55;
-
-
-
-    $sql = "INSERT INTO payments (CUSTOMER_ID_NUMBER, PAYMENT_AMOUNT, SALDO_PENDIENTE, REF_CUOTA, PAYMENT_DATE1, PAYMENT_REFERENCE,PAYMENT_METHOD, FINANCIAL_INSTITUTION, CUSTOMER_ID, LOAN_ID,AMORT_TABLE_ID)
-            VALUES ('$cedulaCliente','$monto','$saldoAbierto55', '$cuotaApagar','$fechaPago', '$recibo', '$metodo',  '$banco', '$idCliente','$prestamo','$pagoID')";
-            $seguardaPago = false;
-
-            
-
-           
-
-            if(mysqli_query($conn, $sql)){      
-                echo "<script>alert('Registro Satisfactorio en la Base de datos!');
-
-                
-                                  
-    </script>";     
-    
-   
-            } else{
-                    echo 'ERROR: Could not able to execute $sql. ' . mysqli_error($conn);
-                };          
-                
-                
-  }
 
   if($seguardaMonto){ 
     
@@ -139,6 +102,8 @@ if($seguardaPago){
         echo 'ERROR: Could not able to execute $sqlMulta. ' . mysqli_error($conn);
       }
       
+     
+
       $seguardaMulta = FALSE;
   
   
@@ -176,35 +141,7 @@ if($seguardaPago){
   }
 
 
-  // if($seguardaAbiertoenPayments){ 
-
-
-
-  //   $cuota55= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
-  //   $rowSaldo55 = mysqli_fetch_array($cuota55);
-  //   $cuotaNuevaConMulta55= $rowSaldo55['CUOTA']+$montoMultaSaldoAbierto;
-   
-  //   $saldoAbierto55 = $cuotaNuevaConMulta55-$monto; 
-  //   echo $saldoAbierto55;
-
-    
-      
-  //   $saldoAbiertoEnPayments = "INSERT INTO payments (SALDO_PENDIENTE) VALUES '$saldoAbierto55' ";
-
-
-  //   if(mysqli_query($conn, $saldoAbiertoEnPayments)){      
-         
-   
-  //   } else{
-  //           echo 'NO SE PUEDO AGREGAR EL SALDO ABIERTO EN PAYMENTS ' . mysqli_error($conn);
-  //       };        
-           
-
-                
-                
-  //               $seguardaAbiertoenPayments= FALSE;
-                
-  // }
+ 
 
 
 
@@ -421,6 +358,8 @@ if($seguardaPago){
         // echo $interval;
         
         $date12 = "UPDATE amortization SET LATE_DAYS= $interval1 WHERE AMORT_TABLE_ID = $pagoID";   
+
+
         // echo $payDate;
          
                    
@@ -430,7 +369,17 @@ if($seguardaPago){
            
                      } else{
                              echo 'ERROR: Could not able to execute $sqlFecha. ' . mysqli_error($conn);
-                     };        
+                     };  
+                     
+          $arrearPmt= "UPDATE payments SET ARREAR= $interval1 WHERE AMORT_TABLE_ID = $pagoID";    
+          
+          if(mysqli_query($conn, $arrearPmt)){      
+                
+           
+          } else{
+                  echo 'ERROR: Could not able to execute Set arrear in payments ' . mysqli_error($conn);
+          };  
+
                      $seguardaDias= FALSE;      
          }
 
@@ -439,11 +388,7 @@ if($seguardaPago){
 
           $queryPagoPen = mysqli_query($conn, "SELECT sum(PAYMENT_AMOUNT) FROM  payments WHERE REF_CUOTA = $cuotaApagar");
       
-          // $totalPagosPen = 0;
-      
-          // while($pagosAcuota= mysqli_fetch_array($queryPagoPen)){
-          //     $totalPagosPen = $totalPagosPen+ $pagosAcuota['PAYMENT_AMOUNT'];
-          // }
+          
       
           $rowPagoPen = mysqli_fetch_array($queryPagoPen);
           $totalPagosPen= $rowPagoPen['sum(PAYMENT_AMOUNT)'];
@@ -477,6 +422,48 @@ if($seguardaPago){
           
           $seactualizaTotal= FALSE;   
           
+      }
+
+
+
+      if($seguardaPago){ 
+    
+   
+        $cedulaCliente= $_GET['ID_NUMBER'];
+        $idCliente= $_GET['CUSTOMER_ID'];
+        $saldoPendienteARestar= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
+    
+        $cuota55= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
+        $rowSaldo55 = mysqli_fetch_array($cuota55);
+        $cuotaNuevaConMulta55= $rowSaldo55['CUOTA']+$montoMultaSaldoAbierto;
+       
+        $saldoAbierto55 = $cuotaNuevaConMulta55-$monto; 
+        echo $saldoAbierto55;
+    
+    
+    
+        $sql = "INSERT INTO payments (CUSTOMER_ID_NUMBER, PAYMENT_AMOUNT, SALDO_PENDIENTE, REF_CUOTA,MULTA_PAGADA, PAYMENT_DATE1, PAYMENT_REFERENCE,PAYMENT_METHOD, FINANCIAL_INSTITUTION, CUSTOMER_ID, LOAN_ID,AMORT_TABLE_ID)
+                VALUES ('$cedulaCliente','$monto','$saldoAbierto55', '$cuotaApagar', '$multaAGuardar','$fechaPago', '$recibo', '$metodo',  '$banco', '$idCliente','$prestamo','$pagoID')";
+               
+    
+                
+    
+               
+    
+                if(mysqli_query($conn, $sql)){      
+                    echo "<script>alert('Registro Satisfactorio en la Base de datos!');
+                    echo
+    
+                    
+                                      
+        </script>";     
+        
+       
+                } else{
+                        echo 'ERROR: Could not able to execute $sql. ' . mysqli_error($conn);
+                    };          
+                    
+                    $seguardaPago = false;
       }
 ?>
 

@@ -128,7 +128,15 @@
     $montoPrestamo = $saldoAmort['LOAN_AMOUNT'];
     $saldoDelPrestamo = $montoPrestamo- $amortPaid1;
 
+    $queryPayDays = mysqli_query($conn, "SELECT  AVG(ARREAR) FROM  payments WHERE LOAN_ID = $loan_id");
+    $rowPayDays = mysqli_fetch_array($queryPayDays);
+    $promPayDays= $rowPayDays['AVG(ARREAR)'];
 
+    $query81 = mysqli_query($conn, "SELECT * FROM  loans WHERE LOAN_ID = $loan_id"); 
+    
+    $queryMultaPagada = mysqli_query($conn, "SELECT sum(MULTA_PAGADA) FROM  payments WHERE LOAN_ID = $loan_id");
+    $rowMulta= mysqli_fetch_array($queryMultaPagada);
+    $totalDeMultas = $rowMulta['sum(MULTA_PAGADA)'];
 
     $row = mysqli_fetch_array($query3);
     $row1 = mysqli_fetch_array($query4);
@@ -141,8 +149,9 @@
     $row8 = mysqli_fetch_array($query21);
     $row9 =  mysqli_fetch_array($query23);
     $row10 =  mysqli_fetch_array($query5);
+    $row11 = mysqli_fetch_array($query81);
 
-    
+    $porcMulta = $row11['MULTA'];
     $tasaMulta = $row1['MULTA'];
     $prestamosActivos = $row['count(*)'];
     $tasaInteres = $row1['INTEREST_RATE'];
@@ -429,7 +438,7 @@ echo $cuotaAPagar;
             <h5>Total Intereses Pagados</h5>
           </div>
           <div class="col">
-            <h5> <?php echo number_format($totalPagado-$amortPagada,0) ?></h5>
+            <h5> <?php echo number_format($intPaid,0) ?></h5>
           </div>
         </div>
       </div>
@@ -440,7 +449,7 @@ echo $cuotaAPagar;
             <h5>Multa Por Atraso</h5>
           </div>
           <div class="col"><h5>
-            <h5><?php echo   number_format($tasaMulta,0), "%"; ?></h5>
+            <h5><?php echo   number_format($porcMulta,0), "%"; ?></h5>
           </div>
         </div>
       </div>
@@ -478,7 +487,7 @@ echo $cuotaAPagar;
             <h5>Total Multas Pagadas</h5>
           </div>
           <div class="col">
-            <h5><?php echo   number_format($monto,0); ?></h5>
+            <h5><?php echo   number_format($totalDeMultas,0); ?></h5>
           </div>
         </div>
       </div>
@@ -489,7 +498,7 @@ echo $cuotaAPagar;
             <h5>Amortizacion Pagada </h5>
           </div>
           <div class="col">
-            <h5><?php echo   number_format($pagado,0); ?></h5>
+            <h5><?php echo   number_format($amortPaid,0); ?></h5>
           </div>
         </div>
       </div>
@@ -508,7 +517,7 @@ echo $cuotaAPagar;
 
               echo number_format(0,2);
             }else{
-              echo number_format($saldoTotalPrestamos,2);
+              echo number_format($saldoDelPrestamo,2);
             }
               ?>
             
@@ -581,7 +590,9 @@ echo $cuotaAPagar;
             <h5>Dias Promedio de Pago</h5>
           </div>
           <div class="col">
-            <h5><?php echo number_format($promDias,0) ?></h5>
+            <h5><?php 
+                     
+            echo number_format($promPayDays,0) ?></h5>
           </div>
         </div>
     </div>
@@ -1126,7 +1137,7 @@ MODAL de Borrado-->
       <div class="card lg-4">           
           <div class="card-body">
               <h5 class="card-title" style="text-align:center ">Dias Prom. de pago</h5>
-              <h3 style="text-align:center"><?php echo number_format($promDias,2) ?></h3> 
+              <h3 style="text-align:center"><?php echo number_format($promPayDays,0)?></h3> 
           </div>
       </div>    
     </div>
@@ -1238,7 +1249,7 @@ MODAL de Borrado-->
     <h2>Pagos</h2><hr><br>
     </div>
     <div class="container mb-5 mt-3 col-lg-12">
-    <table class="table table-striped table-bordered myDataTable " style="width:100%; text-align:center" >
+    <table class="table table-striped table-bordered" style="width:100%; text-align:center" >
     <thead class= "thead-dark">
     <tr>
         <th colspan="1" rowspan="2">Fecha de Vencimiento</th>
@@ -1487,7 +1498,7 @@ MODAL de Borrado-->
     </table>
     <form method='post'>
     <div class="container mb-5 mt-3 col-lg-12">
-    <table class="table table-striped table-bordered myDataTable " style="width:100%; text-align:center" >
+    <table class="table table-striped table-bordered  " style="width:100%; text-align:center" >
     <thead class= "thead-dark">
     <tr>
         <th colspan="1" rowspan="2">Fecha de Pago</th>
@@ -1593,6 +1604,7 @@ MODAL de Borrado-->
               
                 $(".ids").html(id);
                 $(".multa").html(multa);
+                $(".multa").val(multa);
                 $(".cuota").html(cuota);
                 $(".prestamoID").html(prestamoID);
                 $(".numCuota").html(numCuota);
