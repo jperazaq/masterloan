@@ -85,7 +85,7 @@
     $query24 = mysqli_query($conn,"SELECT MAX(ARREAR) FROM amortization WHERE CUSTOMER_ID = $customers_id");
     
     $query25 = mysqli_query($conn,"SELECT payments.PAYMENT_ID, payments.SALDO_PENDIENTE,payments.CUSTOMER_ID_NUMBER,payments.SUMA_TOTAL_PAGADO, payments.PAYMENT_AMOUNT, payments.PAYMENT_DATE1, payments.PAYMENT_METHOD, payments.FINANCIAL_INSTITUTION, payments.PAYMENT_REFERENCE,
-    payments.CUSTOMER_ID, amortization.PAYMENT_DATE,  amortization.ARREAR, amortization.LOAN_ID, amortization.CUOTA, amortization.AMORT_TABLE_ID,amortization.SALDO_PAGO_ABIERTO, amortization.PAY_DATE_RECEIVED, amortization.NUM_PAGO FROM payments AS payments INNER JOIN amortization AS AMORTIZATION 
+    payments.CUSTOMER_ID, payments.SALDO_PENDIENTE, amortization.PAYMENT_DATE,  amortization.ARREAR, amortization.LOAN_ID, amortization.CUOTA, amortization.AMORT_TABLE_ID,amortization.SALDO_PAGO_ABIERTO, amortization.PAY_DATE_RECEIVED, amortization.NUM_PAGO FROM payments AS payments INNER JOIN amortization AS AMORTIZATION 
     ON payments.AMORT_TABLE_ID = amortization.AMORT_TABLE_ID WHERE payments.LOAN_ID = $loan_id ");
 
     $query26 = mysqli_query($conn, "SELECT  * FROM  amortization WHERE LOAN_ID = $loan_id");
@@ -508,7 +508,7 @@ echo $cuotaAPagar;
       <div class="container">
         <div class="row">
           <div class="col">
-            <h5>Saldo Abierto</h5>
+            <h5>Saldo Del Prestamo</h5>
           </div>
           <div class="col">
             <h5><?php
@@ -621,13 +621,14 @@ echo $cuotaAPagar;
 
 
     </div>
+    
     </div><br>
 
+   
 
 
 
-
-    <a href="#" class="btn btn-primary">Descargar</a>
+    
 
 <!-- 
 MODAL DE PAGO -->
@@ -951,6 +952,7 @@ MODAL de Borrado-->
     <button type=""  class="btn btn-primary" data-target=".exampleModal" data-toggle="modal">Registrar Pago </button >
 
     <a href="nuevoPrestamo.php" class="btn btn-primary">Crear nuevo credito</a>
+    <a href="#" class="btn btn-primary">Descargar</a>
     </div>
     </div>
     </div>
@@ -1294,7 +1296,14 @@ MODAL de Borrado-->
     <td>
      <?php 
      $montoPendiente = $pagosTabla['CUOTA']-$pagosTabla['SUMA_TOTAL_PAGADO'];
-     echo $montoPendiente  ?>
+
+     if($montoPendiente<0){
+       $montoPendiente = 0;
+       echo $montoPendiente ;
+     }else{
+      echo $montoPendiente; 
+     }
+      ?>
     </td>
     <td><?php echo $pagosTabla['PAYMENT_REFERENCE'] ?></td>
     <td><?php echo $pagosTabla['LOAN_ID'] ?></td>
@@ -1306,7 +1315,7 @@ MODAL de Borrado-->
      prestamoID=<?php echo $pagosTabla['LOAN_ID']  ?> 
      cuota= "<?php echo number_format($pagosTabla['SALDO_PAGO_ABIERTO'],2) ?>"  
      multa="<?php echo $multaAPagar1 ?>"  data-toggle="modal" 
-     monto="<?php echo $pagosTabla['CUOTA']-$pagosTabla['SUMA_TOTAL_PAGADO']  ?>">Registrar Pago |</a >
+     monto="<?php echo $montoPendiente; ?>">Registrar Pago |</a >
      
 
      <a class= "" name="borrar" id="borrar" type="" href="#modalBorrarPago" numLinea=<?php echo 

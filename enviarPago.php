@@ -276,7 +276,7 @@ $montoMenosMulta = $monto - $montoMultaSaldoAbierto;
         $rowSaldo04 = mysqli_fetch_array($cuota04); 
         $amortization = $rowSaldo04['AMORTIZATION'];
         $interes = $rowSaldo04['INTEREST_AMOUNT'];    
-        $alcanzaPago1 = $monto-$amortizacion;
+        $alcanzaPago1 = $monto-$amortization;
     
             if($alcanzaPago1>$interes){
            
@@ -442,8 +442,8 @@ $montoMenosMulta = $monto - $montoMultaSaldoAbierto;
     
     
     
-        $sql = "INSERT INTO payments (CUSTOMER_ID_NUMBER, PAYMENT_AMOUNT, SALDO_PENDIENTE, REF_CUOTA,MULTA_PAGADA, PAYMENT_DATE1, PAYMENT_REFERENCE,PAYMENT_METHOD, FINANCIAL_INSTITUTION, CUSTOMER_ID, LOAN_ID,AMORT_TABLE_ID)
-                VALUES ('$cedulaCliente','$monto','$saldoAbierto55', '$cuotaApagar', '$multaAGuardar','$fechaPago', '$recibo', '$metodo',  '$banco', '$idCliente','$prestamo','$pagoID')";
+        $sql = "INSERT INTO payments (CUSTOMER_ID_NUMBER, PAYMENT_AMOUNT, SALDO_PENDIENTE, REF_CUOTA,MULTA_PAGADA, SUMA_TOTAL_PAGADO, PAYMENT_DATE1, PAYMENT_REFERENCE,PAYMENT_METHOD, FINANCIAL_INSTITUTION, CUSTOMER_ID, LOAN_ID,AMORT_TABLE_ID)
+                VALUES ('$cedulaCliente','$monto','$saldoAbierto55', '$cuotaApagar', '$multaAGuardar','$monto','$fechaPago', '$recibo', '$metodo',  '$banco', '$idCliente','$prestamo','$pagoID')";
                
     
                 
