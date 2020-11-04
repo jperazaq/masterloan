@@ -249,7 +249,7 @@ $montoMenosMulta = $monto - $montoMultaSaldoAbierto;
             }
             elseif ($alcanzaPago1<=$interes) {
                 $cubreinteres1 =0;
-                $saldoAbiertoInt3 = $cubreinteres1-$amortization;
+                $saldoAbiertoInt3 = $amortization-$cubreinteres1;
               
                 
                   };  
@@ -278,7 +278,7 @@ $montoMenosMulta = $monto - $montoMultaSaldoAbierto;
         $interes = $rowSaldo04['INTEREST_AMOUNT'];    
         $alcanzaPago1 = $monto-$amortization;
     
-            if($alcanzaPago1>$interes){
+            if($alcanzaPago1>=$interes){
            
                 $amortizacionPagada = $montoMenosMulta-$interes;
               
@@ -297,26 +297,11 @@ $montoMenosMulta = $monto - $montoMultaSaldoAbierto;
     
                 if(mysqli_query($conn, $saldoInt004)){      
             
-       
+       echo $amortization, "guardada";
                  } else{
                          echo 'ERROR: Could not able to execute $sqlaMORTI. ' . mysqli_error($conn);
-                 };        
-
-
-
-        $guardarAmortEnPayments = "UPDATE payments SET AMORTIZACION_PAGADA= $amortizacionPagada WHERE AMORT_TABLE_ID = $pagoID";
-
-
-        if(mysqli_query($conn, $guardarAmortEnPayments)){      
-            echo"se guardo amort en payments";
-       
-        } else{
-                echo 'ERROR: Could not able to execute el guadado del amort en payments. ' . mysqli_error($conn);
-        };  
-
-        
-        
-      }
+                 };      
+}
 
 
 
@@ -438,12 +423,12 @@ $montoMenosMulta = $monto - $montoMultaSaldoAbierto;
         $cuotaNuevaConMulta55= $rowSaldo55['CUOTA']+$montoMultaSaldoAbierto;
        
         $saldoAbierto55 = $cuotaNuevaConMulta55-$monto; 
-        echo $saldoAbierto55;
+      
     
     
     
-        $sql = "INSERT INTO payments (CUSTOMER_ID_NUMBER, PAYMENT_AMOUNT, SALDO_PENDIENTE, REF_CUOTA,MULTA_PAGADA, SUMA_TOTAL_PAGADO, PAYMENT_DATE1, PAYMENT_REFERENCE,PAYMENT_METHOD, FINANCIAL_INSTITUTION, CUSTOMER_ID, LOAN_ID,AMORT_TABLE_ID)
-                VALUES ('$cedulaCliente','$monto','$saldoAbierto55', '$cuotaApagar', '$multaAGuardar','$monto','$fechaPago', '$recibo', '$metodo',  '$banco', '$idCliente','$prestamo','$pagoID')";
+        $sql = "INSERT INTO payments (CUSTOMER_ID_NUMBER, PAYMENT_AMOUNT, SALDO_PENDIENTE, REF_CUOTA,MULTA_PAGADA, SUMA_TOTAL_PAGADO,INTERES_PAGADO,SALDO_ABIERTO_INTERES,AMORTIZACION_PAGADA,SALDO_ABIERTO_AMORT,ARREAR, PAYMENT_DATE1, PAYMENT_REFERENCE,PAYMENT_METHOD, FINANCIAL_INSTITUTION, CUSTOMER_ID, LOAN_ID,AMORT_TABLE_ID)
+                VALUES ('$cedulaCliente','$monto','$saldoAbierto55', '$cuotaApagar', '$multaAGuardar','$monto','$pagoDeIntereses', '$saldoAbiertoInt','$amortizacionPagada', '$saldoAbiertoInt3','$interval1','$fechaPago', '$recibo', '$metodo',  '$banco', '$idCliente','$prestamo','$pagoID')";
                
     
                 
