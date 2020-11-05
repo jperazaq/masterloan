@@ -41,7 +41,7 @@ if (isset($_POST['guardarPagoPendiente'])){
 if($seguardaSaldoAmort){ 
 
     $cuota03= mysqli_query($conn, "SELECT * FROM  payments WHERE AMORT_TABLE_ID = $pagoID");
-    $rowSaldo3 = mysqli_fetch_array($cuota03); 
+    $rowSaldo03 = mysqli_fetch_array($cuota03); 
     $amortization = $rowSaldo03['SALDO_ABIERTO_AMORT'];
     $interes = $rowSaldo03['SALDO_ABIERTO_INTERES'];    
     
@@ -57,9 +57,7 @@ if($seguardaSaldoAmort){
             $saldoAbiertoInt3 = $amortization-$cubreinteres1;
           
             
-              };  
-    
-     
+              };   
        
 
 
