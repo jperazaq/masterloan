@@ -125,7 +125,7 @@ $cuota11= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID 
  echo $alcanzaPago1;
      if($alcanzaPago1<0){
          
-         $saldoAbiertoInt = $montoMenosMulta- $interes;
+         $saldoAbiertoInt = $interes- $montoMenosMulta ;
          $pagoDeIntereses = $montoMenosMulta;
          
      }
