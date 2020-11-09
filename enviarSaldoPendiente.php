@@ -1,6 +1,6 @@
 
 <?php 
-// ini_set( "display_errors", 0); 
+ini_set( "display_errors", 0); 
 include ("conexion.php");
 
 if (isset($_POST['guardarPagoPendiente'])){
@@ -16,6 +16,8 @@ if (isset($_POST['guardarPagoPendiente'])){
     $cuotaAPagar = $_POST['pendiente'];
     $payDate = $_POST['fecha_pago'];   
     $numCuota = $_POST['cuotaNumPen'];
+    $saldoPorPagar = $_POST['saldoPorPagar'];
+    $intPorPagar = $_POST['interesPorPagar'];
     $seguardaSaldoFinal = TRUE;
     $seguardaMonto = TRUE;
     $seguardaSaldoPendientePayments = TRUE;
@@ -30,6 +32,8 @@ if (isset($_POST['guardarPagoPendiente'])){
     $cedulaCliente= $_GET['ID_NUMBER'];
     $idCliente= $_GET['CUSTOMER_ID'];
     $seguardaSaldoAmort = TRUE;
+    $seguardaSaldoPend = TRUE;
+    
     
    
 
@@ -38,34 +42,6 @@ if (isset($_POST['guardarPagoPendiente'])){
 };
 
 
-if($seguardaSaldoAmort){ 
-
-    $cuota03= mysqli_query($conn, "SELECT * FROM  payments WHERE AMORT_TABLE_ID = $pagoID");
-    $rowSaldo03 = mysqli_fetch_array($cuota03); 
-    $amortization = $rowSaldo03['SALDO_ABIERTO_AMORT'];
-    $interes = $rowSaldo03['SALDO_ABIERTO_INTERES'];    
-    
-
-        if($alcanzaPago1>$interes){
-            $restaSaldo = $montoMenosMulta-$interes;
-            $saldoAbiertoInt3 = $restaSaldo- $amortization;
-           
-          
-        }
-        elseif ($alcanzaPago1<=$interes) {
-            $cubreinteres1 =0;
-            $saldoAbiertoInt3 = $amortization-$cubreinteres1;
-          
-            
-              };   
-       
-
-
-           
-
-           
-             $seguardaSaldoAmort= FALSE;      
-  }
 
 
 
@@ -78,21 +54,19 @@ if($seguardaSaldoAmort){
 
 
 
+// Calcular Amortizacion
+// if($seguardaSaldoPend){
 
 
-//Calcular Amortizacion
-
-// // $cuota04= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
-// $uota004 = mysqli_query($conn, "SELECT * FROM  payments WHERE AMORT_TABLE_ID = $pagoID");
 // $rowSaldo004 = mysqli_fetch_array($cuota004); 
-// // $rowSaldo04 = mysqli_fetch_array($cuota04); 
-// $amortization = $rowSaldo004['SALDO_ABIERTO_AMORT'];
+
+// $amortization = $saldoPorPagar;
 // $interes = $rowSaldo004['SALDO_ABIERTO_INTERES'];    
 // $alcanzaPago1 = $monto-$amortizacion;
 
 //     if($alcanzaPago1>=$interes){
    
-//         $amortizacionPagada = $montoMenosMulta-$interes;
+//         $amortizacionPagada = $monto-$interes;
       
 //     }
 //     elseif ($alcanzaPago1<=$interes) {
@@ -100,7 +74,8 @@ if($seguardaSaldoAmort){
 //         $amortizacionPagada =0;
         
 //           };  
-
+//           $seguardaSaldoPend = false;
+//         }
 
 //Guardar Arreas
 $cuota11= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
@@ -118,23 +93,70 @@ $cuota11= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID 
 
        
  //Se calcula Intereses  
- $cuota2= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
+ $cuota2= mysqli_query($conn, "SELECT * FROM  payments WHERE AMORT_TABLE_ID = $pagoID");
  $rowSaldo2 = mysqli_fetch_array($cuota2); 
- $interes = $rowSaldo2['INTEREST_AMOUNT'];   
- $alcanzaPago1 = ($monto-$montoMulta)-$interes;
- echo $alcanzaPago1;
-     if($alcanzaPago1<0){
+ $saldoAbiertoAmort55 = $rowSaldo2['SALDO_ABIERTO_AMORT'];
+
+ $interes = $intPorPagar;   
+ $alcanzaPago1 = $monto-$interes;
+
+ 
+if($interes>0){
+
+    if($alcanzaPago1<0){
+        $pagoDeIntereses = $monto;
+        $saldoAbiertoInt = $interes- $pagoDeIntereses ;
+        $saldoAbiertoAmort = $saldoAbiertoAmort55;
+        
+        }elseif ($alcanzaPago1>=0) {
+       
+            $pagoDeIntereses = $interes;
+            $saldoAbiertoInt = $interes- $pagoDeIntereses ;
+            $amortizacionPagada = $monto-$pagoDeIntereses;
+            $saldoAbiertoAmort = $saldoAbiertoAmort55-$amortizacionPagada;
+              };     
+}elseif($interes<=0){
+    $amortizacionPagada = $monto;
+    $saldoAbiertoAmort = $saldoAbiertoAmort55-$amortizacionPagada;
+}
+
+
+
+
+
+ 
+    //  if($alcanzaPago1<0){
          
-         $saldoAbiertoInt = $interes- $montoMenosMulta ;
-         $pagoDeIntereses = $montoMenosMulta;
+    //      if($interes>0){
+    //      $pagoDeIntereses = $monto;
+    //      $saldoAbiertoInt = $interes- $pagoDeIntereses ;
          
-     }
-     elseif ($alcanzaPago1>=0) {
-         $cubreinteres1 =$interes;
-         $saldoAbiertoInt = $cubreinteres1-$interes;
-         $pagoDeIntereses = $interes;
+    //      }else{
+    //     $pagoDeIntereses = 0;
+    //      $saldoAbiertoInt = $interes- $pagoDeIntereses ;
+    //      }
          
-           };       
+    //  }
+
+    //  elseif ($alcanzaPago1>=0) {
+       
+    //      $pagoDeIntereses = $interes;
+    //      $saldoAbiertoInt = $interes- $pagoDeIntereses ;
+    //      $amortizacionPagada = $monto-$pagoDeIntereses;
+    //      $saldoAbiertoAmort = $saldoAbiertoAmort1-$amortizacionPagada;
+    //        };      
+ 
+        
+
+
+
+
+
+           
+
+
+
+
 
 
 // Guardar en tabla de Pago
@@ -150,8 +172,8 @@ if($seguardaPagoPendiente){
     
     $saldoAbiertoPendiente = $cuotaAPagar - $monto;
 
-    $sql = "INSERT INTO payments (CUSTOMER_ID_NUMBER, PAYMENT_AMOUNT,PAGO_PENDIENTE, SALDO_PENDIENTE,REF_CUOTA,INTERES_PAGADO,SALDO_ABIERTO_INTERES,AMORTIZACION_PAGADA, ARREAR,PAYMENT_DATE1, PAYMENT_REFERENCE,PAYMENT_METHOD, FINANCIAL_INSTITUTION, CUSTOMER_ID, LOAN_ID,AMORT_TABLE_ID)
-            VALUES ('$cedulaCliente','$monto','$monto', '$saldoAbiertoPendiente','$numCuota','$pagoDeInteres',abs('$saldoAbiertoInt3'),'$amortizacionPagada','$interval1','$fechaPago', '$recibo', '$metodo',  '$banco', '$idCliente','$prestamo','$pagoID')";
+    $sql = "INSERT INTO payments (CUSTOMER_ID_NUMBER, PAYMENT_AMOUNT,PAGO_PENDIENTE, SALDO_PENDIENTE,REF_CUOTA,INTERES_PAGADO,SALDO_ABIERTO_INTERES,AMORTIZACION_PAGADA,SALDO_ABIERTO_AMORT, ARREAR,PAYMENT_DATE1, PAYMENT_REFERENCE,PAYMENT_METHOD, FINANCIAL_INSTITUTION, CUSTOMER_ID, LOAN_ID,AMORT_TABLE_ID)
+            VALUES ('$cedulaCliente','$monto','$monto', '$saldoAbiertoPendiente','$numCuota','$pagoDeIntereses',abs('$saldoAbiertoInt'),'$amortizacionPagada', '$saldoAbiertoAmort', '$interval1','$fechaPago', '$recibo', '$metodo',  '$banco', '$idCliente','$prestamo','$pagoID')";
            
 
             

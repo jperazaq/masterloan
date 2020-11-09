@@ -84,7 +84,7 @@
 
     $query24 = mysqli_query($conn,"SELECT MAX(ARREAR) FROM amortization WHERE CUSTOMER_ID = $customers_id");
     
-    $query25 = mysqli_query($conn,"SELECT payments.PAYMENT_ID, payments.SALDO_PENDIENTE,payments.CUSTOMER_ID_NUMBER,payments.SUMA_TOTAL_PAGADO, payments.PAYMENT_AMOUNT, payments.PAYMENT_DATE1, payments.PAYMENT_METHOD, payments.FINANCIAL_INSTITUTION, payments.PAYMENT_REFERENCE,
+    $query25 = mysqli_query($conn,"SELECT payments.SALDO_ABIERTO_INTERES, payments.SALDO_ABIERTO_AMORT, payments.PAYMENT_ID, payments.SALDO_PENDIENTE,payments.CUSTOMER_ID_NUMBER,payments.SUMA_TOTAL_PAGADO, payments.PAYMENT_AMOUNT, payments.PAYMENT_DATE1, payments.PAYMENT_METHOD, payments.FINANCIAL_INSTITUTION, payments.PAYMENT_REFERENCE,
     payments.CUSTOMER_ID, payments.SALDO_PENDIENTE, amortization.PAYMENT_DATE,  amortization.ARREAR, amortization.LOAN_ID, amortization.CUOTA, amortization.AMORT_TABLE_ID,amortization.SALDO_PAGO_ABIERTO, amortization.PAY_DATE_RECEIVED, amortization.NUM_PAGO FROM payments AS payments INNER JOIN amortization AS AMORTIZATION 
     ON payments.AMORT_TABLE_ID = amortization.AMORT_TABLE_ID WHERE payments.LOAN_ID = $loan_id ");
 
@@ -172,7 +172,7 @@
     $cuotaAPagar = $row9['CUOTA'];
    
   
-echo $cuotaAPagar;
+
 
 
    
@@ -266,7 +266,7 @@ echo $cuotaAPagar;
 
     </head>
     <body>
-    <!-- <div class= "wrapper " >
+     <div class= "wrapper " >
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" style="height: 50px;color:#222831; ">
     <a href="#" class="navbar-brand">Master Loan</a>
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -282,47 +282,55 @@ echo $cuotaAPagar;
         </div>
         <div class="navbar-nav ml-auto">
             <a href="#" class="nav-item nav-link">Bienvenido <?php echo $nombrein?></a> <h2 >|</h2>
-            <a href="../masterlender/nuevoPrestamo.php" class="nav-item nav-link">Nuevo Credito </a> 
-            <a href="../masterlender/nuevoCliente.php" class="nav-item nav-link">Nuevo Cliente </a> 
-            <a href="../masterlender/cerrasesion.php" class="nav-item nav-link">Cerrar Sesion </a> 
+            <a href="nuevoPrestamo.php" class="nav-item nav-link">Nuevo Credito </a> 
+            <a href="nuevoCliente.php" class="nav-item nav-link">Nuevo Cliente </a> 
+            <a href="cerrasesion.php" class="nav-item nav-link">Cerrar Sesion </a> 
         </div>
     </div>
 </nav>
-</div> -->
+</div> 
 
-    <div class="wrapper d-flex align-items-stretch" >
-    <nav id="sidebar" class="active " style="background-color:#343a40" >
-    
-    <ul class="list-unstyled components mb-5"  style=" position: fixed">
-    <h1><a href="index.html" class="logo">ML</a></h1>
-    <li class="active" >
-    <a href="dashboard.php"><span class="fa fa-home"></span> Dashboard</a>
-    </li>
-    <li>
-    <a href="clientes.php"><span class="fa fa-user"></span> Clientes</a>
-    </li>
-    <li>
-    <a href="prestamos.php"><span class="fa fa-credit-card-alt"></span> Prestamos</a>
-    </li>
-    <li>
-    <a href="cobros.php"><span class="fa fa-money"></span> Cobros</a>
-    </li>
+<div class="wrapper d-flex align-items-stretch" >
+        
+        <nav id="sidebar" class="active " style="background-color:#343a40; margin-top:50px;" >
 
-    <li>
-    <a href="cobros.php"><span class="fa fa-suitcase"></span> Cartera</a>
-    </li>
-    <li>
-    <a href="perfil.php"><span class="fa fa-address-card-o"></span> Perfil</a>
-    </li>
-    </ul>
+        
+         
+          <ul class="list-unstyled components mb-5"  style=" position: fixed">
+          <h1><a href="index.html" class="logo">ML</a></h1>
+          <li class="active" >
+             
+            </li>
 
-    <div class="footer">
-    <p>
-    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Barricade Systems <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
-    </p>
-    </div>
-    </nav>
+           
+            <li>
+            <li class="active" >
+              <a href="dashboard.php"><span class="fa fa-home"></span> Dashboard</a>
+            </li>
+            <li>
+                <a href="clientes.php"><span class="fa fa-user"></span> Clientes</a>
+            </li>
+            <li>
+              <a href="prestamos.php"><span class="fa fa-credit-card-alt"></span> Prestamos</a>
+            </li>
+            <li>
+              <a href="cobros.php"><span class="fa fa-money"></span> Cobros</a>
+            </li>
+            <li>
+              <a href="carteraIndex.php"><span class="fa fa-suitcase"></span> Cartera</a>
+            </li>
 
+            <li>
+              <a href="perfil.php"><span class="fa fa-address-card-o"></span> Perfil</a>
+            </li>
+          </ul>
+
+          <div class="footer">
+            <p>
+              Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Barricade Systems <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib.com</a>
+            </p>
+          </div>
+        </nav>
     <!-- Page Content  -->
 
     <div id="content" class="p-4 p-md-5" style="margin-top:50px; width:100%;background-color:#FFFDF7" >
@@ -820,6 +828,8 @@ MODAL DE PAGO PENDIENTE -->
                                 <label for="inputPassword3" class="col-lg-4 col-form-label"><span style="text-align:center" class="prestamoID"></span></label>
                                 <input type="hidden"class= "idPrestamoPen" name = "idPrestamoPen" id= "idPrestamoPen">
                                 <input type="hidden"class= "lineaPendiente" name = "lineaPendiente" id= "lineaPendiente">
+                                <input type=""class= "saldoPorPagar" name = "SaldoPorPagar" id= "saldoPorPagar">
+                                <input type=""class= "interesPorPagar" name = "interesPorPagar" id= "interesPorPagar">
                             </div>         
           </div>
 
@@ -912,10 +922,10 @@ MODAL de Borrado-->
                             <div class="form-group row" >
                                 
                                 <label for="inputPassword3" class="col-lg-12 col-form-label"><h4>Seguro que desea borrar pago #<span style="text-align:center" value="pagoid" id="pagoid" name= "pagoid" class="pagoid"></span></h4></label> 
-                                <input type=""class="pagoid" name ="pagoid"  id="pagoid">
-                                <input type=""class="paymentAmt" name ="paymentAmt"  id="paymentAmt">
-                                <input type=""class="cuotaNumPen" name ="cuotaNumPen"  id="cuotaNumPen">
-                                <input type=""class="lineaPendiente" name ="lineaPendiente"  id="lineaPendiente">                        
+                                <input type="hidden"class="pagoid" name ="pagoid"  id="pagoid">
+                                <input type="hidden"class="paymentAmt" name ="paymentAmt"  id="paymentAmt">
+                                <input type="hidden"class="cuotaNumPen" name ="cuotaNumPen"  id="cuotaNumPen">
+                                <input type="hidden"class="lineaPendiente" name ="lineaPendiente"  id="lineaPendiente">                        
 
                                   
                                             
@@ -935,7 +945,7 @@ MODAL de Borrado-->
       </div>
     </div>
 
-    <!-- Final del modal de pago pendiente -->
+    <!-- Final del modal de Borrado -->
 
 
 
@@ -951,8 +961,8 @@ MODAL de Borrado-->
 
     <button type=""  class="btn btn-primary" data-target=".exampleModal" data-toggle="modal">Registrar Pago </button >
 
-    <a href="nuevoPrestamo.php" class="btn btn-primary">Crear nuevo credito</a>
-    <a href="#" class="btn btn-primary">Descargar</a>
+    <!-- <a href="nuevoPrestamo.php" class="btn btn-primary">Crear nuevo credito</a>
+    <a href="#" class="btn btn-primary">Descargar</a> -->
     </div>
     </div>
     </div>
@@ -1315,7 +1325,11 @@ MODAL de Borrado-->
      prestamoID=<?php echo $pagosTabla['LOAN_ID']  ?> 
      cuota= "<?php echo number_format($pagosTabla['SALDO_PAGO_ABIERTO'],2) ?>"  
      multa="<?php echo $multaAPagar1 ?>"  data-toggle="modal" 
-     monto="<?php echo $montoPendiente; ?>">Registrar Pago |</a >
+     monto="<?php echo $montoPendiente; ?>" saldoPagar = "<?php echo $pagosTabla['SALDO_ABIERTO_AMORT']?>"
+     intPorPagar =  "<?php echo $pagosTabla['SALDO_ABIERTO_INTERES']?>"
+     
+     
+     >Registrar Pago |</a >
      
 
      <a class= "" name="borrar" id="borrar" type="" href="#modalBorrarPago" numLinea=<?php echo 
@@ -1353,6 +1367,8 @@ MODAL de Borrado-->
                var tableID = $(this).attr('numLinea');
                var idPago1 = $(this).attr('identPago');
                var paymentAmt = $(this).attr('paymentAmt');
+               var saldoAPagar = $(this).attr('saldoPagar');
+               var interesAPagar = $(this).attr('intPorPagar');
 
               
                 $(".pendiente").html(id);
@@ -1371,10 +1387,14 @@ MODAL de Borrado-->
                 $('.pagoid').html(idPago1);
                 $('.pagoid').val(idPago1);
                 $('.paymentAmt').val(paymentAmt);
-
-                console.log(id);
+                $('.interesPorPagar').val(interesAPagar);
+                $('.saldoPorPagar').val(saldoAPagar);
                
-                return id;
+
+
+                // console.log(id);
+               
+                // return id;
 
               
             })
@@ -1622,9 +1642,9 @@ MODAL de Borrado-->
                 $('#idPrestamo').val(prestamoID);
                 $('#linea').val(tableID);
 
-                console.log(id);
+                // console.log(id);
                
-                return id;
+                // return id;
 
               
             })

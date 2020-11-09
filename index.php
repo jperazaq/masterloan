@@ -79,7 +79,7 @@ if($filas >0){
                   <input name="login" id="login" type="submit" class="btn btn-block login-btn mb-4" type="button" value="Ingresar"><br>
                 <h4><?php echo $mensaje ?></h4><br>
                 <a href="#!" class="forgot-password-link">Olvido su contraseña?</a>
-                <p class="login-card-footer-text">No tiene una cuenta? <a href="#!" class="text-reset">Registrese aqui</a></p>
+                <p class="login-card-footer-text">No tiene una cuenta? <a href="registro.php" class="text-reset">Registrese aqui</a></p>
                 <nav class="login-card-footer-nav">
                   <a href="#!">Terms of use.</a>
                   <a href="#!">Privacy policy</a>

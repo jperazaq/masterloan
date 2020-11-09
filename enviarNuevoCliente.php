@@ -17,10 +17,13 @@ $DOB = $_POST['nacimiento_usuario'];
 $dob1 = strtotime($DOB);
 $dob1 = date('Y-m-d',$dob1);
 $userName = $_POST['usuario_usuario'];
-$mail = $_POST['correo_usuario'];
+$mail1 = $_POST['correo_usuario'];
 $rol = $_POST['rol_usuario'];
 $phone = $_POST['telefono'];
-$pass = password_hash($_POST['password_usuario'], PASSWORD_BCRYPT);
+$nombreEmpresa = $_POST['nombreEmpresa'];
+$empresaID = $_POST['empresaID'];
+$pass1 = $_POST['password_usuario'];
+$passConf = $_POST['confirm_password_usuario'];
 
         $fecha_nac = New DateTime($dob1);
 
@@ -32,24 +35,51 @@ $pass = password_hash($_POST['password_usuario'], PASSWORD_BCRYPT);
 $seGuardaUsuario = true;
 
 
-
 };
+
+if($pass1==$passConf){
+        $pass = password_hash($pass1,PASSWORD_BCRYPT);
+}else{
+        echo "<script>window.alert('La contraseña no coincide');
+        </script>";
+
+        $seGuardaUsuario = false;
+}
     
+$queryCorreoDoble = mysqli_query($conn, "SELECT * FROM  users");
+    $rowCorreo= mysqli_fetch_array($queryCorreoDoble);
+
+    if($rowCorreo['EMAIL_NUMBER']===$mail1){
+        echo "<script>window.alert('Correo ya existe');
+        </script>";
+
+        $seGuardaUsuario = false; 
+    }else{
+            $mail= $mail1;
+    }
+
+
+
+
+
+
+
 
    if($seGuardaUsuario){
-    $sql = "INSERT INTO users (ID_NUMBER, FIRST_NAME, LAST_NAME,SECOND_LAST_NAME, USER_USER, PHONE_NUMBER, EMAIL_NUMBER, DATE_OF_BIRTH,AGE,JOB,USER_PASSWORD)
-            VALUES ('$cedula','$fisrtName','$lastName', '$secondLastName',  '$userName', '$phone','$mail', '$dob1','$age1',  '$rol','$pass')";
+    $sql = "INSERT INTO users (ID_NUMBER, FIRST_NAME, LAST_NAME,SECOND_LAST_NAME, USER_USER, PHONE_NUMBER, EMAIL_NUMBER, DATE_OF_BIRTH,AGE,JOB,NOMBRE_EMPRESA,ID_EMPRESA,USER_PASSWORD)
+            VALUES ('$cedula','$fisrtName','$lastName', '$secondLastName',  '$userName', '$phone','$mail', '$dob1','$age1',  '$rol', '$nombreEmpresa', '$empresaID','$pass')";
 
         $seGuardaUsuario = false;
 
    };
     if(mysqli_query($conn, $sql)){    
-        echo "<script>window.alert('Registro Satisfactorio en la Base de datos!');
-        </script>";  
+        header('Location: indexDone.html');
+        exit;
 
           
     } else{
-            echo 'ERROR: Could not able to execute $sql. ' . mysqli_error($conn);
+            echo $pass;
+            echo $pass1;
         }
 
         

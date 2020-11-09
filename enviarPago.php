@@ -1,6 +1,6 @@
 
 <?php 
-// ini_set( "display_errors", 0); 
+ini_set( "display_errors", 0); 
 include ("conexion.php");
 
 if (isset($_POST['guardarPago'])){
@@ -159,7 +159,7 @@ $montoMenosMulta = $monto - $montoMultaSaldoAbierto;
     echo $alcanzaPago1;
         if($alcanzaPago1<0){
             
-            $saldoAbiertoInt = $montoMenosMulta- $interes;
+            $saldoAbiertoInt = $interes- $montoMenosMulta;
             $pagoDeIntereses = $montoMenosMulta;
             
         }
@@ -243,7 +243,7 @@ $montoMenosMulta = $monto - $montoMultaSaldoAbierto;
     
             if($alcanzaPago1>$interes){
                 $restaSaldo = $montoMenosMulta-$interes;
-                $saldoAbiertoInt3 = $restaSaldo- $amortization;
+                $saldoAbiertoInt3 =  $amortization-$restaSaldo;
                
               
             }
@@ -428,7 +428,7 @@ $montoMenosMulta = $monto - $montoMultaSaldoAbierto;
     
     
         $sql = "INSERT INTO payments (CUSTOMER_ID_NUMBER, PAYMENT_AMOUNT, SALDO_PENDIENTE, REF_CUOTA,MULTA_PAGADA, SUMA_TOTAL_PAGADO,INTERES_PAGADO,SALDO_ABIERTO_INTERES,AMORTIZACION_PAGADA,SALDO_ABIERTO_AMORT,ARREAR, PAYMENT_DATE1, PAYMENT_REFERENCE,PAYMENT_METHOD, FINANCIAL_INSTITUTION, CUSTOMER_ID, LOAN_ID,AMORT_TABLE_ID)
-                VALUES ('$cedulaCliente','$monto','$saldoAbierto55', '$cuotaApagar', '$multaAGuardar','$monto','$pagoDeIntereses', '$saldoAbiertoInt','$amortizacionPagada', '$saldoAbierto3','$interval1','$fechaPago', '$recibo', '$metodo',  '$banco', '$idCliente','$prestamo','$pagoID')";
+                VALUES ('$cedulaCliente','$monto','$saldoAbierto55', '$cuotaApagar', '$multaAGuardar','$monto','$pagoDeIntereses', '$saldoAbiertoInt','$amortizacionPagada', '$saldoAbiertoInt3','$interval1','$fechaPago', '$recibo', '$metodo',  '$banco', '$idCliente','$prestamo','$pagoID')";
                
     
                 
