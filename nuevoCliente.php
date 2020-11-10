@@ -8,21 +8,21 @@
        session_start();  
       $varsession = $_SESSION['emailsess'];
     
-      
-      
-
-      $querySes = mysqli_query($conn, "SELECT `idUSERS`, `ID_NUMBER`, `FIRST_NAME`, `LAST_NAME`, `SECOND_LAST_NAME`, `USER_USER`, `PHONE_NUMBER`, `EMAIL_NUMBER`, `DATE_OF_BIRTH`, `AGE`, `JOB`, `USER_PASSWORD`
-       FROM `users` WHERE EMAIL_NUMBER = '$varsession'");
+      $querySes = mysqli_query($conn, "SELECT `idUSERS`, `ID_NUMBER`, `FIRST_NAME`, `LAST_NAME`, `SECOND_LAST_NAME`, `USER_USER`, `PHONE_NUMBER`, `EMAIL_NUMBER`, `DATE_OF_BIRTH`, `AGE`, `JOB`, `NOMBRE_EMPRESA`,`ID_EMPRESA`, `USER_PASSWORD`
+      FROM `users` WHERE EMAIL_NUMBER = '$varsession'");
       $rowses = mysqli_fetch_array($querySes);
       $nombrein = $rowses['FIRST_NAME'];
-     
-     
+      $idEmpreasSess= $rowses['ID_EMPRESA'];
+
+
       if ($varsession == NULL || $varsession = ""){
         header("LOCATION: nuevo.php")
         ;
         die();
 
       }
+      
+
        $query = mysqli_query($conn, "SELECT * FROM  users");
 
       
@@ -634,6 +634,13 @@
                             <label for="inputPassword3" class="col-sm-2 col-form-label">Ingreso Promedio Mensual</label>
                             <div class="col-sm-10">
                             <input type="text" class="form-control" id="ingreso_cliente" name="ingreso_cliente" placeholder=" Ejemplo: 500 000 " required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                           
+                            <div class="col-sm-10">
+                            <input type="" class="form-control" id="idEmpresa" name="idEmpresa" placeholder=" Ejemplo: 500 000 " value = "<?php echo $idEmpreasSess ?>">
                             </div>
                         </div>
                         

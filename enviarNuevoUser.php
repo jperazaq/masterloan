@@ -29,6 +29,7 @@ include ("conexion.php");
     $canton =$_POST['canton_cliente'];
     $distrito =$_POST['distrito_cliente'];
     $senas =$_POST['senas_cliente'];
+    $empresaID =$_POST['idEmpresa'];
 
 
     };
@@ -36,8 +37,8 @@ include ("conexion.php");
     
 
   if($seguardaCliente){ 
-    $sql = "INSERT INTO customers (ID_NUMBER, FIRST_NAME, LAST_NAME,SECOND_LAST_NAME, PHONE_NUMBER, EMAIL,OCUPATION,MONTHLY_AVERAGE_INCOME,TIME_IN_BUSSINESS,ANALYST_ID,FECHA_REG,PROVINCIA,CANTON,DISTRITO,SENAS)
-            VALUES ('$cedula_cliente','$nombre_cliente','$primer_apellido_cliente', '$segundo_apellido_cliente',  '$phone', '$mail','$ocupacion', '$ingreso','$dedicacion', '$cobrador', '$fechaReg','$provincia','$canton','$distrito','$senas')";
+    $sql = "INSERT INTO customers (ID_NUMBER, FIRST_NAME, LAST_NAME,SECOND_LAST_NAME, PHONE_NUMBER, EMAIL,OCUPATION,MONTHLY_AVERAGE_INCOME,TIME_IN_BUSSINESS,ANALYST_ID,FECHA_REG,PROVINCIA,CANTON,DISTRITO,SENAS, EMPRESA_ID)
+            VALUES ('$cedula_cliente','$nombre_cliente','$primer_apellido_cliente', '$segundo_apellido_cliente',  '$phone', '$mail','$ocupacion', '$ingreso','$dedicacion', '$cobrador', '$fechaReg','$provincia','$canton','$distrito','$senas', '$empresaID')";
             $seguardaCliente = false;
             if(mysqli_query($conn, $sql)){      
                 echo "<script>window.alert('Registro Satisfactorio en la Base de datos!');

@@ -9,13 +9,14 @@ include  ('conexion.php');
 if  (isset($_POST['login'])){
 
   $email = $_POST['email'];
-  $pass = $_POST['password'];
+  $pass =  $_POST['password'];
   $ingresar = true;
-
+  $pass1 = sha1($pass);
+  echo $pass1;
 }
 
 if($ingresar){
-$query = "SELECT * from users WHERE EMAIL_NUMBER ='$email' AND USER_PASSWORD = '$pass' ";
+$query = "SELECT * from users WHERE EMAIL_NUMBER ='$email' AND USER_PASSWORD = '$pass1' ";
 
 $resultado = mysqli_query($conn, $query);
 
@@ -26,6 +27,7 @@ $filas = mysqli_num_rows($resultado);
 if($filas >0){
   session_start();
   $_SESSION['emailsess'] = $email;
+  
   header("Location: dashboard.php");
 }else{
   $mensaje= "Los datos ingresados son incorrectos!";

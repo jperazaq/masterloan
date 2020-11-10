@@ -38,7 +38,7 @@ $seGuardaUsuario = true;
 };
 
 if($pass1==$passConf){
-        $pass = password_hash($pass1,PASSWORD_BCRYPT);
+        $pass = sha1($pass1);
 }else{
         echo "<script>window.alert('La contraseña no coincide');
         </script>";

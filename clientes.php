@@ -11,11 +11,12 @@
   
   
 
-  $querySes = mysqli_query($conn, "SELECT `idUSERS`, `ID_NUMBER`, `FIRST_NAME`, `LAST_NAME`, `SECOND_LAST_NAME`, `USER_USER`, `PHONE_NUMBER`, `EMAIL_NUMBER`, `DATE_OF_BIRTH`, `AGE`, `JOB`, `USER_PASSWORD`
+  $querySes = mysqli_query($conn, "SELECT `idUSERS`, `ID_NUMBER`, `FIRST_NAME`, `LAST_NAME`, `SECOND_LAST_NAME`, `USER_USER`, `PHONE_NUMBER`, `EMAIL_NUMBER`, `DATE_OF_BIRTH`, `AGE`, `JOB`,  `NOMBRE_EMPRESA`,`ID_EMPRESA`,`USER_PASSWORD`
    FROM `users` WHERE EMAIL_NUMBER = '$varsession'");
   $rowses = mysqli_fetch_array($querySes);
   $nombrein = $rowses['FIRST_NAME'];
- 
+  $idEmpreasSess= $rowses['ID_EMPRESA'];
+  echo $idEmpreasSess;
  
   if ($varsession == NULL || $varsession = ""){
     header("LOCATION: nuevo.php")
@@ -25,16 +26,16 @@
   }
 
  
-  $query3 = mysqli_query($conn, " SELECT customers.FIRST_NAME, customers.LAST_NAME, customers.SECOND_LAST_NAME, customers.ID_NUMBER, customers.CUSTOMER_ID,
+  $query1 = mysqli_query($conn, " SELECT customers.FIRST_NAME, customers.LAST_NAME, customers.SECOND_LAST_NAME, customers.ID_NUMBER, customers.CUSTOMER_ID,
   loans.LOAN_ID, loans.STAR_DATE, loans.MONTO_CUOTA_TOTAL, sum(LOAN_AMOUNT), loans.MONTO_SOLO_INTERESES,loans.USER_CLIENTE_ID
     FROM customers AS customers
-  INNER JOIN loans AS loans ON customers.CUSTOMER_ID = loans.CUSTOMER_ID GROUP BY CUSTOMER_ID");
+  INNER JOIN loans AS loans ON customers.EMPRESA_ID = loans.EMPRESA_ID GROUP BY EMPRESA_ID WHERE EMPRESA_ID = $idEmpreasSess");
 
  
-  $query3 = mysqli_query($conn, " SELECT customers.FIRST_NAME, customers.LAST_NAME, customers.SECOND_LAST_NAME, customers.ID_NUMBER, customers.CUSTOMER_ID,
-  loans.LOAN_ID, loans.STAR_DATE, loans.MONTO_CUOTA_TOTAL, loans.LOAN_AMOUNT, loans.MONTO_SOLO_INTERESES,loans.USER_CLIENTE_ID
+  $query3 = mysqli_query($conn, " SELECT customers.FIRST_NAME, customers.LAST_NAME, customers.SECOND_LAST_NAME, customers.ID_NUMBER, customers.CUSTOMER_ID,customers.EMPRESA_ID,
+  loans.LOAN_ID, loans.STAR_DATE, loans.MONTO_CUOTA_TOTAL, loans.LOAN_AMOUNT,loans.MONTO_SOLO_INTERESES,loans.USER_CLIENTE_ID,loans.EMPRESA_ID
     FROM customers AS customers
-  INNER JOIN loans AS loans ON customers.CUSTOMER_ID = loans.CUSTOMER_ID");
+  INNER JOIN loans AS loans ON customers.EMPRESA_ID = loans.EMPRESA_ID WHERE loans.EMPRESA_ID = $idEmpreasSess"  );
 
   
   
@@ -181,6 +182,8 @@
                   
               <tbody>
               <?php 
+
+            
                   while($datos = mysqli_fetch_array($query3)){   
                     $id= $datos['LOAN_ID'];                     
                     $idnumber= $datos['ID_NUMBER'];  

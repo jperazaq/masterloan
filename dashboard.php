@@ -21,10 +21,11 @@
       
       
 
-      $querySes = mysqli_query($conn, "SELECT `idUSERS`, `ID_NUMBER`, `FIRST_NAME`, `LAST_NAME`, `SECOND_LAST_NAME`, `USER_USER`, `PHONE_NUMBER`, `EMAIL_NUMBER`, `DATE_OF_BIRTH`, `AGE`, `JOB`, `USER_PASSWORD`
+      $querySes = mysqli_query($conn, "SELECT `idUSERS`, `ID_NUMBER`, `FIRST_NAME`, `LAST_NAME`, `SECOND_LAST_NAME`, `USER_USER`, `PHONE_NUMBER`, `EMAIL_NUMBER`, `DATE_OF_BIRTH`, `AGE`, `JOB`, 'NOMBRE_EMPRESA','ID_EMPRESA', `USER_PASSWORD`
        FROM `users` WHERE EMAIL_NUMBER = '$varsession'");
       $rowses = mysqli_fetch_array($querySes);
       $nombrein = $rowses['FIRST_NAME'];
+      $idEmpreasSess= $rowses['ID_EMPRESA'];
      
      
       if ($varsession == NULL || $varsession = ""){

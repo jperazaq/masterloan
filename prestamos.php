@@ -10,10 +10,11 @@
   
   
 
-  $querySes = mysqli_query($conn, "SELECT `idUSERS`, `ID_NUMBER`, `FIRST_NAME`, `LAST_NAME`, `SECOND_LAST_NAME`, `USER_USER`, `PHONE_NUMBER`, `EMAIL_NUMBER`, `DATE_OF_BIRTH`, `AGE`, `JOB`, `USER_PASSWORD`
+  $querySes = mysqli_query($conn, "SELECT `idUSERS`, `ID_NUMBER`, `FIRST_NAME`, `LAST_NAME`, `SECOND_LAST_NAME`, `USER_USER`, `PHONE_NUMBER`, `EMAIL_NUMBER`, `DATE_OF_BIRTH`, `AGE`, `JOB`, `NOMBRE_EMPRESA`,`ID_EMPRESA`,`USER_PASSWORD`
    FROM `users` WHERE EMAIL_NUMBER = '$varsession'");
   $rowses = mysqli_fetch_array($querySes);
   $nombrein = $rowses['FIRST_NAME'];
+  $idEmpreasSess= $rowses['ID_EMPRESA'];
  
  
   if ($varsession == NULL || $varsession = ""){
@@ -29,7 +30,7 @@
   $query3 = mysqli_query($conn, " SELECT customers.FIRST_NAME, customers.LAST_NAME, customers.SECOND_LAST_NAME, customers.ID_NUMBER, customers.CUSTOMER_ID,
   loans.LOAN_ID, loans.STAR_DATE, loans.MONTO_CUOTA_TOTAL, LOAN_AMOUNT, loans.MONTO_SOLO_INTERESES,loans.USER_CLIENTE_ID
     FROM customers AS customers
-  INNER JOIN loans AS loans ON customers.CUSTOMER_ID = loans.CUSTOMER_ID ");
+  INNER JOIN loans AS loans ON customers.CUSTOMER_ID = loans.CUSTOMER_ID WHERE customers.EMPRESA_ID = $idEmpreasSess ");
   
   
   ?>

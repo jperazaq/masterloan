@@ -12,6 +12,26 @@ include  ('conexion.php');
 $query = mysqli_query($conn, "SELECT * FROM  customers");
 $query2 = mysqli_query($conn, "SELECT * FROM  users");
 
+      
+session_start();  
+$varsession = $_SESSION['emailsess'];
+
+
+
+
+$querySes = mysqli_query($conn, "SELECT `idUSERS`, `ID_NUMBER`, `FIRST_NAME`, `LAST_NAME`, `SECOND_LAST_NAME`, `USER_USER`, `PHONE_NUMBER`, `EMAIL_NUMBER`, `DATE_OF_BIRTH`, `AGE`, `JOB`, `NOMBRE_EMPRESA`,`ID_EMPRESA`, `USER_PASSWORD`
+ FROM `users` WHERE EMAIL_NUMBER = '$varsession'");
+$rowses = mysqli_fetch_array($querySes);
+$nombrein = $rowses['FIRST_NAME'];
+$idEmpreasSess= $rowses['ID_EMPRESA'];
+
+
+if ($varsession == NULL || $varsession = ""){
+  header("LOCATION: nuevo.php")
+  ;
+  die();
+
+}
 
 ?>
 <head>
@@ -192,6 +212,13 @@ $query2 = mysqli_query($conn, "SELECT * FROM  users");
                       Cuota Plana
                     </label><br>
                     <small>Monto principal entre el periodo del prestamo mas el monto de interes mensual calculado sobre el principal</small>
+                  </div>
+
+                  
+                  <div class="form-check" >
+                    <input class="form-check-input" type="hidden" name="idEmpresa" id="idEmpresa" value="<?php echo $idEmpreasSess ?>"required>
+                    
+                    
                   </div>
 
                 </div>
