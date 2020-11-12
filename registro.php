@@ -128,6 +128,7 @@ if($filas >0){
                 </div>
             </div>
             <label for="inputPassword3" class="col-sm-2 col-form-label">Rol</label>
+            
                         <div class="col-sm-10">
 
                         <select class="custom-select my-1 mr-sm-2" id="rol_usuario" name="rol_usuario">
