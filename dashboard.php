@@ -373,7 +373,7 @@ while($payDateAmounts = mysqli_fetch_array($query17)){
             <h1  >DASHBOARD</h1><hr>
             
            
-                  <table class="table" style="text-align:center; background-color:#e4e3e3">
+                  <!-- <table class="table" style="text-align:center; background-color:#e4e3e3">
                   <thead class= "thead-dark">
                     <tr >
 
@@ -409,7 +409,7 @@ while($payDateAmounts = mysqli_fetch_array($query17)){
                     </tr>
                    
                   </tbody>
-                </table>
+                </table> -->
           
           <!-- Bloque de graficos -->
             <div class="card-deck">
@@ -446,11 +446,11 @@ while($payDateAmounts = mysqli_fetch_array($query17)){
 
                   <div class="container">
                       <div class="row">
-                        <div class="col-lg">
+                        <div class="col-sm-4">
                           <h5><a href="#" class="btn btn-primary">Ver Clientes</a></h5>
                           
                         </div>
-                        <div class="col">
+                        <div class="col-sm-4">
                           <h5><a href="nuevoPrestamo.php" class="btn btn-primary">Crear Credito</a></h5>
                         </div>
 

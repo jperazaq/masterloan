@@ -649,10 +649,10 @@ MODAL DE PAGO -->
 
     </div><br><hr>
 
-    <h2 class="card-title"> Resumen de creditos activos</h2> 
+    <!-- <h2 class="card-title"> Resumen de creditos activos</h2> 
     <table class="table" style="text-align:center; background-color:#e4e3e3">
-    <thead class= "thead-dark">
-      <tr >
+    <thead class= "thead-dark"> -->
+      <!-- <tr >
 
       
           <th scope="col">Al dia</th>
@@ -672,46 +672,48 @@ MODAL DE PAGO -->
     </thead>
     <tbody>
       <tr>
-      <?php
-      $aldia= 0;
-      $unoTreinta=0;
-      $treintaSesenta=0;
-      $sesentanoventa = 0;
-      $over90=0;
-      $totalAPagar1=0;
+     
+      // $aldia= 0;
+      // $unoTreinta=0;
+      // $treintaSesenta=0;
+      // $sesentanoventa = 0;
+      // $over90=0;
+      // $totalAPagar1=0;
 
-      while($aging = mysqli_fetch_array($query18) ){
+      // while($aging = mysqli_fetch_array($query18) ){
 
 
-        if($aging['ARREAR']<0){
-          $totalAPagar1 = $totalAPagar1+$aging['CUOTA'];
-          $aldia= $aldia+$aging['CUOTA'];
+      //   if($aging['ARREAR']<0){
+      //     $totalAPagar1 = $totalAPagar1+$aging['CUOTA'];
+      //     $aldia= $aldia+$aging['CUOTA'];
 
-        }elseif($aging['ARREAR']>0 && $aging['ARREAR']<=30){
-          $totalAPagar1 = $totalAPagar1+$aging['CUOTA'];
-          $unoTreinta= $unoTreinta+$aging['CUOTA'];
+      //   }elseif($aging['ARREAR']>0 && $aging['ARREAR']<=30){
+      //     $totalAPagar1 = $totalAPagar1+$aging['CUOTA'];
+      //     $unoTreinta= $unoTreinta+$aging['CUOTA'];
 
-        }elseif($aging['ARREAR']>30 && $aging['ARREAR']<=60){
-          $totalAPagar1 = $totalAPagar1+$aging['CUOTA'];
-          $treintaSesenta= $treintaSesenta+$aging['CUOTA'];
-        }
-          elseif($aging['ARREAR']>60 && $aging['ARREAR']<=90){
-            $totalAPagar1 = $totalAPagar1+$aging['CUOTA'];
-            $sesentanoventa= $sesentanoventa+$aging['CUOTA'];
+      //   }elseif($aging['ARREAR']>30 && $aging['ARREAR']<=60){
+      //     $totalAPagar1 = $totalAPagar1+$aging['CUOTA'];
+      //     $treintaSesenta= $treintaSesenta+$aging['CUOTA'];
+      //   }
+      //     elseif($aging['ARREAR']>60 && $aging['ARREAR']<=90){
+      //       $totalAPagar1 = $totalAPagar1+$aging['CUOTA'];
+      //       $sesentanoventa= $sesentanoventa+$aging['CUOTA'];
 
-          }else{
-            $totalAPagar1 = $totalAPagar1+$aging['CUOTA'];
-            $over90 = $over90+$aging['CUOTA'];
-          }
+      //     }else{
+      //       $totalAPagar1 = $totalAPagar1+$aging['CUOTA'];
+      //       $over90 = $over90+$aging['CUOTA'];
+      //     }
         
         
         
-      }
+      // }
       //  
 
 
 ?>
-        <th ><?php echo number_format($aldia,2) ?></th>
+        <th >
+        <?php echo number_format($aldia,2) ?>
+        </th>
         <th scope="row"><?php echo ($aldia/$totalAPagar1)*100 ?></th>
         <th ><?php echo number_format($unoTreinta,2) ?></th>
         <th scope="row"><?php echo ($unoTreinta/$totalAPagar1)*100  ?></th>
@@ -725,7 +727,7 @@ MODAL DE PAGO -->
       </tr>
       
     </tbody>
-    </table> <hr>
+    </table> <hr> -->
 
 
     <head>
@@ -923,7 +925,7 @@ MODAL DE PAGO -->
 
 
     <div class="col-sm">
-    <h2>Pagos</h2><hr><br>
+    <!-- <h2>Pagos</h2><hr><br>
     </div>
     <div class="container mb-5 mt-3 col-lg-12">
     <table class="table table-striped table-bordered myDataTable " style="width:100%; text-align:center" >
@@ -982,7 +984,7 @@ MODAL DE PAGO -->
 
 
     </table>
-    </div>
+    </div> -->
     <div class="col-sm">
     <h2>Tabla de Proximos Pagos</h2><hr><br>
 

@@ -284,7 +284,7 @@
             <a href="#" class="nav-item nav-link">Bienvenido <?php echo $nombrein?></a> <h2 >|</h2>
             <a href="nuevoPrestamo.php" class="nav-item nav-link">Nuevo Credito </a> 
             <a href="nuevoCliente.php" class="nav-item nav-link">Nuevo Cliente </a> 
-            <a href="cerrasesion.php" class="nav-item nav-link">Cerrar Sesion </a> 
+            <a href="masterlender/cerrasesion.php" class="nav-item nav-link">Cerrar Sesion </a> 
         </div>
     </div>
 </nav>
