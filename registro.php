@@ -56,11 +56,11 @@ if($filas >0){
 </head>
 <body>
   <main class="d-flex align-items-center min-vh-100 py-3 py-md-0">
-    <div class="container">
-      <div class="card login-card">
+    <div class="container" >
+      <div class="card login-card" style="width:1000px">
         <div class="row no-gutters">
-          <div class="col-md-5">
-            <img src="./login/assets/images/login.jpg" alt="login" class="login-card-img">
+          <div class="col-lg-5">
+            <img src="./login/assets/images/login.jpg" alt="login" class="login-card-img" >
           </div>
           <div class="col-md-7">
             <div class="card-body">

@@ -76,7 +76,7 @@
     $query21 = mysqli_query($conn, "SELECT  sum(AMORTIZACION_PAGADA)FROM  amortization WHERE LOAN_ID = $loan_id");
 
     $query22 = mysqli_query($conn, " SELECT customers.FIRST_NAME, customers.LAST_NAME, customers.SECOND_LAST_NAME, customers.ID_NUMBER, customers.CUSTOMER_ID,
-    loans.LOAN_ID, loans.STAR_DATE, loans.MONTO_CUOTA_TOTAL, loans.LOAN_AMOUNT, loans.MONTO_SOLO_INTERESES,loans.USER_CLIENTE_ID
+    loans.LOAN_ID, loans.STAR_DATE, loans.MONTO_CUOTA_TOTAL, loans.TIPO_DE_CUOTA, loans.LOAN_AMOUNT, loans.MONTO_SOLO_INTERESES,loans.USER_CLIENTE_ID
       FROM customers AS customers
     INNER JOIN loans AS loans ON customers.CUSTOMER_ID = loans.CUSTOMER_ID");
 
@@ -104,7 +104,11 @@
     
     $query32 = mysqli_query($conn, "SELECT sum(CUOTA) FROM  amortization WHERE LOAN_ID = $loan_id");
 
-    
+    $query33 = mysqli_query($conn, " SELECT customers.FIRST_NAME, customers.LAST_NAME, customers.SECOND_LAST_NAME, customers.ID_NUMBER, customers.CUSTOMER_ID,
+    loans.LOAN_ID, loans.STAR_DATE, loans.MONTO_CUOTA_TOTAL, loans.TIPO_DE_CUOTA, loans.LOAN_AMOUNT, loans.MONTO_SOLO_INTERESES,loans.USER_CLIENTE_ID
+      FROM customers AS customers
+    INNER JOIN loans AS loans ON customers.CUSTOMER_ID = loans.CUSTOMER_ID");
+
     $queryInt = mysqli_query($conn, "SELECT sum(INTERES_PAGADO) from payments WHERE LOAN_ID = $loan_id");
     $intpaidrow= mysqli_fetch_array($queryInt);
     $intPaid = $intpaidrow['sum(INTERES_PAGADO)'];
@@ -179,20 +183,20 @@
     $saldoTotalPrestamos= $monto-$pagado;
     $today= date('Y-m-d');
    
-    // for($i = 0;$i<$cuenta;$i++){
-    //   $now= date('Y-m-d');
-    // $fechaDeHoy= "UPDATE amortization SET TODAY = '$now'  WHERE CUSTOMER_ID = $customers_id";
+    for($i = 0;$i<$cuenta;$i++){
+      $now= date('Y-m-d');
+    $fechaDeHoy= "UPDATE amortization SET TODAY = '$now'  WHERE CUSTOMER_ID = $customers_id";
     
-    // if(mysqli_query($conn,$fechaDeHoy)){   
+    if(mysqli_query($conn,$fechaDeHoy)){   
                             
                                    
             
-    // } else{
-    //   echo 'ERROR: Could not able to execute $Update. ' . mysqli_error($conn,$Update);  
-    //     };    
+    } else{
+      echo 'ERROR: Could not able to execute $Update. ' . mysqli_error($conn,$Update);  
+        };    
           
     
-    //   }
+      }
 
 
     for($i = 0;$i<$cuenta;$i++){
@@ -313,9 +317,9 @@
             <li>
               <a href="prestamos.php"><span class="fa fa-credit-card-alt"></span> Prestamos</a>
             </li>
-            <li>
+            <!-- <li>
               <a href="cobros.php"><span class="fa fa-money"></span> Cobros</a>
-            </li>
+            </li> -->
             <li>
               <a href="carteraIndex.php"><span class="fa fa-suitcase"></span> Cartera</a>
             </li>
@@ -556,6 +560,23 @@
           </div>
           <div class="col">
             <h5><?php echo number_format($cuota ,0) ?></h5>
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <h5>Tipo de Cuota</h5>
+          </div>
+          <div class="col">
+            <h5><?php 
+            while($tipoCuota = mysqli_fetch_array($query33)){
+             $tipoCuote = $tipoCuota['TIPO_DE_CUOTA'];
+            }
+            echo $tipoCuote;
+           ?></h5>
           </div>
         </div>
       </div>
@@ -959,7 +980,7 @@ MODAL de Borrado-->
 
 
 
-    <button type=""  class="btn btn-primary" data-target=".exampleModal" data-toggle="modal">Registrar Pago </button >
+    <!-- <button type=""  class="btn btn-primary" data-target=".exampleModal" data-toggle="modal">Registrar Pago </button > -->
 
     <!-- <a href="nuevoPrestamo.php" class="btn btn-primary">Crear nuevo credito</a>
     <a href="#" class="btn btn-primary">Descargar</a> -->

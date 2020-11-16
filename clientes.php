@@ -32,10 +32,12 @@
   INNER JOIN loans AS loans ON customers.EMPRESA_ID = loans.EMPRESA_ID GROUP BY EMPRESA_ID WHERE EMPRESA_ID = $idEmpreasSess");
 
  
-  $query3 = mysqli_query($conn, " SELECT customers.FIRST_NAME, customers.LAST_NAME, customers.SECOND_LAST_NAME, customers.ID_NUMBER, customers.CUSTOMER_ID,customers.EMPRESA_ID,
+  $query3 = mysqli_query($conn, " SELECT customers.FECHA_REG, customers.EMAIL, customers.PHONE_NUMBER,customers.FIRST_NAME, customers.LAST_NAME, customers.SECOND_LAST_NAME, customers.ID_NUMBER, customers.CUSTOMER_ID,customers.EMPRESA_ID,
   loans.LOAN_ID, loans.STAR_DATE, loans.MONTO_CUOTA_TOTAL, loans.LOAN_AMOUNT,loans.MONTO_SOLO_INTERESES,loans.USER_CLIENTE_ID,loans.EMPRESA_ID
     FROM customers AS customers
-  INNER JOIN loans AS loans ON customers.EMPRESA_ID = loans.EMPRESA_ID WHERE loans.EMPRESA_ID = $idEmpreasSess"  );
+  INNER JOIN loans AS loans ON customers.EMPRESA_ID = loans.EMPRESA_ID WHERE loans.EMPRESA_ID = $idEmpreasSess "  );
+
+  $query4 = mysqli_query($conn, "SELECT * from customers");
 
   
   
@@ -83,7 +85,7 @@
 </nav>
 </div>
       
-      <div class="wrapper d-flex align-items-stretch" style="margin-top:50px">
+      <div class="wrapper d-flex align-items-stretch" style="margin-top:15px">
         <nav id="sidebar" class="active " style="background-color:#343a40" >
          
           <ul class="list-unstyled components mb-5"  style=" position: fixed">
@@ -98,9 +100,9 @@
             <li>
               <a href="prestamos.php"><span class="fa fa-credit-card-alt"></span> Prestamos</a>
             </li>
-            <li>
+            <!-- <li>
               <a href="cobros.php"><span class="fa fa-money"></span> Cobros</a>
-            </li>
+            </li> -->
             <li>
               <a href="perfil.php"><span class="fa fa-address-card-o"></span> Perfil</a>
             </li>
@@ -161,15 +163,11 @@
                   <tr>
                       
                       <th>Cedula</th>
-                      <th>Monto del Prestamo </th>
-                      <th>Prestamo ID </th>
-                      <th>Fecha Apertura </th>
-                      <th>Pago mensual </th>
-                      <th>Pago Solo Intereses </th>
-                      <th>Pago Amortizacion </th>
-                      <th>Analista </th>
-                      <th>Dias de Atraso </th>
-                      <th>Total Atraso </th>
+                      <th>Telefono </th>
+                      <th>Fecha de Registro </th>                     
+                      <th>Email </th>
+                      <th>Id Cliente</th>
+                      
                       
                       <th>Acciones </th>
 
@@ -193,16 +191,11 @@
               <tr>
                   <td><?php echo $datos['FIRST_NAME'], ' ', $datos['LAST_NAME']. ' ', $datos['SECOND_LAST_NAME']  ?></td>
                   <td><?php echo $datos['ID_NUMBER']?></td>
-                  <td><?php echo $datos['LOAN_AMOUNT']?></td>
-                  <td><?php echo $datos['LOAN_ID']?></td>
-                  <td><?php echo $datos['STAR_DATE']?></td>
-                  <td><?php echo $datos['MONTO_CUOTA_TOTAL']?></td>
-                  <td><?php echo $datos['MONTO_SOLO_INTERESES']?></td> 
-                  <td><?php echo  $datos['MONTO_CUOTA_TOTAL']-$datos['MONTO_SOLO_INTERESES']?></td>                  
-                  <td><?php echo $datos['USER_CLIENTE_ID']?></td>
+                  <td><?php echo $datos['PHONE_NUMBER']?></td>
+                  <td><?php echo $datos['FECHA_REG']?></td>
+                  <td><?php echo $datos['EMAIL']?></td>
+                  <td><?php echo $datos['CUSTOMER_ID']?></td>
                   
-                  <td>0</td>
-                  <td>0</td>
 
                   <td><?php echo "<a href='detalleCliente.php?LOAN_ID=$id&ID_NUMBER=$idnumber&CUSTOMER_ID=$customer_id&LOANID=$id'>Ver Detalles</a>"?></td>
                   

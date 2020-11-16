@@ -334,12 +334,12 @@ while($payDateAmounts = mysqli_fetch_array($query17)){
             <li>
               <a href="prestamos.php"><span class="fa fa-credit-card-alt"></span> Prestamos</a>
             </li>
-            <li>
+            <!-- <li>
               <a href="cobros.php"><span class="fa fa-money"></span> Cobros</a>
             </li>
             <li>
               <a href="carteraIndex.php"><span class="fa fa-suitcase"></span> Cartera</a>
-            </li>
+            </li> -->
 
             <li>
               <a href="perfil.php"><span class="fa fa-address-card-o"></span> Perfil</a>

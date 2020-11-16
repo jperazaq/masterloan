@@ -223,9 +223,9 @@ while($datos = mysqli_fetch_array($query31)){
     <li>
     <a href="prestamos.php"><span class="fa fa-credit-card-alt"></span> Prestamos</a>
     </li>
-    <li>
+    <!-- <li>
     <a href="cobros.php"><span class="fa fa-money"></span> Cobros</a>
-    </li>
+    </li> -->
     <li>
     <a href="cobros.php"><span class="fa fa-suitcase"></span> Cartera</a>
     </li>

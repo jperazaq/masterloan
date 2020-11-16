@@ -640,7 +640,7 @@
                         <div class="form-group row">
                            
                             <div class="col-sm-10">
-                            <input type="" class="form-control" id="idEmpresa" name="idEmpresa" placeholder=" Ejemplo: 500 000 " value = "<?php echo $idEmpreasSess ?>">
+                            <input type="hidden" class="form-control" id="idEmpresa" name="idEmpresa" placeholder=" Ejemplo: 500 000 " value = "<?php echo $idEmpreasSess ?>">
                             </div>
                         </div>
                         
