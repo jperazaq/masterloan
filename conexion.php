@@ -2,7 +2,7 @@
 <?php
 $username = "b9321a99880982";
 $password = "bdaa56d9";
-$servername = "@us-cdbr-east-02.cleardb.com";
+$servername = "us-cdbr-east-02.cleardb.com";
 $database = "heroku_07d992e5526fdc5";
 
 
