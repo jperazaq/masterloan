@@ -25,5 +25,3 @@ if (!$conn) {
 
 
 ?>
-
-<!-- mysql://b9321a99880982:bdaa56d9@us-cdbr-east-02.cleardb.com/heroku_07d992e5526fdc5?reconnect=true -->
