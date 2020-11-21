@@ -2,10 +2,10 @@
 
 include ("conexion.php");
 
-ini_set( "display_errors", 0); 
+// ini_set( "display_errors", 0); 
 
-error_reporting(E_ALL ^ E_NOTICE);
-ini_set('error_reporting', E_ALL ^ E_NOTICE);
+// error_reporting(E_ALL ^ E_NOTICE);
+// ini_set('error_reporting', E_ALL ^ E_NOTICE);
     
 
 if(isset($_POST['guardarUsuario'])){
@@ -35,6 +35,20 @@ $passConf = $_POST['confirm_password_usuario'];
 $seGuardaUsuario = true;
 
 
+echo $cedula;
+echo $fisrtName;
+echo $lastName;
+echo $secondLastName;
+echo $dob1;
+echo $userName;
+echo $mail1;
+echo $rol;
+echo $phone;
+echo $nombreEmpresa;
+echo $empresaID;
+echo $pass1;
+echo $passConf;
+
 };
 
 if($pass1==$passConf){
@@ -43,25 +57,21 @@ if($pass1==$passConf){
         echo "<script>window.alert('La contraseña no coincide');
         </script>";
 
-        $seGuardaUsuario = false;
+     
 }
     
 $queryCorreoDoble = mysqli_query($conn, "SELECT * FROM  users");
     $rowCorreo= mysqli_fetch_array($queryCorreoDoble);
 
-    if($rowCorreo['EMAIL_NUMBER']===$mail1){
+    if($rowCorreo['EMAIL_NUMBER']===$mail1 && $mail1 != null){
         echo "<script>window.alert('Correo ya existe');
         </script>";
 
-        $seGuardaUsuario = false; 
+      
     }else{
             $mail= $mail1;
+           
     }
-
-
-
-
-
 
 
 
@@ -78,8 +88,9 @@ $queryCorreoDoble = mysqli_query($conn, "SELECT * FROM  users");
 
           
     } else{
-            echo $pass;
-            echo $pass1;
+        echo 'ERROR: Could not able to execute $sql. '. mysqli_error($sql);
+     
+      $seGuardaUsuario = false;
         }
 
         

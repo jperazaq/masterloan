@@ -992,7 +992,7 @@ MODAL de Borrado-->
 
 
     </div><br><hr>
-
+<!-- 
     <h2 class="card-title"> Atraso</h2> 
     <table class="table" style="text-align:center; background-color:#e4e3e3">
     <thead class= "thead-dark">
@@ -1019,112 +1019,112 @@ MODAL de Borrado-->
       <?php
    
 
-      $aldiaPendiente= 0;
-      $unoTreintaPendiente=0;
-      $treintaSesentaPendiente=0;
-      $sesentanoventaPendiente = 0;
-      $over90Pendiente=0;
-      $totalAPagar1Pendiente=0;
-      $totalAPagar2 = 0;
+      // $aldiaPendiente= 0;
+      // $unoTreintaPendiente=0;
+      // $treintaSesentaPendiente=0;
+      // $sesentanoventaPendiente = 0;
+      // $over90Pendiente=0;
+      // $totalAPagar1Pendiente=0;
+      // $totalAPagar2 = 0;
                                       
-      while($pendingAging = mysqli_fetch_array($query31)){
+      // while($pendingAging = mysqli_fetch_array($query31)){
 
        
 
-      if($pendingAging['SALDO_ABIERTO_CUOTA']<0){
+      // if($pendingAging['SALDO_ABIERTO_CUOTA']<0){
 
-        if($pendingAging['ARREAR']<=0){
+      //   if($pendingAging['ARREAR']<=0){
 
-          $totalAPagar2 = $totalAPagar1+$pendingAging['CUOTA']-$pendingAging['PAYMENT_AMOUNT'];
-          $aldiaPendiente= $aldiaPendiente+abs($pendingAging['SALDO_ABIERTO_CUOTA']);   
+      //     $totalAPagar2 = $totalAPagar1+$pendingAging['CUOTA']-$pendingAging['PAYMENT_AMOUNT'];
+      //     $aldiaPendiente= $aldiaPendiente+abs($pendingAging['SALDO_ABIERTO_CUOTA']);   
                
           
           
-          }
+      //     }
         
         
         
-        elseif($aging['ARREAR']>0 && $aging['ARREAR']<=30){
+      //   elseif($aging['ARREAR']>0 && $aging['ARREAR']<=30){
           
-          $unoTreintaPendiente= ($unoTreintaPendiente+$aging['SALDO_ABIERTO_CUOTA']);
+      //     $unoTreintaPendiente= ($unoTreintaPendiente+$aging['SALDO_ABIERTO_CUOTA']);
 
-        }elseif($aging['ARREAR']>30 && $aging['ARREAR']<=60){
+      //   }elseif($aging['ARREAR']>30 && $aging['ARREAR']<=60){
           
-          $treintaSesentaPendiente= $treintaSesentaPendiente+$aging['SALDO_ABIERTO_CUOTA'];
+      //     $treintaSesentaPendiente= $treintaSesentaPendiente+$aging['SALDO_ABIERTO_CUOTA'];
 
-        }
-          elseif($aging['ARREAR']>60 && $aging['ARREAR']<=90){
+      //   }
+      //     elseif($aging['ARREAR']>60 && $aging['ARREAR']<=90){
             
-            $sesentanoventa= $sesentanoventaPendiente+$aging['SALDO_ABIERTO_CUOTA'];
+      //       $sesentanoventa= $sesentanoventaPendiente+$aging['SALDO_ABIERTO_CUOTA'];
 
-          }else{
+      //     }else{
            
-            $over90Pendiente = $over90Pendiente+$aging['SALDO_ABIERTO_CUOTA'];
-          }
+      //       $over90Pendiente = $over90Pendiente+$aging['SALDO_ABIERTO_CUOTA'];
+      //     }
         
         
-      }
-      }
+      // }
+      // }
 
-      $aldia= 0;
-      $unoTreinta=0;
-      $treintaSesenta=0;
-      $sesentanoventa = 0;
-      $over90=0;
-      $totalAPagar1=0;
+      // $aldia= 0;
+      // $unoTreinta=0;
+      // $treintaSesenta=0;
+      // $sesentanoventa = 0;
+      // $over90=0;
+      // $totalAPagar1=0;
 
 
 
-      while($aging = mysqli_fetch_array($query18) ){
-
-        
-        
-       if($aging['PAYMENT_AMOUNT']<=0 ) {
+      // while($aging = mysqli_fetch_array($query18) ){
 
         
+        
+      //  if($aging['PAYMENT_AMOUNT']<=0 ) {
 
-          if($aging['ARREAR']<=0){
+        
+
+      //     if($aging['ARREAR']<=0){
             
-          $totalAPagar1 = $totalAPagar1+$aging['AMORTIZATION'];
-          $aldia= $aldia+($aging['AMORTIZATION']);          
+      //     $totalAPagar1 = $totalAPagar1+$aging['AMORTIZATION'];
+      //     $aldia= $aldia+($aging['AMORTIZATION']);          
           
           
-          }
+      //     }
         
         
         
-        elseif($aging['ARREAR']>0 && $aging['ARREAR']<=30){
-          $totalAPagar1 = ($totalAPagar1+$aging['CUOTA']);
-          $unoTreinta= ($unoTreinta+$aging['CUOTA'])-$aging['AMORTIZACION_PAGADA'];
+      //   elseif($aging['ARREAR']>0 && $aging['ARREAR']<=30){
+      //     $totalAPagar1 = ($totalAPagar1+$aging['CUOTA']);
+      //     $unoTreinta= ($unoTreinta+$aging['CUOTA'])-$aging['AMORTIZACION_PAGADA'];
 
-        }elseif($aging['ARREAR']>30 && $aging['ARREAR']<=60){
-          $totalAPagar1 = $totalAPagar1+$aging['CUOTA'];
-          $treintaSesenta= $treintaSesenta+$aging['CUOTA'];
+      //   }elseif($aging['ARREAR']>30 && $aging['ARREAR']<=60){
+      //     $totalAPagar1 = $totalAPagar1+$aging['CUOTA'];
+      //     $treintaSesenta= $treintaSesenta+$aging['CUOTA'];
 
-        }
-          elseif($aging['ARREAR']>60 && $aging['ARREAR']<=90){
-            $totalAPagar1 = $totalAPagar1+$aging['CUOTA'];
-            $sesentanoventa= $sesentanoventa+$aging['CUOTA'];
+      //   } -->
+//           elseif($aging['ARREAR']>60 && $aging['ARREAR']<=90){
+//             $totalAPagar1 = $totalAPagar1+$aging['CUOTA'];
+//             $sesentanoventa= $sesentanoventa+$aging['CUOTA'];
 
-          }else{
-            $totalAPagar1 = $totalAPagar1+$aging['CUOTA'];
-            $over90 = $over90+$aging['CUOTA'];
-          }
+//           }else{
+//             $totalAPagar1 = $totalAPagar1+$aging['CUOTA'];
+//             $over90 = $over90+$aging['CUOTA'];
+//           }
         
         
         
-      }
+//       }
     
-    }
-      //  
+//     }
+//       //  
   
-  $unoTreintaFinal=$unoTreinta+$unoTreintaFinal;
-  $treintaSesentaFinal=$treintaSesenta+$treintaSesentaPendiente;
-  $sesentanoventaFinal = $sesentanoventa+$sesentanoventaPendiente;
-  $over90Final=$over90+$over90Pendiente;
-  $totalAPagarfinal = $saldoTotalPrestamos;
-  $alDiaFinal = $saldoTotalPrestamos-$unoTreintaFinal-$treintaSesentaFinal-$sesentanoventaFinal-$over90Final; 
-?>
+//   $unoTreintaFinal=$unoTreinta+$unoTreintaFinal;
+//   $treintaSesentaFinal=$treintaSesenta+$treintaSesentaPendiente;
+//   $sesentanoventaFinal = $sesentanoventa+$sesentanoventaPendiente;
+//   $over90Final=$over90+$over90Pendiente;
+//   $totalAPagarfinal = $saldoTotalPrestamos;
+//   $alDiaFinal = $saldoTotalPrestamos-$unoTreintaFinal-$treintaSesentaFinal-$sesentanoventaFinal-$over90Final; 
+// ?>
         <th ><?php echo number_format($alDiaFinal,2) ?></th>
         <th scope="row"><?php echo number_format(($alDiaFinal/$totalAPagarfinal)*100,0) ?></th>
         <th ><?php echo number_format($unoTreintaFinal,2) ?></th>

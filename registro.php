@@ -152,6 +152,7 @@ if($filas >0){
                   <input name="guardarUsuario" id="guardarUsuario" type="submit" class="btn btn-block login-btn mb-4" type="button" value="Registrarse"><br>
                 <h4><?php echo $mensaje ?></h4><br>
                 <a href="#!" class="forgot-password-link">Olvido su contraseña?</a>
+                <a href="index.php" class="forgot-password-link">Login</a>
                
                 <nav class="login-card-footer-nav">
                   <a href="#!">Terms of use.</a>
