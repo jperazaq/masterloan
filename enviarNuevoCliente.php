@@ -15,7 +15,7 @@ $lastName = $_POST['papellido_usuario'];
 $secondLastName = $_POST['sapellido_usuario'];   
 $DOB = $_POST['nacimiento_usuario'];
 $dob1 = strtotime($DOB);
-$dob1 = date('Y-m-d',$dob1);
+$dob2 = date('Y-m-d',$dob1);
 $userName = $_POST['usuario_usuario'];
 $mail1 = $_POST['correo_usuario'];
 $rol = $_POST['rol_usuario'];
@@ -77,7 +77,7 @@ $queryCorreoDoble = mysqli_query($conn, "SELECT * FROM  users");
 
    if($seGuardaUsuario){
     $sql = "INSERT INTO users (ID_NUMBER, FIRST_NAME, LAST_NAME,SECOND_LAST_NAME, USER_USER, PHONE_NUMBER, EMAIL_NUMBER, DATE_OF_BIRTH,AGE,JOB,NOMBRE_EMPRESA,ID_EMPRESA,USER_PASSWORD)
-            VALUES ('$cedula','$fisrtName','$lastName', '$secondLastName',  '$userName', '$phone','$mail', '$dob1','$age1',  '$rol', '$nombreEmpresa', '$empresaID','$pass')";
+            VALUES ('$cedula','$fisrtName','$lastName', '$secondLastName',  '$userName', '$phone','$mail', '$dob2','$age1',  '$rol', '$nombreEmpresa', '$empresaID','$pass')";
 
         $seGuardaUsuario = false;
 
