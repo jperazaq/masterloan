@@ -9,7 +9,7 @@
 
       <?php   
       
-      include  ('conexion2.php');
+      include  ('conexiongir.php');
       
 
       
