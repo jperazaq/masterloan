@@ -145,10 +145,7 @@ $email = $row99['EMAIL_NUMBER'];
           <div class="container col-lg-12"  >
             
             <h1 ><?php  echo $nombreEmpresa ?></h1><hr>
-                   <a href="nuevoCliente.php" class="btn btn-primary">Guardar Cambios</a>
                   
-                  <a href="nuevoPrestamo.php" class="btn btn-primary">Cambiar Contraseña</a>
-            
 <br>
           
 
@@ -214,8 +211,19 @@ $email = $row99['EMAIL_NUMBER'];
             </tr>
 
 
-
+            <tr>                                                     
+           <td> <a href="nuevoCliente.php" class="btn btn-primary">Guardar Cambios</a>
+                  
+            <a href="nuevoPrestamo.php" class="btn btn-primary">Cambiar Contraseña</a>                     
+            </td>    
+        </tr>
+            
+           
 </tbody>
+
+
+            
+
         </table>
         </form>
       </div>

@@ -296,7 +296,7 @@
 
 <div class="wrapper d-flex align-items-stretch" >
         
-        <nav id="sidebar" class="active " style="background-color:#343a40; margin-top:50px;" >
+        <nav id="sidebar" class="active " style="background-color:#343a40; margin-top:25px;" >
 
         
          
@@ -849,8 +849,8 @@ MODAL DE PAGO PENDIENTE -->
                                 <label for="inputPassword3" class="col-lg-4 col-form-label"><span style="text-align:center" class="prestamoID"></span></label>
                                 <input type="hidden"class= "idPrestamoPen" name = "idPrestamoPen" id= "idPrestamoPen">
                                 <input type="hidden"class= "lineaPendiente" name = "lineaPendiente" id= "lineaPendiente">
-                                <input type=""class= "saldoPorPagar" name = "SaldoPorPagar" id= "saldoPorPagar">
-                                <input type=""class= "interesPorPagar" name = "interesPorPagar" id= "interesPorPagar">
+                                <input type="hidden"class= "saldoPorPagar" name = "SaldoPorPagar" id= "saldoPorPagar">
+                                <input type="hidden"class= "interesPorPagar" name = "interesPorPagar" id= "interesPorPagar">
                             </div>         
           </div>
 
@@ -992,8 +992,8 @@ MODAL de Borrado-->
 
 
     </div><br><hr>
-<!-- 
-    <h2 class="card-title"> Atraso</h2> 
+<!--  
+     <h2 class="card-title"> Atraso</h2> 
     <table class="table" style="text-align:center; background-color:#e4e3e3">
     <thead class= "thead-dark">
       <tr >
@@ -1015,7 +1015,7 @@ MODAL de Borrado-->
       </tr>
     </thead>
     <tbody>
-      <tr>
+      <tr> -->
       <?php
    
 
@@ -1101,7 +1101,7 @@ MODAL de Borrado-->
       //     $totalAPagar1 = $totalAPagar1+$aging['CUOTA'];
       //     $treintaSesenta= $treintaSesenta+$aging['CUOTA'];
 
-      //   } -->
+      //   } 
 //           elseif($aging['ARREAR']>60 && $aging['ARREAR']<=90){
 //             $totalAPagar1 = $totalAPagar1+$aging['CUOTA'];
 //             $sesentanoventa= $sesentanoventa+$aging['CUOTA'];
@@ -1116,7 +1116,7 @@ MODAL de Borrado-->
 //       }
     
 //     }
-//       //  
+//       
   
 //   $unoTreintaFinal=$unoTreinta+$unoTreintaFinal;
 //   $treintaSesentaFinal=$treintaSesenta+$treintaSesentaPendiente;
@@ -1125,7 +1125,7 @@ MODAL de Borrado-->
 //   $totalAPagarfinal = $saldoTotalPrestamos;
 //   $alDiaFinal = $saldoTotalPrestamos-$unoTreintaFinal-$treintaSesentaFinal-$sesentanoventaFinal-$over90Final; 
 // ?>
-        <th ><?php echo number_format($alDiaFinal,2) ?></th>
+        <!-- <th ><?php echo number_format($alDiaFinal,2) ?></th>
         <th scope="row"><?php echo number_format(($alDiaFinal/$totalAPagarfinal)*100,0) ?></th>
         <th ><?php echo number_format($unoTreintaFinal,2) ?></th>
         <th scope="row"><?php echo number_format(($unoTreintaFinal/$totalAPagarfinal)*100,0)  ?></th>
@@ -1139,10 +1139,10 @@ MODAL de Borrado-->
       </tr>
       
     </tbody>
-    </table> <hr>
+    </table> <hr> -->
 
 
-    <head>
+     <head>
     <div class="col-sm">
 
     <h2>Totales Actualizados </h2><hr>
@@ -1201,11 +1201,11 @@ MODAL de Borrado-->
           <div class="card-body">
               <h5 class="card-title" style="text-align:center">Pago al Capital</h5>
               <h3 style="text-align:center">  <?php 
-               if($intPaid >0){
-                echo  $amortPaid;
-              } else{
+                if($intPaid >0){
+                 echo  $amortPaid;
+               } else{
                 echo 0;
-                }
+                 }
               
               
               ?></h3> 
@@ -1220,11 +1220,11 @@ MODAL de Borrado-->
           <div class="card-body">
               <h5 class="card-title" style="text-align:center">Total Pagado</h5>
               <h3 style="text-align:center">  <?php 
-              if($intPaid >0){
-                echo  $TotalPaid  ;
-              } else{
-                echo 0;
-                }
+               if($intPaid >0){
+                 echo  $TotalPaid  ;
+               } else{
+                 echo 0;
+                 }
               
               
               
@@ -1246,7 +1246,7 @@ MODAL de Borrado-->
           <h3 class="card-title" style="text-align:center"><?php 
 
 
-            if($saldoDelPrestamo >0){
+             if($saldoDelPrestamo >0){
               echo  $saldoDelPrestamo  ;
             } else{
               echo 0;
@@ -1552,8 +1552,7 @@ MODAL de Borrado-->
     <thead class= "thead-dark">
     <tr>
         <th colspan="1" rowspan="2">Fecha de Pago</th>
-        <!-- <th colspan="2" >Hr Information</th> -->
-        <!-- <th colspan="3">Contact</th> -->
+      
 
     </tr>
     <tr>

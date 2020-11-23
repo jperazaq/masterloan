@@ -9,7 +9,7 @@
 
       <?php   
       
-      include  ('conexionn   .php');
+      include  ('conexion.php');
       
 
       
