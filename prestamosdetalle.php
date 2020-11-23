@@ -320,9 +320,9 @@
             <!-- <li>
               <a href="cobros.php"><span class="fa fa-money"></span> Cobros</a>
             </li> -->
-            <li>
+            <!-- <li>
               <a href="carteraIndex.php"><span class="fa fa-suitcase"></span> Cartera</a>
-            </li>
+            </li> -->
 
             <li>
               <a href="perfil.php"><span class="fa fa-address-card-o"></span> Perfil</a>

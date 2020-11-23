@@ -5,6 +5,7 @@
   include  ('conexion.php');
 
 
+
   session_start();  
   $varsession = $_SESSION['emailsess'];
 
@@ -144,9 +145,9 @@ $email = $row99['EMAIL_NUMBER'];
           <div class="container col-lg-12"  >
             
             <h1 ><?php  echo $nombreEmpresa ?></h1><hr>
-                   <a href="editarperfil.php" class="btn btn-primary">Editar</a>
+                   <a href="nuevoCliente.php" class="btn btn-primary">Guardar Cambios</a>
                   
-                  <a href="editarperfil.php" class="btn btn-primary">Cambiar Contraseña</a>
+                  <a href="nuevoPrestamo.php" class="btn btn-primary">Cambiar Contraseña</a>
             
 <br>
           
@@ -156,7 +157,7 @@ $email = $row99['EMAIL_NUMBER'];
       <div class="col-sm">
     
     <br>
-
+<form action="post">
         <table class="table" >
           <thead>
             <tr>
@@ -168,45 +169,55 @@ $email = $row99['EMAIL_NUMBER'];
           <tr>
               
               <td>Nombre de la Empresa</td>
-              <td><?php echo $nombreEmpresa?></td>
+              <td><input type="text" id= "nombreEmpresa" class = "nombreEmpresa" value=<?php echo $nombreEmpresa?>></td>
               
             </tr>
   
             <tr>
               
               <td>Empresa Id</td>
-              <td><?php echo $IdDeEmpresa?></td>
+              <td><input type="text" id= "empresaID" class = "empresaID" value=<?php echo $IdDeEmpresa?>> </td>
               
             </tr>
             <tr>
               
               <td>Email</td>
-              <td><?php echo $email ?></td>
+              <td> <input type="text" id= "email" class = "email" value= "<?php echo $email ?>"> </td>
               
             </tr>
 
             <tr>     
                                                             
-              <td>Nombre representante</td>
-              <td><?php echo $firstName," ", $lastName," ",$SecondLastName ?></td>                            
+              <td>Nombre </td>
+              <td> <input type="text" id= "nombre" class = "nombre" value ="<?php echo $firstName?>"> </td>                            
             </tr>
+
+            <td>Primer Apellido </td>
+              <td> <input type="text" id= "papellido" class = "papellido" value ="<?php echo  $lastName ?>"> </td>                            
+            </tr>
+
+            <td>Segundo Apellido </td>
+              <td> <input type="text" id= "sapellido" class = "sapellido" value ="<?php echo $SecondLastName ?>"> </td>                            
+            </tr>
+
 
             
 
             <tr>                                                     
               <td>Telefono</td>
-              <td><?php echo $phoneNumber?></td>                            
+              <td> <input type="text" id= "telefono" class = "telefono" value= "<?php echo $phoneNumber?>"></td>                            
             </tr>
 
             <tr>                                                     
               <td>Rol</td>
-              <td><?php echo $JOB?></td>                            
+              <td> <input type="text"  id= "rol" class = "rol" value = "<?php echo $JOB ?>"> </td>                            
             </tr>
 
 
 
 </tbody>
         </table>
+        </form>
       </div>
          
 
