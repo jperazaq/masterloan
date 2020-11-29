@@ -144,6 +144,14 @@ $email = $row99['EMAIL_NUMBER'];
           <div class="container col-lg-12"  >
             
             <h1 ><?php  echo $nombreEmpresa ?></h1><hr>
+
+           <a href='editarperfil.php?nombreempresa=<?php echo $nombreEmpresa?>&empresaID=$IdDeEmpresa&email=$email
+            &repName=$firstName
+            &lastName=$lastName
+            &scdlastname=$SecondLastName
+            &telefono=$phoneNumber
+            &rol=$JOB
+            '>Ver Detalles</a>
                    <a href="editarperfil.php" class="btn btn-primary">Editar</a>
                   
                   <a href="editarperfil.php" class="btn btn-primary">Cambiar Contraseña</a>

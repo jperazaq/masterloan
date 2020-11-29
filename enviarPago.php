@@ -3,6 +3,9 @@
 ini_set( "display_errors", 0); 
 include ("conexion.php");
 
+
+
+
 if (isset($_POST['guardarPago'])){
     
     $prestamo=$_POST['idPrestamo'];       

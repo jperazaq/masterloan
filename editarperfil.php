@@ -3,11 +3,14 @@
 
   <?php 
   include  ('conexion.php');
+  include  ("enviarupdate.php");
 
 
 
-  session_start();  
+//   session_start();  
   $varsession = $_SESSION['emailsess'];
+
+
 
   
   
@@ -27,21 +30,32 @@
   }
 
  
-  $query1 = mysqli_query($conn, " SELECT * from users WHERE ID_EMPRESA = $idEmpreasSess");
+//   $query1 = mysqli_query($conn, " SELECT * from users WHERE ID_EMPRESA = $idEmpreasSess");
 
 
-$row99 = mysqli_fetch_array($query1);
+// $row99 = mysqli_fetch_array($query1);
 
-$nombreEmpresa = $row99['NOMBRE_EMPRESA'];
-$idEmpresa = $row99['idUSERS'];
-$firstName = $row99['FIRST_NAME'];
-$lastName = $row99['LAST_NAME'];
-$SecondLastName = $row99['SECOND_LAST_NAME'];
-$phoneNumber = $row99['PHONE_NUMBER'];
-$DOB = $row99['DATE_OF_BIRTH'];
-$JOB = $row99['JOB'];
-$IdDeEmpresa = $row99['ID_EMPRESA'];
-$email = $row99['EMAIL_NUMBER'];
+// $nombreEmpresa = $row99['NOMBRE_EMPRESA'];
+// $idEmpresa = $row99['idUSERS'];
+// $firstName = $row99['FIRST_NAME'];
+// $lastName = $row99['LAST_NAME'];
+// $SecondLastName = $row99['SECOND_LAST_NAME'];
+// $phoneNumber = $row99['PHONE_NUMBER'];
+// $DOB = $row99['DATE_OF_BIRTH'];
+// $JOB = $row99['JOB'];
+// $IdDeEmpresa = $row99['ID_EMPRESA'];
+// $email = $row99['EMAIL_NUMBER'];
+
+
+$nombreEmpresa = $_GET['nombreempresa'];
+$IdDeEmpresa = $_GET['empresaID'];
+$firstName = $_GET['repName'];
+$lastName = $_GET['lastName'];
+$SecondLastName = $_GET['scdlastname'];
+$phoneNumber = $_GET['telefono'];
+
+$JOB = $_GET['rol'];
+$email = $_GET['email'];
 
 
  
@@ -144,9 +158,9 @@ $email = $row99['EMAIL_NUMBER'];
               
           <div class="container col-lg-12"  >
             
-            <h1 ><?php  echo $nombreEmpresa ?></h1><hr>
+            <h1 >Actualizar Datos</h1>
                   
-<br>
+
           
 
                   <div class="container col-lg-3  "style ="margin-left:0px">
@@ -154,7 +168,7 @@ $email = $row99['EMAIL_NUMBER'];
       <div class="col-sm">
     
     <br>
-<form action="post">
+
         <table class="table" >
           <thead>
             <tr>
@@ -164,9 +178,9 @@ $email = $row99['EMAIL_NUMBER'];
           <tbody>
 
           <tr>
-              
+          <form action="" method = "POST">
               <td>Nombre de la Empresa</td>
-              <td><input type="text" id= "nombreEmpresa" class = "nombreEmpresa" value=<?php echo $nombreEmpresa?>></td>
+              <td><input type="text" id= "nombreEmpresa" name ="nombreEmpresa" class = "form-control" value = <?php echo $nombreEmpresa?>  > </td>
               
             </tr>
   
@@ -186,7 +200,7 @@ $email = $row99['EMAIL_NUMBER'];
             <tr>     
                                                             
               <td>Nombre </td>
-              <td> <input type="text" id= "nombre" class = "nombre" value ="<?php echo $firstName?>"> </td>                            
+              <td> <input type="text" id= "nombre" name="nombre" class = "form-control" value ="<?php echo $firstName?>"> </td>                            
             </tr>
 
             <td>Primer Apellido </td>
@@ -212,7 +226,8 @@ $email = $row99['EMAIL_NUMBER'];
 
 
             <tr>                                                     
-           <td> <a href="nuevoCliente.php" class="btn btn-primary">Guardar Cambios</a>
+           <td> 
+           <button type="submit" class="btn btn-primary"id="actualizar" name="actualizar">Actualizar</button>
                   
             <a href="nuevoPrestamo.php" class="btn btn-primary">Cambiar Contraseña</a>                     
             </td>    
