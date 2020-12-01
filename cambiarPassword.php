@@ -3,12 +3,9 @@
 
   <?php 
   include  ('conexion.php');
-  include  ("enviarupdate.php");
+  include  ("enviarNuevaPass.php");
 
-  ini_set( "display_errors", 0); 
-  
-error_reporting(E_ALL ^ E_NOTICE);
-ini_set('error_reporting', E_ALL ^ E_NOTICE);
+
 
 //   session_start();  
   $varsession = $_SESSION['emailsess'];
@@ -32,7 +29,10 @@ ini_set('error_reporting', E_ALL ^ E_NOTICE);
 
   }
 
- 
+  ini_set( "display_errors", 0); 
+  
+  error_reporting(E_ALL ^ E_NOTICE);
+  ini_set('error_reporting', E_ALL ^ E_NOTICE);
 //   $query1 = mysqli_query($conn, " SELECT * from users WHERE ID_EMPRESA = $idEmpreasSess");
 
 
@@ -182,51 +182,24 @@ $email1 = $_GET['email'];
 
           <tr>
           <form action="" method = "POST">
-              <td>Nombre de la Empresa</td>
-              <td><input style= "width:250px" type="text" id= "nombreEmpresa" name ="nombreEmpresa" class = "form-control" value = <?php echo $nombreEmpresa?>  > </td>
-              
-            </tr>
+             
   
-            <!-- <tr>
-              
-              <td>Empresa Id</td>
-              <td><input type="text" id= "empresaID" name="empresaID" class = "form-control" value=<?php echo $IdDeEmpresa?>> </td>
-              
-            </tr> -->
-            <!-- <tr>
-              
-              <td>Email</td>
-              <td> <input type="email" id= "email" class = "form-control" name= "email" value= <?php echo $email1 ?>> </td>
-              
-            </tr> -->
+           
 
             <tr>     
                                                             
-              <td>Nombre </td>
-              <td> <input type="text" id= "nombre" name="nombre" class = "form-control" value =<?php echo $firstName1?>> </td>                            
+              <td>Ingrese nueva clave </td>
+              <td> <input type="paswword" id= "pass" name="pass" class = "form-control"> </td>                            
             </tr>
 
-            <td>Primer Apellido </td>
-              <td> <input type="text" id= "papellido" name="papellido" class = "form-control" value =<?php echo  $lastName1 ?>> </td>                            
-            </tr>
-
-            <td>Segundo Apellido </td>
-              <td> <input type="text" id= "sapellido" name="sapellido" class = "form-control" value =<?php echo $SecondLastName1 ?>> </td>                            
+            <tr>     
+                                                            
+            <td>Confirmar Clave </td>
+            <td> <input type="paswword" id= "cpass" name="cpass" class = "form-control"> </td>                            
             </tr>
 
 
             
-
-            <tr>                                                     
-              <td>Telefono</td>
-              <td> <input type="text" id= "telefono" name="telefono" class = "form-control" value= <?php echo $phoneNumber1?>></td>                            
-            </tr>
-
-            <tr>                                                     
-              <td>Rol</td>
-              <td> <input type="text"  id= "rol" name="rol" class = "form-control" value = <?php echo $JOB1 ?>> </td>                            
-            </tr>
-
 
             <tr>                                                     
            <td> 
@@ -256,14 +229,7 @@ $email1 = $_GET['email'];
 
 
 
-        
-          
-    
-
-
-
-
-    
+           
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/pooper.js/1.14.7/umd/pooper.min.js" ></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"></script>

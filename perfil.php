@@ -8,16 +8,15 @@
   session_start();  
   $varsession = $_SESSION['emailsess'];
 
-  
+  echo $varsession;
   
 
-  $querySes = mysqli_query($conn, "SELECT `idUSERS`, `ID_NUMBER`, `FIRST_NAME`, `LAST_NAME`, `SECOND_LAST_NAME`, `USER_USER`, `PHONE_NUMBER`, `EMAIL_NUMBER`, `DATE_OF_BIRTH`, `AGE`, `JOB`,  `NOMBRE_EMPRESA`,`ID_EMPRESA`,`USER_PASSWORD`
-   FROM `users` WHERE EMAIL_NUMBER = '$varsession'");
+  $querySes = mysqli_query($conn, "SELECT * FROM users WHERE EMAIL_NUMBER = '$varsession'");
   $rowses = mysqli_fetch_array($querySes);
   $nombrein = $rowses['FIRST_NAME'];
   $idEmpreasSess= $rowses['ID_EMPRESA'];
-  echo $idEmpreasSess;
- 
+  echo $nombrein;
+
   if ($varsession == NULL || $varsession = ""){
     header("LOCATION: nuevo.php")
     ;
@@ -145,16 +144,19 @@ $email = $row99['EMAIL_NUMBER'];
             
             <h1 ><?php  echo $nombreEmpresa ?></h1><hr>
 
-           <a href='editarperfil.php?nombreempresa=<?php echo $nombreEmpresa?>&empresaID=$IdDeEmpresa&email=$email
-            &repName=$firstName
-            &lastName=$lastName
-            &scdlastname=$SecondLastName
-            &telefono=$phoneNumber
-            &rol=$JOB
-            '>Ver Detalles</a>
-                   <a href="editarperfil.php" class="btn btn-primary">Editar</a>
-                  
-                  <a href="editarperfil.php" class="btn btn-primary">Cambiar Contraseña</a>
+           <a href='editarperfil.php?nombreempresa="<?php echo $nombreEmpresa?>"&empresaID="<?php echo $IdDeEmpresa?>"&email="<?php echo $email?>"&repName="<?php echo $firstName?>"
+            &lastName="<?php echo $lastName?>"
+            &scdlastname="<?php echo $SecondLastName?>"
+            &telefono="<?php echo $phoneNumber?>"
+            &rol="<?php echo $JOB?>"
+            '>Editar Perfil</a>
+                   
+            <a href='cambiarPassword.php?nombreempresa="<?php echo $nombreEmpresa?>"&empresaID="<?php echo $IdDeEmpresa?>"&email="<?php echo $email?>"&repName="<?php echo $firstName?>"
+            &lastName="<?php echo $lastName?>"
+            &scdlastname="<?php echo $SecondLastName?>"
+            &telefono="<?php echo $phoneNumber?>"
+            &rol="<?php echo $JOB?>"
+            '> |Cambiar Contraseña</a>
             
 <br>
           
