@@ -54,7 +54,7 @@ $montoMenosMulta = $monto - $montoMultaSaldoAbierto;
     $cuotaNuevaConMulta= $rowSaldo99['CUOTA']+$montoMultaSaldoAbierto;
    
     $saldoAbierto99 = $monto-$cuotaNuevaConMulta; 
-    echo $saldoAbierto99;
+  
 
     $pago99 = "UPDATE amortization SET PAYMENT_AMOUNT = $monto WHERE AMORT_TABLE_ID = $pagoID";   
     $saldo = "UPDATE amortization SET SALDO_PAGO_ABIERTO  = $saldoAbierto99 WHERE AMORT_TABLE_ID = $pagoID";   
@@ -279,7 +279,7 @@ $montoMenosMulta = $monto - $montoMultaSaldoAbierto;
         $rowSaldo04 = mysqli_fetch_array($cuota04); 
         $amortization = $rowSaldo04['AMORTIZATION'];
         $interes = $rowSaldo04['INTEREST_AMOUNT'];    
-        $alcanzaPago1 = $monto-$amortization;
+        $alcanzaPago1 = $amortization-$monto;
     
             if($alcanzaPago1>=$interes){
            
@@ -302,7 +302,7 @@ $montoMenosMulta = $monto - $montoMultaSaldoAbierto;
             
        echo $amortization, "guardada";
                  } else{
-                         echo 'ERROR: Could not able to execute $sqlaMORTI. ' . mysqli_error($conn);
+                         echo 'ERROR: Could not able to execute Guardar Amortizacion. ' . mysqli_error($conn);
                  };      
 }
 
