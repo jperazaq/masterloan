@@ -1,22 +1,20 @@
 <?php  
+
+// ini_set( "display_errors", 0); 
+
+// error_reporting(E_ALL ^ E_NOTICE);
+// ini_set('error_reporting', E_ALL ^ E_NOTICE);
+include  ("enviarNuevoRegistro.php");
 include  ('conexion.php');
-include  ("enviarNuevoCliente.php");
-
-ini_set( "display_errors", 0); 
-
-error_reporting(E_ALL ^ E_NOTICE);
-ini_set('error_reporting', E_ALL ^ E_NOTICE);
-include  ('conexion.php');
-include  ("enviarNuevoCliente.php");
-
-
 
 ?>
 
-
 <!DOCTYPE html>
+
+
 <html lang="en">
 <head>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -121,11 +119,12 @@ include  ("enviarNuevoCliente.php");
                     
                   <div class="form-group mb-4">
                     
-                  <button name="guardarUsuario" id="guardarUsuario" type="submit" class="btn btn-block login-btn mb-4"  value="Registrarse"> Registrarse </button>
+                  <button name="guardarUsuario" id="guardarUsuario" type="submit" class="btn btn-block login-btn mb-4"  > Registrarse </button>
                     
                   
                   <br>
 </button>
+</form>
                   <h4><?php echo $mensaje ?></h4><br>
                 <a href="#!" class="forgot-password-link">Olvido su contraseña?</a><br>
                 <a href="index.php" class="forgot-password-link">Login</a>
@@ -134,7 +133,7 @@ include  ("enviarNuevoCliente.php");
                   <a href="#!">Terms of use.</a>
                   <a href="#!">Privacy policy</a>
                 </nav>
-                </form>
+                
             </div>
           </div>
         </div>

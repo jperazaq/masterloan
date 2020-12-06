@@ -1,6 +1,6 @@
 <?php 
 
-include ("conexion.php");
+include ('conexion.php');
 
 ini_set( "display_errors", 0); 
 
