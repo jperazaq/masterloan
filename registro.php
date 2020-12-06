@@ -1,5 +1,7 @@
 <?php  
- session_start();
+include  ('conexion.php');
+include  ("enviarNuevoCliente.php");
+
 ini_set( "display_errors", 0); 
 
 error_reporting(E_ALL ^ E_NOTICE);
@@ -7,37 +9,7 @@ ini_set('error_reporting', E_ALL ^ E_NOTICE);
 include  ('conexion.php');
 include  ("enviarNuevoCliente.php");
 
-if  (isset($_POST['login'])){
 
-  $email = $_POST['email'];
-  $pass = $_POST['password'];
-  $ingresar = true;
-
-}
-
-if($ingresar){
-$query = "SELECT * from users WHERE EMAIL_NUMBER ='$email' AND USER_PASSWORD = '$pass' ";
-
-$resultado = mysqli_query($conn, $query);
-
-$filas = mysqli_num_rows($resultado);
-
-
-
-if($filas >0){
-  session_start();
-  $_SESSION['emailsess'] = $email;
-  header("Location: dashboard.php");
-}else{
-  $mensaje= "Los datos ingresados son incorrectos!";
-}
-
- mysqli_free_result($resultado);
-
- mysqli_close($conn);
- 
- $ingresar = false;
-}
 
 ?>
 
@@ -149,8 +121,12 @@ if($filas >0){
                     
                   <div class="form-group mb-4">
                     
-                  <input name="guardarUsuario" id="guardarUsuario" type="submit" class="btn btn-block login-btn mb-4"  value="Registrarse"><br>
-                <h4><?php echo $mensaje ?></h4><br>
+                  <button name="guardarUsuario" id="guardarUsuario" type="submit" class="btn btn-block login-btn mb-4"  value="Registrarse"> Registrarse </button>
+                    
+                  
+                  <br>
+</button>
+                  <h4><?php echo $mensaje ?></h4><br>
                 <a href="#!" class="forgot-password-link">Olvido su contraseña?</a><br>
                 <a href="index.php" class="forgot-password-link">Login</a>
                

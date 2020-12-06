@@ -20,7 +20,7 @@ if (!$conn) {
 }else{
 
 //  mysqli_close($conn);
- echo "conectado" ,$database;
+//  echo "conectado" ,$database;
 }
 
 

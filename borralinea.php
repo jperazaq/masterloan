@@ -32,11 +32,11 @@ if($borrar){
 if($actualizarPago){
     $queryPagoPen = mysqli_query($conn, "SELECT sum(PAYMENT_AMOUNT) FROM  payments WHERE REF_CUOTA = $numCuota");
 
-    // $totalPagosPen = 0;
+    $totalPagosPen = 0;
 
-    // while($pagosAcuota= mysqli_fetch_array($queryPagoPen)){
-    //     $totalPagosPen = $totalPagosPen+ $pagosAcuota['PAYMENT_AMOUNT'];
-    // }
+    while($pagosAcuota= mysqli_fetch_array($queryPagoPen)){
+        $totalPagosPen = $totalPagosPen+ $pagosAcuota['PAYMENT_AMOUNT'];
+    }
 
     $rowPagoPen = mysqli_fetch_array($queryPagoPen);
     $totalPagosPen= $rowPagoPen['sum(PAYMENT_AMOUNT)'];
@@ -60,7 +60,7 @@ if(mysqli_query($conn, $pagoPendiente)){
     $cuota100= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
     $rowSaldo100 = mysqli_fetch_array($cuota100);
     
-    $nuevoPagoSaldo = $rowSaldo100['PAYMENT_AMOUNT']-$monto;
+    $nuevoPagoSaldo = $rowSaldo100['PAYMENT_AMOUNT']-$monto   ;
 
 
     $pago100 = "UPDATE amortization SET PAYMENT_AMOUNT = $nuevoPagoSaldo WHERE AMORT_TABLE_ID = $pagoID";   

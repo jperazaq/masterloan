@@ -2,10 +2,10 @@
 
 include ("conexion.php");
 
-// ini_set( "display_errors", 0); 
+ini_set( "display_errors", 0); 
 
-// error_reporting(E_ALL ^ E_NOTICE);
-// ini_set('error_reporting', E_ALL ^ E_NOTICE);
+error_reporting(E_ALL ^ E_NOTICE);
+ini_set('error_reporting', E_ALL ^ E_NOTICE);
     
 
 if(isset($_POST['guardarUsuario'])){
@@ -71,15 +71,20 @@ $queryCorreoDoble = mysqli_query($conn, "SELECT * FROM  users");
    };
     if(mysqli_query($conn, $sql33)){    
         echo "<script>window.alert('Registro Satisfactorio en la Base de datos!')
-                 </script>" ;                
+                 </script>" ;       
+                 
+                 header("Location: registroDone.php");
+                 $seGuardaUsuario1 = false;
+    }else{        
+        echo 'ERROR: Could not able to execute $sql. '. mysqli_error($sql33);
+
+        echo "<script>window.alert('Ha ocurrido un error!')
+        </script>" ;
         $seGuardaUsuario1 = false;
-    } else{
-        echo 'ERROR: Could not able to execute $sql. '. mysqli_error($sql3);
-     
-      $seGuardaUsuario1 = false;
         }
 
         
+      
         ;
         
 ?>
