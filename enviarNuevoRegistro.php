@@ -1,22 +1,23 @@
 <?php 
 
 include ('conexion.php');
+  
 
-ini_set( "display_errors", 0); 
+// ini_set( "display_errors", 0); 
 
-error_reporting(E_ALL ^ E_NOTICE);
-ini_set('error_reporting', E_ALL ^ E_NOTICE);
+// error_reporting(E_ALL ^ E_NOTICE);
+// ini_set('error_reporting', E_ALL ^ E_NOTICE);
     
 
 if(isset($_POST['guardarUsuario'])){
-$cedula = $_POST["cedula_user"];
+$cedula = $_POST['cedula_user'];
 $fisrtName = $_POST['nombre_usuario'];
 $lastName = $_POST['papellido_usuario'];
 $secondLastName = $_POST['sapellido_usuario'];   
 $DOB = $_POST['nacimiento_usuario'];
 $dob1 = strtotime($DOB);
 $dob2 = date('Y-m-d',$dob1);
-$userName = $_POST['usuario_usuario'];
+
 $mail1 = $_POST['correo_usuario'];
 $rol = $_POST['rol_usuario'];
 $phone = $_POST['telefono'];
@@ -32,7 +33,7 @@ $passConf = $_POST['confirm_password_usuario'];
         $age = $fecha_nac ->diff($hoy);
 
         $age1 = $age ->format("%r%a");
-$seGuardaUsuario1 = true;
+$guardar = true;
 
 
 
@@ -63,9 +64,9 @@ $queryCorreoDoble = mysqli_query($conn, "SELECT * FROM  users");
 
 
 
-   if($seGuardaUsuario1){
+   if($guardar){
     $sql33 = "INSERT INTO users (ID_NUMBER, FIRST_NAME, LAST_NAME,SECOND_LAST_NAME, PHONE_NUMBER, EMAIL_NUMBER, DATE_OF_BIRTH,AGE,JOB,NOMBRE_EMPRESA,ID_EMPRESA,USER_PASSWORD)
-            VALUES ('$cedula','$fisrtName','$lastName', '$secondLastName', '$phone','$mail', '$dob2','$age1',  '$rol', '$nombreEmpresa', '$empresaID','$pass')";
+            VALUES ('$cedula','$fisrtName','$lastName', '$secondLastName', '$phone','$mail1', '$dob2','$age1',  '$rol', '$nombreEmpresa', '$empresaID','$pass')";
 
 
    };
@@ -73,10 +74,10 @@ $queryCorreoDoble = mysqli_query($conn, "SELECT * FROM  users");
         echo "<script>window.alert('Registro Satisfactorio en la Base de datos!')
                  </script>" ;       
                  
-                 header("Location: registroDone.php");
+                 header("Location:indexdone.html");
               
     }else{        
-        echo 'ERROR: Could not able to execute $sql. '. mysqli_error($sql33);
+        echo 'ERROR: Could not able to execute $sql.'. mysqli_error($sql33);
 
         echo "<script>window.alert('Ha ocurrido un error!')
         </script>" ;
@@ -86,5 +87,5 @@ $queryCorreoDoble = mysqli_query($conn, "SELECT * FROM  users");
         
       
         ;
-        $seGuardaUsuario1 = false;
+        $guardar = false;
 ?>

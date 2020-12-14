@@ -1,5 +1,5 @@
 <?php 
-// ini_set( "display_errors", 0); 
+ini_set( "display_errors", 0); 
 include ("conexion.php");
 
 if (isset($_POST['borrarRegistro'])){
@@ -9,7 +9,8 @@ if (isset($_POST['borrarRegistro'])){
     $monto = $_POST['paymentAmt'];
     $actualizarPago= TRUE;
     $pagoID = $_POST['lineaPendiente'];
-    echo $registroABorrar;
+    $actualizarPagoAmort = true;
+    $pagoIdAmort = $_POST['pagoid'];   
 
 }
 
@@ -30,16 +31,15 @@ if($borrar){
 }
 
 if($actualizarPago){
-    $queryPagoPen = mysqli_query($conn, "SELECT sum(PAYMENT_AMOUNT) FROM  payments WHERE REF_CUOTA = $numCuota");
+    $queryPagoPen = mysqli_query($conn, "SELECT PAYMENT_AMOUNT FROM  payments WHERE REF_CUOTA = $numCuota");
 
     $totalPagosPen = 0;
 
     while($pagosAcuota= mysqli_fetch_array($queryPagoPen)){
-        $totalPagosPen = $totalPagosPen+ $pagosAcuota['PAYMENT_AMOUNT'];
+        $totalPagosPen =  $pagosAcuota['PAYMENT_AMOUNT']-$monto;
     }
 
-    $rowPagoPen = mysqli_fetch_array($queryPagoPen);
-    $totalPagosPen= $rowPagoPen['sum(PAYMENT_AMOUNT)'];
+    
 
     $pagoPenFinal = $totalPagosPen - $monto;
 
@@ -57,22 +57,39 @@ if(mysqli_query($conn, $pagoPendiente)){
         echo 'ERROR: Could not able to execute $pagoPendiente. ' . mysqli_error($conn);
     };     
     
-    $cuota100= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
-    $rowSaldo100 = mysqli_fetch_array($cuota100);
+
+    if($actualizarPagoAmort){
+
+    $cuota101= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
+    $rowSaldo101 = mysqli_fetch_array($cuota101);
     
-    $nuevoPagoSaldo = $rowSaldo100['PAYMENT_AMOUNT']-$monto   ;
+    $pagoenlibros = $rowSaldo101['PAYMENT_AMOUNT'];
+    // $montoarestar = number_format($monto,5)*1000;
+
+    $nuevoPagoSaldo = $pagoenlibros-$monto;
+    
+   
+
+    echo $nuevoPagoSaldo;
+    $pago101 = "UPDATE amortization SET PAYMENT_AMOUNT = $nuevoPagoSaldo WHERE AMORT_TABLE_ID = $pagoID";   
+    }
 
 
-    $pago100 = "UPDATE amortization SET PAYMENT_AMOUNT = $nuevoPagoSaldo WHERE AMORT_TABLE_ID = $pagoID";   
-    
-    if(mysqli_query($conn,$pago100)){
+
+
+    if(mysqli_query($conn,$pago101)){
         echo "Actualizado";
+        echo $pagoenlibros,"/";
+        echo $montoarestar,"/";
+        echo $pagoenlibros-$montoarestar;
+       
     }else{
         echo 'ERROR: Could not able to execute $sqlaMORTI. ' . mysqli_error($conn);
     }
     
     
-    $actualizarPago= FALSE;   
+    $actualizarPago= FALSE;  
+    $actualizarPagoAmort= false; 
     
 
 }

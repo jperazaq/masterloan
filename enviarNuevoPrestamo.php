@@ -1,6 +1,6 @@
 <?php 
 
-// include  ("conexion.php");
+include  ("conexion.php");
 
 
 
@@ -19,7 +19,7 @@ if (isset($_POST['guardar'])){
     $cobradorClienteAcargo = $_POST['cobrador_cliente']; 
     $prestamo = $_POST["montoPrestamo"];
     $tasaInt = $_POST['tasa'];  
-    $tasaInt =$_POST['tasa']; 
+    $multa =$_POST['multa']; 
     $periodoMeses = $_POST['periodo'];
     $periodoMeses = $_POST['periodo'];
     $radioCuotaMonto = $_POST['radioCuota'];  
@@ -37,15 +37,15 @@ if (isset($_POST['guardar'])){
 $montoCuota = $prestamo*((($tasaInt/100)*(pow((1+$tasaInt/100),$periodoMeses)))/(pow(1+($tasaInt/100),$periodoMeses)-1));
 $pagoInt = $prestamo*($tasaInt/100);
 $fechaFinal =date ('Y-m-d',strtotime($openDate."$periodoMeses month"));
-$cuotaPlana = ($prestamo/$periodoMeses)+($prestamo*($tasaInt/100));
+$cuotaPlana = ($prestamo/$periodoMeses)+($prestamo*($tasaInt/100)/12);
 $intPlano= $prestamo*($tasaInt/100);
 $amortPlano = $prestamo/$periodoMeses;
 
 
 if($seGuarda){
 if($radioCuotaMonto == "cuota_completa"){
-$sql = "INSERT INTO loans ( LOAN_AMOUNT, INTEREST_RATE, NET_TERMS,TIPO_DE_CUOTA, MONEDA,MONTO_CUOTA_TOTAL,MONTO_SOLO_INTERESES, STAR_DATE,END_DATE,USER_CLIENTE_ID, CUSTOMER_ID,EMPRESA_ID)
-VALUES ('$prestamo', '$tasaInt','$periodoMeses','$radioCuotaMonto','$radioMonedaSim','$montoCuota','$pagoInt','$openDate','$fechaFinal','$cobradorClienteAcargo','$clienteIDNumber', '$empresaID')";
+$sql = "INSERT INTO loans ( LOAN_AMOUNT, INTEREST_RATE, NET_TERMS,TIPO_DE_CUOTA,MULTA, MONEDA,MONTO_CUOTA_TOTAL,MONTO_SOLO_INTERESES, STAR_DATE,END_DATE,USER_CLIENTE_ID, CUSTOMER_ID,EMPRESA_ID)
+VALUES ('$prestamo', '$tasaInt','$periodoMeses','$radioCuotaMonto','$multa','$radioMonedaSim','$montoCuota','$pagoInt','$openDate','$fechaFinal','$cobradorClienteAcargo','$clienteIDNumber', '$empresaID')";
 
 $sqlAmort= "INSERT INTO amortization (TODAY) VALUES ('$openDate')";
  
@@ -53,13 +53,13 @@ $sqlAmort= "INSERT INTO amortization (TODAY) VALUES ('$openDate')";
 }
 
 elseif($radioCuotaMonto="cuota_plana"){
-    $sql = "INSERT INTO loans ( LOAN_AMOUNT, INTEREST_RATE, NET_TERMS,TIPO_DE_CUOTA, MONEDA,MONTO_CUOTA_TOTAL,MONTO_AMORTIZACION,MONTO_SOLO_INTERESES, STAR_DATE,END_DATE,USER_CLIENTE_ID, CUSTOMER_ID,EMPRESA_ID)
-VALUES                       ('$prestamo', '$tasaInt','$periodoMeses','$radioCuotaMonto','$radioMonedaSim','$cuotaPlana','$amortPlano','$intPlano','$openDate','$fechaFinal','$cobradorClienteAcargo','$clienteIDNumber','$empresaID')";
+    $sql = "INSERT INTO loans ( LOAN_AMOUNT, INTEREST_RATE, NET_TERMS,TIPO_DE_CUOTA,MULTA, MONEDA,MONTO_CUOTA_TOTAL,MONTO_AMORTIZACION,MONTO_SOLO_INTERESES, STAR_DATE,END_DATE,USER_CLIENTE_ID, CUSTOMER_ID,EMPRESA_ID)
+VALUES                       ('$prestamo', '$tasaInt','$periodoMeses','$radioCuotaMonto','$multa','$radioMonedaSim','$cuotaPlana','$amortPlano','$intPlano','$openDate','$fechaFinal','$cobradorClienteAcargo','$clienteIDNumber','$empresaID')";
 $sqlAmort= "INSERT INTO amortization (TODAY) VALUES ('$openDate')";
 }
 else{
-$sql = "INSERT INTO loans ( LOAN_AMOUNT, INTEREST_RATE, NET_TERMS,TIPO_DE_CUOTA, MONEDA,MONTO_SOLO_INTERESES, STAR_DATE,END_DATE,USER_CLIENTE_ID, CUSTOMER_ID, EMPRESA_ID)
-VALUES ('$prestamo', '$tasaInt','$periodoMeses','$radioCuotaMonto','$radioMonedaSim','$pagoInt','$openDate','$fechaFinal','$cobradorClienteAcargo','$clienteIDNumber', '$empresaID')";
+$sql = "INSERT INTO loans ( LOAN_AMOUNT, INTEREST_RATE, NET_TERMS,TIPO_DE_CUOTA,MULTA, MONEDA,MONTO_SOLO_INTERESES, STAR_DATE,END_DATE,USER_CLIENTE_ID, CUSTOMER_ID, EMPRESA_ID)
+VALUES ('$prestamo', '$tasaInt','$periodoMeses','$radioCuotaMonto','$multa','$radioMonedaSim','$pagoInt','$openDate','$fechaFinal','$cobradorClienteAcargo','$clienteIDNumber', '$empresaID')";
 
 $sqlAmort= "INSERT INTO amortization (TODAY) VALUES ('$openDate')";
 

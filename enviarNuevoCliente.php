@@ -1,6 +1,7 @@
 <?php 
 
-include ("conexion.php");
+include ('conexion.php');
+
 
 ini_set( "display_errors", 0); 
 
@@ -32,7 +33,7 @@ $passConf = $_POST['confirm_password_usuario'];
         $age = $fecha_nac ->diff($hoy);
 
         $age1 = $age ->format("%r%a");
-$seGuardaUsuario1 = true;
+$seGuardaUsuario2 = true;
 
 
 
@@ -63,28 +64,28 @@ $queryCorreoDoble = mysqli_query($conn, "SELECT * FROM  users");
 
 
 
-   if($seGuardaUsuario1){
-    $sql33 = "INSERT INTO users (ID_NUMBER, FIRST_NAME, LAST_NAME,SECOND_LAST_NAME, PHONE_NUMBER, EMAIL_NUMBER, DATE_OF_BIRTH,AGE,JOB,NOMBRE_EMPRESA,ID_EMPRESA,USER_PASSWORD)
-            VALUES ('$cedula','$fisrtName','$lastName', '$secondLastName', '$phone','$mail', '$dob2','$age1',  '$rol', '$nombreEmpresa', '$empresaID','$pass')";
+   if($seGuardaUsuario2){
+    $sql34 = "INSERT INTO users (ID_NUMBER, FIRST_NAME, LAST_NAME,SECOND_LAST_NAME, PHONE_NUMBER, EMAIL_NUMBER, DATE_OF_BIRTH,AGE,JOB,NOMBRE_EMPRESA,ID_EMPRESA,USER_PASSWORD)
+            VALUES('$cedula','$fisrtName','$lastName', '$secondLastName', '$phone','$mail', '$dob2','$age1','$rol', '$nombreEmpresa', '$empresaID','$pass')";
 
 
    };
-    if(mysqli_query($conn, $sql33)){    
+    if(mysqli_query($conn, $sql34)){    
         echo "<script>window.alert('Registro Satisfactorio en la Base de datos!')
                  </script>" ;       
                  
-                 header("Location: registroDone.php");
+                 header("Location: nuevoUsuario.php");
               
     }else{        
-        echo 'ERROR: Could not able to execute $sql. '. mysqli_error($sql33);
+        echo 'ERROR: Could not able to execute $sql. '. mysqli_error($sql34);
 
-        echo "<script>window.alert('Ha ocurrido un error!')
-        </script>" ;
-        
+        // echo "<script>window.alert('Ha ocurrido un error!')
+        // </script>" ;
+        $seGuardaUsuario2 = false;
         }
 
         
       
         ;
-        $seGuardaUsuario1 = false;
+        $seGuardaUsuario2 = false;
 ?>

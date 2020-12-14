@@ -277,16 +277,18 @@ $montoMenosMulta = $monto - $montoMultaSaldoAbierto;
 
         $cuota04= mysqli_query($conn, "SELECT * FROM  amortization WHERE AMORT_TABLE_ID = $pagoID");
         $rowSaldo04 = mysqli_fetch_array($cuota04); 
-        $amortization = $rowSaldo04['AMORTIZATION'];
-        $interes = $rowSaldo04['INTEREST_AMOUNT'];    
-        $alcanzaPago1 = $amortization-$monto;
+        $amortization1 = $rowSaldo04['AMORTIZATION'];
+        $interes1 = $rowSaldo04['INTEREST_AMOUNT'];    
+        $alcanzaPago1 = $amortization1-$monto;
+
+        echo $alcanzaPago1,"Hola";
     
-            if($alcanzaPago1>=$interes){
+            if($alcanzaPago1<=$interes1){
            
                 $amortizacionPagada = $montoMenosMulta-$interes;
               
             }
-            elseif ($alcanzaPago1<=$interes) {
+            elseif ($alcanzaPago1>=$interes) {
                
                 $amortizacionPagada =0;
                 

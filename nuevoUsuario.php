@@ -43,7 +43,7 @@ ini_set('error_reporting', E_ALL ^ E_NOTICE);
           
     </head>
     <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" style="height: 50px;color:#222831; ">
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top" style="height: 55px;color:#222831; ">
     <a href="#" class="navbar-brand">Master Loan</a>
     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
@@ -69,7 +69,7 @@ ini_set('error_reporting', E_ALL ^ E_NOTICE);
    
    
       <div class="wrapper d-flex align-items-stretch"    >
-        <nav id="sidebar" class="active " style="background-color:#343a40; margin-top:20px;" >
+        <nav id="sidebar" class="active " style="background-color:#343a40; margin-top:30px;" >
           
           <ul class="list-unstyled components mb-5"  style=" position: fixed">
           <h1><a href="index.html" class="logo">ML</a></h1>
@@ -86,9 +86,9 @@ ini_set('error_reporting', E_ALL ^ E_NOTICE);
               <a href="cobros.php"><span class="fa fa-money"></span> Cobros</a>
             </li>
 
-            <li>
+            <!-- <li>
               <a href="cobros.php"><span class="fa fa-suitcase"></span> Cartera</a>
-            </li>
+            </li> -->
             <li>
               <a href="perfil.php"><span class="fa fa-address-card-o"></span> Perfil</a>
             </li>

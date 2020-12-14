@@ -4,8 +4,10 @@
 
 // error_reporting(E_ALL ^ E_NOTICE);
 // ini_set('error_reporting', E_ALL ^ E_NOTICE);
-include  ("enviarNuevoRegistro.php");
 include  ('conexion.php');
+
+include  ("enviarNuevoRegistro.php");
+
 
 ?>
 
@@ -38,7 +40,7 @@ include  ('conexion.php');
                 <h1> Master Loan </h1>
               </div>
               <p class="login-card-description">Cree su cuenta</p>
-              <form action="" method="POST">
+              <form action="" method="post">
               <div class="form-group row">
             
             <label for="cedula" class="col-sm-4 col-form-label">Cedula</label>
@@ -125,7 +127,7 @@ include  ('conexion.php');
                   <br>
 </button>
 </form>
-                  <h4><?php echo $mensaje ?></h4><br>
+                  <!-- <h4><?php echo $mensaje ?></h4><br> -->
                 <a href="#!" class="forgot-password-link">Olvido su contraseña?</a><br>
                 <a href="index.php" class="forgot-password-link">Login</a>
                

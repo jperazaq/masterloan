@@ -4,6 +4,7 @@
   <?php 
   include  ('conexion.php');
 
+  ini_set( "display_errors", 0); 
 
   session_start();  
   $varsession = $_SESSION['emailsess'];
@@ -26,10 +27,7 @@
   }
 
  
-  $query1 = mysqli_query($conn, " SELECT customers.FIRST_NAME, customers.LAST_NAME, customers.SECOND_LAST_NAME, customers.ID_NUMBER, customers.CUSTOMER_ID,
-  loans.LOAN_ID, loans.STAR_DATE, loans.MONTO_CUOTA_TOTAL, sum(LOAN_AMOUNT), loans.MONTO_SOLO_INTERESES,loans.USER_CLIENTE_ID
-    FROM customers AS customers
-  INNER JOIN loans AS loans ON customers.EMPRESA_ID = loans.EMPRESA_ID GROUP BY EMPRESA_ID WHERE EMPRESA_ID = $idEmpreasSess");
+  $query1 = mysqli_query($conn, " SELECT * FROM customers WHERE EMPRESA_ID = $idEmpreasSess");
 
  
   $query3 = mysqli_query($conn, " SELECT customers.FECHA_REG, customers.EMAIL, customers.PHONE_NUMBER,customers.FIRST_NAME, customers.LAST_NAME, customers.SECOND_LAST_NAME, customers.ID_NUMBER, customers.CUSTOMER_ID,customers.EMPRESA_ID,
@@ -163,11 +161,12 @@
                   <tr>
                       
                       <th>Cedula</th>
+                      
                       <th>Telefono </th>
                       <th>Fecha de Registro </th>                     
                       <th>Email </th>
                       <th>Id Cliente</th>
-                      
+                      <th>Ocupacion</th>
                       
                       <th>Acciones </th>
 
@@ -182,7 +181,7 @@
               <?php 
 
             
-                  while($datos = mysqli_fetch_array($query3)){   
+                  while($datos = mysqli_fetch_array($query1)){   
                     $id= $datos['LOAN_ID'];                     
                     $idnumber= $datos['ID_NUMBER'];  
                     $customer_id= $datos['CUSTOMER_ID']; 
@@ -195,6 +194,7 @@
                   <td><?php echo $datos['FECHA_REG']?></td>
                   <td><?php echo $datos['EMAIL']?></td>
                   <td><?php echo $datos['CUSTOMER_ID']?></td>
+                  <td><?php echo $datos['OCUPATION']?></td>
                   
 
                   <td><?php echo "<a href='detalleCliente.php?LOAN_ID=$id&ID_NUMBER=$idnumber&CUSTOMER_ID=$customer_id&LOANID=$id'>Ver Detalles</a>"?></td>
